@@ -1,25 +1,29 @@
 {
-  "title": "Cosmos Block Explorer",
-  "network": "theta-testnet-001",
+  "title": "Vipcoin Block Explorer",
+  "network": "vipcoin-gold",
   "icon": "/images/icon.svg",
   "logo": {
     "default": "/images/logo.svg"
   },
   "prefix": {
-    "consensus": "cosmosvalcons",
-    "validator": "cosmosvaloper",
-    "account": "cosmos"
+    "consensus": "vcgvalcons",
+    "validator": "vcgvaloper",
+    "account": "vcg"
   },
   "genesis": {
     "time": "2021-07-13T08:00:00",
     "height": 1
   },
-  "primaryTokenUnit": "uatom",
-  "votingPowerTokenUnit": "uatom",
+  "primaryTokenUnit": "vcg",
+  "votingPowerTokenUnit": "stake",
   "tokenUnits": {
-    "uatom": {
-      "display": "atom",
-      "exponent": 6
+    "stake": {
+      "display": "stake",
+      "exponent": 1
+    },
+    "vcg": {
+      "display": "vcg",
+      "exponent": 8
     }
   },
   "extra": {

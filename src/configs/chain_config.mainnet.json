@@ -1,25 +1,29 @@
 {
-  "title": "Desmos Block Explorer",
-  "network": "desmos-mainnet-1",
-  "icon": "https://raw.githubusercontent.com/forbole/big-dipper-assets/master/desmos/icon.svg?sanitize=true",
+  "title": "Vipcoin Block Explorer",
+  "network": "vipcoin-gold",
+  "icon": "/images/icon.svg",
   "logo": {
-    "default": "https://raw.githubusercontent.com/forbole/big-dipper-assets/master/desmos/logo.svg?sanitize=true"
+    "default": "/images/logo.svg"
   },
   "prefix": {
-    "consensus": "desmosvalcons",
-    "validator": "desmosvaloper",
-    "account": "desmos"
+    "consensus": "vcgvalcons",
+    "validator": "vcgvaloper",
+    "account": "vcg"
   },
   "genesis": {
-    "time": "2021-07-13T08:00:00",
+    "time": "2022-04-04T16:54:21",
     "height": 1
   },
-  "primaryTokenUnit": "udsm",
-  "votingPowerTokenUnit": "udsm",
+  "primaryTokenUnit": "vcg",
+  "votingPowerTokenUnit": "stake",
   "tokenUnits": {
-    "udsm": {
-      "display": "dsm",
-      "exponent": 6
+    "stake": {
+      "display": "stake",
+      "exponent": 1
+    },
+    "vcg": {
+      "display": "vcg",
+      "exponent": 8
     }
   },
   "extra": {
