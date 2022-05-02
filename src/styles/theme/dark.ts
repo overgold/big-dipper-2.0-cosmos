@@ -1,6 +1,6 @@
 const backgroundDefault = '#020202';
-const surfaceOne = '#191B26';
-const surfaceTwo = '#282A36';
+const surfaceOne = '#131316';
+const surfaceTwo = '#282828';
 const fontOne = '#E6E6E6';
 const fontTwo = '#C4C4C4';
 const fontThree = '#818181';
@@ -18,14 +18,14 @@ export const darkThemeOverride = {
   palette: {
     type: 'dark',
     primary: {
-      main: '#6B9EFF',
+      main: '#F3A50D',
       contrastText: '#fff',
     },
     background: {
       default: backgroundDefault,
       paper: surfaceOne,
     },
-    divider: '#363A51',
+    divider: '#282828',
     text: {
       primary: '#E6E6E6',
       secondary: '#C4C4C4',
@@ -44,10 +44,10 @@ export const darkThemeOverride = {
         highlight: '#6AA6FF',
       },
       primaryData: {
-        one: '#AE73F8',
-        two: '#6B9EFF',
-        three: '#5ACF78',
-        four: '#E3AB55',
+        one: '#DE8C04',
+        two: '#0D467D',
+        three: '#0BA7B4',
+        four: '#6DD2DA',
       },
       tokenomics: {
         one: '#5E94FF',
