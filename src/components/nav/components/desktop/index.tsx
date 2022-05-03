@@ -5,10 +5,7 @@ import {
   AppBar,
   ClickAwayListener,
 } from '@material-ui/core';
-import { useRecoilValue } from 'recoil';
-import { readTheme } from '@recoil/settings/selectors';
-import BigDipperLogoWhite from '@assets/big-dipper-white.svg';
-import BigDipperLogoRed from '@assets/big-dipper-red.svg';
+import VipcoinGoldLogo from '@assets/vipcoin-gold-logo.svg';
 import { useStyles } from './styles';
 import { useDesktop } from './hooks';
 import {
@@ -24,7 +21,6 @@ const Desktop: React.FC<{
   className, title,
 }) => {
   const classes = useStyles();
-  const theme = useRecoilValue(readTheme);
   const {
     isMenu,
     toggleMenu,
@@ -66,19 +62,15 @@ const Desktop: React.FC<{
             }),
           }}
         >
-          {theme === 'light' ? (
-            <BigDipperLogoRed
-              className={classes.logo}
+          <div className={classes.logo}>
+            <VipcoinGoldLogo
+              width="35"
+              height="35"
+              viewBox="0 0 28 28"
               onClick={toggleMenu}
               role="button"
             />
-          ) : (
-            <BigDipperLogoWhite
-              className={classes.logo}
-              onClick={toggleMenu}
-              role="button"
-            />
-          )}
+          </div>
           <MenuItems />
         </Drawer>
       </div>
