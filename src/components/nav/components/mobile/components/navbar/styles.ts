@@ -6,7 +6,7 @@ export const useStyles = () => {
       return ({
         root: {
           display: 'flex',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           justifyContent: 'space-between',
           padding: theme.spacing(3, 2, 0),
         },

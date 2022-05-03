@@ -31,10 +31,10 @@ export const useStyles = () => {
         },
         hero: {
           [theme.breakpoints.up('md')]: {
-            gridColumn: '1 / 3',
+            gridColumn: '1 / 4',
           },
           [theme.breakpoints.up('lg')]: {
-            gridColumn: '1 / 3',
+            gridColumn: '1 / 4',
             // height: '400px', // if we can get the change feature
             height: '350px',
           },

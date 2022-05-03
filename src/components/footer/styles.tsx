@@ -7,9 +7,14 @@ export const useStyles = () => {
       return ({
         root: {
           background: theme.palette.background.paper,
-          padding: theme.spacing(6, 3, 6),
+          padding: theme.spacing(6, 0),
           color: theme.palette.custom.fonts.fontOne,
+          '& .footer': {
+            padding: theme.spacing(0, 3),
+          },
           '& .footer__closing--container': {
+            padding: theme.spacing(1),
+            background: 'white',
             '& a': {
               color: theme.palette.custom.fonts.highlight,
             },
@@ -31,7 +36,12 @@ export const useStyles = () => {
             width: '180px',
           },
           '& .footer__closing--text': {
-            color: theme.palette.custom.fonts.fontThree,
+            fontWeight: '400',
+            fontSize: '14px',
+            lineHeight: '19px',
+            margin: '0',
+            textAlign: 'center',
+            color: '#131316',
           },
           '& .footer__links': {
             marginTop: '1rem',
@@ -86,8 +96,7 @@ export const useStyles = () => {
             '& .footer__closing--container': {
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: theme.spacing(1, 0),
+              justifyContent: 'center',
             },
           },
           [theme.breakpoints.up('lg')]: {
