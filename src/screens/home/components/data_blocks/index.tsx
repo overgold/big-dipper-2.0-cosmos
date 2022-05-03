@@ -5,12 +5,13 @@ import useTranslation from 'next-translate/useTranslation';
 import { SingleBlock } from './components';
 import { useStyles } from './styles';
 import { useDataBlocks } from './hooks';
+import { IHome } from '../../types';
 
-const DataBlocks: React.FC<{
+interface IDataBlocks extends IHome {
   className?: string;
-}> = ({
-  className,
-}) => {
+}
+
+const DataBlocks = ({ className, data: chartData }: IDataBlocks) => {
   const { t } = useTranslation('home');
   const classes = useStyles();
   const { state } = useDataBlocks();
@@ -27,7 +28,9 @@ const DataBlocks: React.FC<{
     },
     {
       key: t('price'),
-      value: state.price !== null ? `$${numeral(state.price).format('0.00')}` : 'N/A',
+      value: chartData.length
+        ? `€${numeral(chartData[chartData.length - 1].price).format('0.00')}`
+        : 'N/A',
       className: classes.price,
     },
     {
@@ -42,7 +45,7 @@ const DataBlocks: React.FC<{
 
   return (
     <div className={classnames(classes.root, className)}>
-      {data.map((x) => (
+      {data.map(x => (
         <SingleBlock
           key={x.key}
           label={x.key}

@@ -11,7 +11,7 @@ export const usePrice = () => {
   };
 
   const tickPriceFormatter = (num: number) => {
-    return `$${numeral(num).format('0,0.[00]')}`;
+    return `€${numeral(num).format('0,0.[00]')}`;
   };
 
   return {

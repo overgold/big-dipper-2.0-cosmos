@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = () => {
   const styles = makeStyles(
-    (theme) => {
-      return ({
+    theme => {
+      return {
         root: {
           ...theme.mixins.layout,
           display: 'grid',
@@ -31,12 +31,10 @@ export const useStyles = () => {
         },
         hero: {
           [theme.breakpoints.up('md')]: {
-            gridColumn: '1 / 4',
+            gridColumn: '1 / 3',
           },
           [theme.breakpoints.up('lg')]: {
             gridColumn: '1 / 4',
-            // height: '400px', // if we can get the change feature
-            height: '350px',
           },
         },
         tokenomics: {
@@ -75,10 +73,11 @@ export const useStyles = () => {
             gridColumn: '3 / 5',
           },
         },
-      });
-    }, {
-      index: 1,
+      };
     },
+    {
+      index: 1,
+    }
   )();
 
   return styles;

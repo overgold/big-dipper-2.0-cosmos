@@ -8,14 +8,15 @@ import {
   Transactions,
   Hero,
 } from './components';
+import { IHome } from './types';
 
-const Home = () => {
+const Home = ({ data }: IHome) => {
   const classes = useStyles();
 
   return (
     <Layout className={classes.root}>
-      <DataBlocks className={classes.dataBlocks} />
-      <Hero className={classes.hero} />
+      <DataBlocks data={data} className={classes.dataBlocks} />
+      <Hero data={data} className={classes.hero} />
       <Consensus className={classes.consensus} />
       <Blocks className={classes.blocks} />
       <Transactions className={classes.transactions} />
