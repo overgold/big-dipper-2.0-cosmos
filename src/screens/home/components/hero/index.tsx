@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@components';
 import { TokenPrice } from './components';
 import Switcher from './components/switcher';
-import { IHome } from '../../types';
+import { IHome, PriceHistoryData } from '../../types';
 import { ChartData, SwitcherType } from './types';
 
 const Hero = (props: IHome & ComponentDefault) => {
@@ -15,7 +15,7 @@ const Hero = (props: IHome & ComponentDefault) => {
     }
   }, [switcher]);
 
-  const chartDataChanger = (el: any, index: number) => {
+  const chartDataChanger = (el: PriceHistoryData, index: number) => {
     return switcher === SwitcherType.price
       ? {
           name: index,
