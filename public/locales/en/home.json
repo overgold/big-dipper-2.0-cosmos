@@ -30,5 +30,11 @@
   "lastVotingPowerChange": "Last Voting Power Change",
   "powerChange": "<0>{{change}}</0> at block ",
   "validators": "Validators",
-  "priceHistory": "Price (~24h)"
+  "priceHistory": "Price",
+  "capitalization": "Capitalization",
+  "priceUp": "Price Up",
+  "priceDown": "Price Down",
+  "coins": "Coins",
+  "fiat": "Fiat (EUR)",
+  "gold": "Gold (1/100 gram)"
 }

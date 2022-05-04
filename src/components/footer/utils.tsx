@@ -1,4 +1,3 @@
-const FORBOLE_URL = 'https://www.forbole.com';
 const BIG_DIPPER_URL = 'https://bigdipper.live';
 
 export const footerLinks = [
@@ -7,15 +6,15 @@ export const footerLinks = [
     links: [
       {
         key: 'vipcoin',
-        url: FORBOLE_URL,
+        url: 'https://vipcoin.gold/',
       },
       {
         key: 'wallet',
-        url: `${FORBOLE_URL}/stake-now`,
+        url: 'https://wallet.vipcoin.gold/',
       },
       {
         key: 'vcg',
-        url: `${FORBOLE_URL}/contact`,
+        url: 'https://vcgpay.com/',
       },
     ],
   },
