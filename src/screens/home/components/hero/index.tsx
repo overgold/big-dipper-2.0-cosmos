@@ -15,16 +15,24 @@ const Hero = (props: IHome & ComponentDefault) => {
     }
   }, [switcher]);
 
+  const dateSetter = (date: number) => {
+    return new Date(date * 1000).toLocaleString('en-GB', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    });
+  };
+
   const chartDataChanger = (el: PriceHistoryData, index: number) => {
     return switcher === SwitcherType.price
       ? {
-          name: index,
+          name: dateSetter(el.createdAt),
           value: el.price,
           a: el.priceUp,
           b: el.priceDown,
         }
       : {
-          name: index,
+          name: dateSetter(el.createdAt),
           value: el.capitalization,
           a: el.coinsCap,
           b: el.fiatCap,

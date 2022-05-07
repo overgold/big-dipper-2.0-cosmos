@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, useMediaQuery } from '@material-ui/core';
 import {
   AreaChart,
   Area,
@@ -25,6 +25,8 @@ const TokenPrice = ({ items, type }: ITokenPrice) => {
   const { classes, theme } = useStyles();
 
   const { tickPriceFormatter } = usePrice();
+
+  const isMobile = useMediaQuery('(max-width:400px)');
 
   const priceTooltip = (x: ChartData) => {
     return (
@@ -61,6 +63,25 @@ const TokenPrice = ({ items, type }: ITokenPrice) => {
     );
   };
 
+  const CustomizedAxisTick = (props: any) => {
+    const { x, y, payload } = props;
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          x={0}
+          y={0}
+          dy={10}
+          textAnchor="end"
+          fill="#666"
+          transform={`rotate(-${isMobile ? 50 : 35})`}
+        >
+          {payload.value}
+        </text>
+      </g>
+    );
+  };
+
   return (
     <div className={classes.chart}>
       <ResponsiveContainer width="99%">
@@ -70,7 +91,7 @@ const TokenPrice = ({ items, type }: ITokenPrice) => {
             top: 20,
             right: 0,
             left: type === SwitcherType.price ? 0 : 20,
-            bottom: 0,
+            bottom: 40,
           }}
         >
           <defs>
@@ -88,7 +109,12 @@ const TokenPrice = ({ items, type }: ITokenPrice) => {
             </linearGradient>
           </defs>
           <CartesianGrid stroke={theme.palette.divider} />
-          <XAxis dataKey="name" tickLine={false} />
+          <XAxis
+            dataKey="name"
+            tickLine={false}
+            tick={<CustomizedAxisTick />}
+            interval={'preserveStartEnd'}
+          />
           <YAxis tickLine={false} tickFormatter={tickPriceFormatter} />
           <Tooltip
             cursor={false}
