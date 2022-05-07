@@ -12,7 +12,7 @@ export interface PriceHistoryData {
   priceDown: number;
   priceVCS: number;
   createdAt: number;
-  frame: '2021-10-01';
+  frame: string;
 }
 
 export interface IHome {

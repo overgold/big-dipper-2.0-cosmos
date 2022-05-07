@@ -1,20 +1,20 @@
-import {
-  makeStyles, useTheme,
-} from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 export const useStyles = () => {
   const styles = makeStyles(
     () => {
-      return ({
+      return {
         chart: {
-          height: '285px',
+          height: '350px',
           width: '100%',
+          position: 'relative',
           '& .yAxis .recharts-cartesian-axis-tick:first-child': {
             display: 'none',
           },
         },
-      });
-    }, { index: 1 },
+      };
+    },
+    { index: 1 }
   )();
 
   return {

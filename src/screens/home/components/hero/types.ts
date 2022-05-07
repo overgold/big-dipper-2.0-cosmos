@@ -10,7 +10,7 @@ export type HeroState = {
 };
 
 export interface ChartData {
-  name: number;
+  name: string;
   value: number;
   a: number;
   b: number;
