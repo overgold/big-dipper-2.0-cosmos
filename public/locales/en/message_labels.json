@@ -54,5 +54,12 @@
   "MsgGrantAllowance": "Grant Allowance",
   "MsgRevokeAllowance": "Revoke Allowance",
   "MsgCreateVestingAccount": "Create Vesting Account",
-  "MsgCreatePeriodicVestingAccount": "Create Periodic Vesting Account"
+  "MsgCreatePeriodicVestingAccount": "Create Periodic Vesting Account",
+  "MsgPayment": "Payment",
+  "MsgWithdraw": "Withdraw",
+  "MsgSetTransferExtra": "Set Transfer Extra",
+  "MsgIssue": "Issue",
+  "MsgSystemTransfer": "System Transfer",
+  "MsgSetRewardManagerAddress": "Set Reward Manager Address",
+  "MsgSystemRewardTransfer": "System Reward Transfer"
 }

@@ -55,5 +55,11 @@
   "MsgGrantAllowance": "<0>{{granter}}</0> granted allowance for <1>{{grantee}}</1>",
   "MsgRevokeAllowance": "<0>{{granter}}</0> revoked allowance for <1>{{grantee}}</1>",
   "MsgCreateVestingAccount": "Vesting account created for <0>{{toAddress}}</0>",
-  "MsgCreatePeriodicVestingAccount": "Periodic vesting account created for <0>{{toAddress}}</0>"
+  "MsgCreatePeriodicVestingAccount": "Periodic vesting account created for <0>{{toAddress}}</0>",
+  "MsgPayment": "Transfer {{amount}} {{asset}} from <0></0> to <1></1> <2></2> by <3></3>",
+  "MsgWithdraw": "Withdraw from <0></0> <1></1> by <2></2>",
+  "MsgSetTransferExtra": "Set Transfer Extra: <0></0> by <1></1>",
+  "MsgSystemTransfer": "Transfer {{amount}} {{asset}} from <0></0> to <1></1> <2></2> by <3></3>",
+  "MsgSetRewardManagerAddress": "Set reward manager address <0></0> by <1></1>",
+  "MsgSystemRewardTransfer": "Transfer {{amount}} {{asset}} to <0></0> <1></1> by <2></2>"
 }

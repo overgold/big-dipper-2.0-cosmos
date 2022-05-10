@@ -68,12 +68,15 @@ import GrantAllowance from './feegrant/grant_allowance';
 import RevokeAllowance from './feegrant/revoke_allowance';
 import CreateVestingAccount from './vesting/create_vesting_account';
 import CreatePeriodicVestingAccount from './vesting/create_periodic_vesting_account';
+import MsgPaymentComponent from './banking/msg_payment/msg_payment';
+import MsgWithdrawComponent from './banking/msg_with_draw/msg_with_draw';
+import MsgSetTransferExtraComponent from './banking/msg_set_transfer_extra/msg_set_transfer_extra';
+import MsgIssueComponent from './banking/msg_issue/msg_issue';
+import MsgSystemTransferComponent from './banking/msg_system_transfer/msg_system_transfer';
+import MsgSetRewardManagerAddressComponent from './banking/msg_set_reward_manager_address/msg_set_reward_manager_address';
+import MsgSystemRewardTransferComponent from './banking/msg_system_reward_transfer/msg_system_reward_transfer';
 
-export {
-  getMessageModelByType,
-  getMessageByType,
-  convertMsgsToModels,
-};
+export { getMessageModelByType, getMessageByType, convertMsgsToModels };
 
 export {
   Delegate,
@@ -134,4 +137,11 @@ export {
   RevokeAllowance,
   CreateVestingAccount,
   CreatePeriodicVestingAccount,
+  MsgPaymentComponent,
+  MsgWithdrawComponent,
+  MsgSetTransferExtraComponent,
+  MsgIssueComponent,
+  MsgSystemTransferComponent,
+  MsgSetRewardManagerAddressComponent,
+  MsgSystemRewardTransferComponent,
 };

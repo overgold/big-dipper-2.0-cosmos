@@ -69,6 +69,13 @@ import MsgGrantAllowance from './msg/feegrant/msg_grant_allowance';
 import MsgRevokeAllowance from './msg/feegrant/msg_revoke_allowance';
 import MsgCreateVestingAccount from './msg/vesting/msg_create_vesting_account';
 import MsgCreatePeriodicVestingAccount from './msg/vesting/msg_create_periodic_vesting_account';
+import MsgPayment from './msg/banking/msg_payment';
+import MsgWithdraw from './msg/banking/msg_with_draw';
+import MsgSetTransferExtra from './msg/banking/msg_set_transfer_extra';
+import MsgIssue from './msg/banking/msg_issue';
+import MsgSystemTransfer from './msg/banking/msg_system_transfer';
+import MsgSetRewardManagerAddress from './msg/banking/msg_set_reward_manager_address';
+import MsgSystemRewardTransfer from './msg/banking/msg_system_reward_transfer';
 
 export {
   BigDipperNetwork,
@@ -142,4 +149,12 @@ export {
   MsgRevokeAllowance,
   MsgCreateVestingAccount,
   MsgCreatePeriodicVestingAccount,
+  //Banking messages type
+  MsgPayment,
+  MsgWithdraw,
+  MsgSetTransferExtra,
+  MsgIssue,
+  MsgSystemTransfer,
+  MsgSetRewardManagerAddress,
+  MsgSystemRewardTransfer,
 };
