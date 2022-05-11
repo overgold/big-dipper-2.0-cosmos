@@ -445,7 +445,7 @@ const getDataByType = (type: string) => {
       model: MODELS.MsgIssue,
       content: COMPONENTS.MsgIssueComponent,
       tagTheme: 'one',
-      tagDisplay: 'MsgSetTransferExtra',
+      tagDisplay: 'MsgIssue',
     },
 
     // =====================================
