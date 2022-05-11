@@ -34,5 +34,10 @@
   "feegrant": "Feegrant",
   "vesting": "Vesting",
   "logs": "Logs",
-  "with extras": "with extras"
+  "with extras": "with extras",
+  "Asset state": "Asset state",
+  "Asset policies": "Asset policies",
+  "Asset properties": "Asset properties",
+  "Precision": "Precision",
+  "Fee percent": "Fee percent"
 }

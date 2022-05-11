@@ -425,8 +425,7 @@ const getDataByType = (type: string) => {
     },
     '/vipcoin.chain.banking.MsgPayment': {
       model: MODELS.MsgPayment,
-      // content: COMPONENTS.MsgPaymentComponent,
-      content: COMPONENTS.MsgSystemRewardTransferComponent,
+      content: COMPONENTS.MsgPaymentComponent,
       tagTheme: 'one',
       tagDisplay: 'MsgPayment',
     },
@@ -447,6 +446,129 @@ const getDataByType = (type: string) => {
       content: COMPONENTS.MsgIssueComponent,
       tagTheme: 'one',
       tagDisplay: 'MsgSetTransferExtra',
+    },
+
+    // =====================================
+    // Asset messages
+    // =====================================
+
+    '/vipcoin.chain.assets.MsgAssetSetExtra': {
+      model: MODELS.MsgAssetSetExtra,
+      content: COMPONENTS.MsgAssetSetExtraComponent,
+      tagTheme: 'two',
+      tagDisplay: 'MsgAssetSetExtra',
+    },
+    '/vipcoin.chain.assets.MsgAssetManage': {
+      model: MODELS.MsgAssetManage,
+      content: COMPONENTS.MsgAssetManageComponent,
+      tagTheme: 'two',
+      tagDisplay: 'MsgAssetManage',
+    },
+    '/vipcoin.chain.assets.MsgAssetCreate': {
+      model: MODELS.MsgAssetCreate,
+      content: COMPONENTS.MsgAssetCreateComponent,
+      tagTheme: 'two',
+      tagDisplay: 'MsgAssetCreate',
+    },
+
+    // =====================================
+    // Accounts messages
+    // =====================================
+
+    '/vipcoin.chain.accounts.MsgSetKinds': {
+      model: MODELS.MsgSetKinds,
+      content: COMPONENTS.MsgSetKindsComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetKinds',
+    },
+    '/vipcoin.chain.accounts.MsgSetAffiliateAddress': {
+      model: MODELS.MsgSetAffiliateAddress,
+      content: COMPONENTS.MsgSetAffiliateAddressComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetAffiliateAddress',
+    },
+    '/vipcoin.chain.accounts.MsgRegisterUser': {
+      model: MODELS.MsgRegisterUser,
+      content: COMPONENTS.MsgRegisterUserComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgRegisterUser',
+    },
+    '/vipcoin.chain.accounts.MsgAccountMigrate': {
+      model: MODELS.MsgAccountMigrate,
+      content: COMPONENTS.MsgAccountMigrateComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgAccountMigrate',
+    },
+    '/vipcoin.chain.accounts.MsgSetAffiliateExtra': {
+      model: MODELS.MsgSetAffiliateExtra,
+      content: COMPONENTS.MsgSetAffiliateExtraComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetAffiliateExtra',
+    },
+    '/vipcoin.chain.accounts.MsgSetExtra': {
+      model: MODELS.MsgSetExtra,
+      content: COMPONENTS.MsgSetExtraComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetExtra',
+    },
+    '/vipcoin.chain.accounts.MsgSetState': {
+      model: MODELS.MsgSetState,
+      content: COMPONENTS.MsgSetStateComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetState',
+    },
+    '/vipcoin.chain.accounts.MsgAddAffiliate': {
+      model: MODELS.MsgAddAffiliate,
+      content: COMPONENTS.MsgAddAffiliateComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgAddAffiliate',
+    },
+    '/vipcoin.chain.accounts.MsgCreateAccount': {
+      model: MODELS.MsgCreateAccount,
+      content: COMPONENTS.MsgCreateAccountComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgCreateAccount',
+    },
+
+    // =====================================
+    // Wallets messages
+    // =====================================
+
+    '/vipcoin.chain.wallets.MsgSetWalletKind': {
+      model: MODELS.MsgSetWalletKind,
+      content: COMPONENTS.MsgSetWalletKindComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetWalletKind',
+    },
+    '/vipcoin.chain.wallets.MsgSetWalletState': {
+      model: MODELS.MsgSetWalletState,
+      content: COMPONENTS.MsgSetWalletStateComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetWalletState',
+    },
+    '/vipcoin.chain.wallets.MsgCreateWallet': {
+      model: MODELS.MsgCreateWallet,
+      content: COMPONENTS.MsgCreateWalletComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgCreateWallet',
+    },
+    '/vipcoin.chain.wallets.MsgCreateWalletWithBalance': {
+      model: MODELS.MsgCreateWalletWithBalance,
+      content: COMPONENTS.MsgCreateWalletWithBalanceComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgCreateWalletWithBalance',
+    },
+    '/vipcoin.chain.wallets.MsgSetDefaultWallet': {
+      model: MODELS.MsgSetDefaultWallet,
+      content: COMPONENTS.MsgSetDefaultWalletComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetDefaultWallet',
+    },
+    '/vipcoin.chain.wallets.MsgSetExtra': {
+      model: MODELS.MsgSetExtraWallet,
+      content: COMPONENTS.MsgSetExtraWalletComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetExtraWallet',
     },
   };
 

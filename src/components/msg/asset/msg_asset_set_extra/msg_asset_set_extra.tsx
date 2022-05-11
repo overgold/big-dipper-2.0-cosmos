@@ -1,20 +1,18 @@
 import React from 'react';
-import { MsgSetTransferExtra } from '@models';
+import { MsgAssetSetExtra } from '@models';
 import { useStyles } from '../styles';
 import Link from 'next/link';
 import Trans from 'next-translate/Trans';
 import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
 
-const MsgSetTransferExtraComponent = (props: {
-  message: MsgSetTransferExtra;
-}) => {
+const MsgAssetSetExtraComponent = (props: { message: MsgAssetSetExtra }) => {
   const { message } = props;
   const classes = useStyles();
 
   return (
     <div>
       <Trans
-        i18nKey="message_contents:MsgSetTransferExtra"
+        i18nKey="message_contents:MsgAssetSetExtra"
         components={[
           <>
             {(message.extras?.length && (
@@ -27,15 +25,19 @@ const MsgSetTransferExtraComponent = (props: {
                   </div>
                 ))}
               </div>
-            )) || <br />}
+            )) ||
+              null}
           </>,
           <Link href={ACCOUNT_DETAILS(message.creator)}>
             {message.creator}
           </Link>,
         ]}
+        values={{
+          name: message.name,
+        }}
       />
     </div>
   );
 };
 
-export default MsgSetTransferExtraComponent;
+export default MsgAssetSetExtraComponent;

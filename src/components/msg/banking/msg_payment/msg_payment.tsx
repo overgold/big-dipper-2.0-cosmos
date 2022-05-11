@@ -4,6 +4,7 @@ import { useStyles } from '../styles';
 import Link from 'next/link';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
+import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
 
 const MsgPaymentComponent = (props: { message: MsgPayment }) => {
   const { message } = props;
@@ -15,7 +16,7 @@ const MsgPaymentComponent = (props: { message: MsgPayment }) => {
       <Trans
         i18nKey="message_contents:MsgPayment"
         components={[
-          <Link href={`/account/${message.wallet_from}`}>
+          <Link href={ACCOUNT_DETAILS(message.wallet_from)}>
             {message.wallet_from}
           </Link>,
           <Link href={`/account/${message.wallet_to}`}>
@@ -38,7 +39,9 @@ const MsgPaymentComponent = (props: { message: MsgPayment }) => {
             )) ||
               null}
           </>,
-          <Link href={`/account/${message.creator}`}>{message.creator}</Link>,
+          <Link href={ACCOUNT_DETAILS(message.creator)}>
+            {message.creator}
+          </Link>,
         ]}
         values={{
           amount: message.amount / 100000000,

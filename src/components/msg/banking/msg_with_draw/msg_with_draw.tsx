@@ -4,6 +4,7 @@ import { useStyles } from '../styles';
 import Link from 'next/link';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
+import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
 
 const MsgWithdrawComponent = (props: { message: MsgWithdraw }) => {
   const { message } = props;
@@ -15,7 +16,7 @@ const MsgWithdrawComponent = (props: { message: MsgWithdraw }) => {
       <Trans
         i18nKey="message_contents:MsgWithdraw"
         components={[
-          <Link href={`/account/${message.wallet}`}>{message.wallet}</Link>,
+          <Link href={ACCOUNT_DETAILS(message.wallet)}>{message.wallet}</Link>,
           <>
             {(message.extras?.length && (
               <>
@@ -33,7 +34,9 @@ const MsgWithdrawComponent = (props: { message: MsgWithdraw }) => {
             )) ||
               null}
           </>,
-          <Link href={`/account/${message.creator}`}>{message.creator}</Link>,
+          <Link href={ACCOUNT_DETAILS(message.creator)}>
+            {message.creator}
+          </Link>,
         ]}
       />
     </div>
