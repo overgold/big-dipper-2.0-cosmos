@@ -68,12 +68,33 @@ import GrantAllowance from './feegrant/grant_allowance';
 import RevokeAllowance from './feegrant/revoke_allowance';
 import CreateVestingAccount from './vesting/create_vesting_account';
 import CreatePeriodicVestingAccount from './vesting/create_periodic_vesting_account';
+import MsgPaymentComponent from './banking/msg_payment/msg_payment';
+import MsgWithdrawComponent from './banking/msg_with_draw/msg_with_draw';
+import MsgSetTransferExtraComponent from './banking/msg_set_transfer_extra/msg_set_transfer_extra';
+import MsgIssueComponent from './banking/msg_issue/msg_issue';
+import MsgSystemTransferComponent from './banking/msg_system_transfer/msg_system_transfer';
+import MsgSetRewardManagerAddressComponent from './banking/msg_set_reward_manager_address/msg_set_reward_manager_address';
+import MsgSystemRewardTransferComponent from './banking/msg_system_reward_transfer/msg_system_reward_transfer';
+import MsgAssetSetExtraComponent from './asset/msg_asset_set_extra/msg_asset_set_extra';
+import MsgAssetManageComponent from './asset/msg_asset_manage/msg_asset_manage';
+import MsgAssetCreateComponent from './asset/msg_asset_create/msg_asset_create';
+import MsgSetKindsComponent from './accounts/msg_set_kinds/msg_set_kinds';
+import MsgSetAffiliateAddressComponent from './accounts/msg_set_affiliate_address/msg_set_affiliate_address';
+import MsgRegisterUserComponent from './accounts/msg_register_user/msg_register_user';
+import MsgAccountMigrateComponent from './accounts/msg_account_migrate/msg_account_migrate';
+import MsgSetAffiliateExtraComponent from './accounts/msg_set_affiliate_extra/msg_set_affiliate_extra';
+import MsgSetExtraComponent from './accounts/msg_set_extra/msg_set_extra';
+import MsgSetStateComponent from './accounts/msg_set_state/msg_set_state';
+import MsgAddAffiliateComponent from './accounts/msg_add_affiliate/msg_add_affiliate';
+import MsgCreateAccountComponent from './accounts/msg_create_account/msg_create_account';
+import MsgSetWalletKindComponent from './wallets/msg_set_wallet_kind/msg_set_wallet_kind';
+import MsgSetWalletStateComponent from './wallets/msg_set_wallet_state/msg_set_wallet_state';
+import MsgCreateWalletComponent from './wallets/msg_create_wallet/msg_create_wallet';
+import MsgCreateWalletWithBalanceComponent from './wallets/msg_create_wallet_with_balance/msg_create_wallet_with_balance';
+import MsgSetDefaultWalletComponent from './wallets/msg_set_default_wallet/msg_set_default_wallet';
+import MsgSetExtraWalletComponent from './wallets/msg_set_extra/msg_set_extra';
 
-export {
-  getMessageModelByType,
-  getMessageByType,
-  convertMsgsToModels,
-};
+export { getMessageModelByType, getMessageByType, convertMsgsToModels };
 
 export {
   Delegate,
@@ -134,4 +155,29 @@ export {
   RevokeAllowance,
   CreateVestingAccount,
   CreatePeriodicVestingAccount,
+  MsgPaymentComponent,
+  MsgWithdrawComponent,
+  MsgSetTransferExtraComponent,
+  MsgIssueComponent,
+  MsgSystemTransferComponent,
+  MsgSetRewardManagerAddressComponent,
+  MsgSystemRewardTransferComponent,
+  MsgAssetSetExtraComponent,
+  MsgAssetManageComponent,
+  MsgAssetCreateComponent,
+  MsgSetKindsComponent,
+  MsgSetAffiliateAddressComponent,
+  MsgRegisterUserComponent,
+  MsgAccountMigrateComponent,
+  MsgSetAffiliateExtraComponent,
+  MsgSetExtraComponent,
+  MsgSetStateComponent,
+  MsgAddAffiliateComponent,
+  MsgCreateAccountComponent,
+  MsgSetWalletKindComponent,
+  MsgSetWalletStateComponent,
+  MsgCreateWalletComponent,
+  MsgCreateWalletWithBalanceComponent,
+  MsgSetDefaultWalletComponent,
+  MsgSetExtraWalletComponent,
 };

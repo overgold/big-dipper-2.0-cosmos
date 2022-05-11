@@ -69,6 +69,31 @@ import MsgGrantAllowance from './msg/feegrant/msg_grant_allowance';
 import MsgRevokeAllowance from './msg/feegrant/msg_revoke_allowance';
 import MsgCreateVestingAccount from './msg/vesting/msg_create_vesting_account';
 import MsgCreatePeriodicVestingAccount from './msg/vesting/msg_create_periodic_vesting_account';
+import MsgPayment from './msg/banking/msg_payment';
+import MsgWithdraw from './msg/banking/msg_with_draw';
+import MsgSetTransferExtra from './msg/banking/msg_set_transfer_extra';
+import MsgIssue from './msg/banking/msg_issue';
+import MsgSystemTransfer from './msg/banking/msg_system_transfer';
+import MsgSetRewardManagerAddress from './msg/banking/msg_set_reward_manager_address';
+import MsgSystemRewardTransfer from './msg/banking/msg_system_reward_transfer';
+import MsgAssetSetExtra from './msg/asset/msg_asset_set_extra';
+import MsgAssetManage from './msg/asset/msg_asset_manage';
+import MsgAssetCreate from './msg/asset/msg_asset_create';
+import MsgSetKinds from './msg/accounts/msg_set_kinds';
+import MsgSetAffiliateAddress from './msg/accounts/msg_set_affiliate_address';
+import MsgRegisterUser from './msg/accounts/msg_register_user';
+import MsgAccountMigrate from './msg/accounts/msg_account_migrate';
+import MsgSetAffiliateExtra from './msg/accounts/msg_set_affiliate_extra';
+import MsgSetExtra from './msg/accounts/msg_set_extra';
+import MsgSetState from './msg/accounts/msg_set_state';
+import MsgAddAffiliate from './msg/accounts/msg_add_affiliate';
+import MsgCreateAccount from './msg/accounts/msg_create_accoun';
+import MsgSetWalletKind from './msg/wallets/msg_set_wallet_kind';
+import MsgSetWalletState from './msg/wallets/msg_set_wallet_state';
+import MsgCreateWallet from './msg/wallets/msg_create_wallet';
+import MsgCreateWalletWithBalance from './msg/wallets/msg_create_wallet_with_balance';
+import MsgSetDefaultWallet from './msg/wallets/msg_set_default_wallet';
+import MsgSetExtraWallet from './msg/wallets/msg_set_extra';
 
 export {
   BigDipperNetwork,
@@ -142,4 +167,33 @@ export {
   MsgRevokeAllowance,
   MsgCreateVestingAccount,
   MsgCreatePeriodicVestingAccount,
+  //Banking messages type
+  MsgPayment,
+  MsgWithdraw,
+  MsgSetTransferExtra,
+  MsgIssue,
+  MsgSystemTransfer,
+  MsgSetRewardManagerAddress,
+  MsgSystemRewardTransfer,
+  //Asset messages type
+  MsgAssetSetExtra,
+  MsgAssetManage,
+  MsgAssetCreate,
+  //Accounts messages type
+  MsgSetKinds,
+  MsgSetAffiliateAddress,
+  MsgRegisterUser,
+  MsgAccountMigrate,
+  MsgSetAffiliateExtra,
+  MsgSetExtra,
+  MsgSetState,
+  MsgAddAffiliate,
+  MsgCreateAccount,
+  //Wallets messages type
+  MsgSetWalletKind,
+  MsgSetWalletState,
+  MsgCreateWallet,
+  MsgCreateWalletWithBalance,
+  MsgSetDefaultWallet,
+  MsgSetExtraWallet,
 };

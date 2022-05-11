@@ -1,8 +1,6 @@
 import * as MODELS from '@models';
 import * as R from 'ramda';
-import {
-  Tag,
-} from '@components';
+import { Tag } from '@components';
 import * as COMPONENTS from '@msg';
 
 const getDataByType = (type: string) => {
@@ -403,6 +401,175 @@ const getDataByType = (type: string) => {
       tagDisplay: 'txUnblockUserLabel',
     },
 
+    // =====================================
+    // Banking messages
+    // =====================================
+
+    '/vipcoin.chain.banking.MsgSystemTransfer': {
+      model: MODELS.MsgSystemTransfer,
+      content: COMPONENTS.MsgSystemTransferComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgSystemTransfer',
+    },
+    '/vipcoin.chain.banking.MsgSetRewardManagerAddress': {
+      model: MODELS.MsgSetRewardManagerAddress,
+      content: COMPONENTS.MsgSetRewardManagerAddressComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgSetRewardManagerAddress',
+    },
+    '/vipcoin.chain.banking.MsgSystemRewardTransfer': {
+      model: MODELS.MsgSystemRewardTransfer,
+      content: COMPONENTS.MsgSystemRewardTransferComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgSystemRewardTransfer',
+    },
+    '/vipcoin.chain.banking.MsgPayment': {
+      model: MODELS.MsgPayment,
+      content: COMPONENTS.MsgPaymentComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgPayment',
+    },
+    '/vipcoin.chain.banking.MsgWithdraw': {
+      model: MODELS.MsgWithdraw,
+      content: COMPONENTS.MsgWithdrawComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgWithdraw',
+    },
+    '/vipcoin.chain.banking.MsgSetTransferExtra': {
+      model: MODELS.MsgSetTransferExtra,
+      content: COMPONENTS.MsgSetTransferExtraComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgSetTransferExtra',
+    },
+    '/vipcoin.chain.banking.MsgIssue': {
+      model: MODELS.MsgIssue,
+      content: COMPONENTS.MsgIssueComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgSetTransferExtra',
+    },
+
+    // =====================================
+    // Asset messages
+    // =====================================
+
+    '/vipcoin.chain.assets.MsgAssetSetExtra': {
+      model: MODELS.MsgAssetSetExtra,
+      content: COMPONENTS.MsgAssetSetExtraComponent,
+      tagTheme: 'two',
+      tagDisplay: 'MsgAssetSetExtra',
+    },
+    '/vipcoin.chain.assets.MsgAssetManage': {
+      model: MODELS.MsgAssetManage,
+      content: COMPONENTS.MsgAssetManageComponent,
+      tagTheme: 'two',
+      tagDisplay: 'MsgAssetManage',
+    },
+    '/vipcoin.chain.assets.MsgAssetCreate': {
+      model: MODELS.MsgAssetCreate,
+      content: COMPONENTS.MsgAssetCreateComponent,
+      tagTheme: 'two',
+      tagDisplay: 'MsgAssetCreate',
+    },
+
+    // =====================================
+    // Accounts messages
+    // =====================================
+
+    '/vipcoin.chain.accounts.MsgSetKinds': {
+      model: MODELS.MsgSetKinds,
+      content: COMPONENTS.MsgSetKindsComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetKinds',
+    },
+    '/vipcoin.chain.accounts.MsgSetAffiliateAddress': {
+      model: MODELS.MsgSetAffiliateAddress,
+      content: COMPONENTS.MsgSetAffiliateAddressComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetAffiliateAddress',
+    },
+    '/vipcoin.chain.accounts.MsgRegisterUser': {
+      model: MODELS.MsgRegisterUser,
+      content: COMPONENTS.MsgRegisterUserComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgRegisterUser',
+    },
+    '/vipcoin.chain.accounts.MsgAccountMigrate': {
+      model: MODELS.MsgAccountMigrate,
+      content: COMPONENTS.MsgAccountMigrateComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgAccountMigrate',
+    },
+    '/vipcoin.chain.accounts.MsgSetAffiliateExtra': {
+      model: MODELS.MsgSetAffiliateExtra,
+      content: COMPONENTS.MsgSetAffiliateExtraComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetAffiliateExtra',
+    },
+    '/vipcoin.chain.accounts.MsgSetExtra': {
+      model: MODELS.MsgSetExtra,
+      content: COMPONENTS.MsgSetExtraComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetExtra',
+    },
+    '/vipcoin.chain.accounts.MsgSetState': {
+      model: MODELS.MsgSetState,
+      content: COMPONENTS.MsgSetStateComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetState',
+    },
+    '/vipcoin.chain.accounts.MsgAddAffiliate': {
+      model: MODELS.MsgAddAffiliate,
+      content: COMPONENTS.MsgAddAffiliateComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgAddAffiliate',
+    },
+    '/vipcoin.chain.accounts.MsgCreateAccount': {
+      model: MODELS.MsgCreateAccount,
+      content: COMPONENTS.MsgCreateAccountComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgCreateAccount',
+    },
+
+    // =====================================
+    // Wallets messages
+    // =====================================
+
+    '/vipcoin.chain.wallets.MsgSetWalletKind': {
+      model: MODELS.MsgSetWalletKind,
+      content: COMPONENTS.MsgSetWalletKindComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetWalletKind',
+    },
+    '/vipcoin.chain.wallets.MsgSetWalletState': {
+      model: MODELS.MsgSetWalletState,
+      content: COMPONENTS.MsgSetWalletStateComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetWalletState',
+    },
+    '/vipcoin.chain.wallets.MsgCreateWallet': {
+      model: MODELS.MsgCreateWallet,
+      content: COMPONENTS.MsgCreateWalletComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgCreateWallet',
+    },
+    '/vipcoin.chain.wallets.MsgCreateWalletWithBalance': {
+      model: MODELS.MsgCreateWalletWithBalance,
+      content: COMPONENTS.MsgCreateWalletWithBalanceComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgCreateWalletWithBalance',
+    },
+    '/vipcoin.chain.wallets.MsgSetDefaultWallet': {
+      model: MODELS.MsgSetDefaultWallet,
+      content: COMPONENTS.MsgSetDefaultWalletComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetDefaultWallet',
+    },
+    '/vipcoin.chain.wallets.MsgSetExtra': {
+      model: MODELS.MsgSetExtraWallet,
+      content: COMPONENTS.MsgSetExtraWalletComponent,
+      tagTheme: 'six',
+      tagDisplay: 'MsgSetExtraWallet',
+    },
   };
 
   if (defaultTypeToModel[type]) return defaultTypeToModel[type];
@@ -427,7 +594,7 @@ export const getMessageModelByType = (type: string) => {
  * Helper function to correctly display the correct UI
  * @param type Model type
  */
-export const getMessageByType = (message: any, viewRaw: boolean, t:any) => {
+export const getMessageByType = (message: any, viewRaw: boolean, t: any) => {
   const { type } = message;
   let results: {
     content: any;
@@ -456,10 +623,12 @@ export const getMessageByType = (message: any, viewRaw: boolean, t:any) => {
   }
 
   return {
-    type: <Tag
-      value={t(`message_labels:${results.tagDisplay}`)}
-      theme={results.tagTheme}
-    />,
+    type: (
+      <Tag
+        value={t(`message_labels:${results.tagDisplay}`)}
+        theme={results.tagTheme}
+      />
+    ),
     message: <results.content message={message as any} />,
   };
 };
@@ -467,8 +636,10 @@ export const getMessageByType = (message: any, viewRaw: boolean, t:any) => {
 export const convertMsgsToModels = (transaction: any) => {
   const messages = R.pathOr([], ['messages'], transaction).map((msg, i) => {
     const model = getMessageModelByType(msg?.['@type']);
-    if (model === MODELS.MsgWithdrawDelegatorReward
-      || model === MODELS.MsgWithdrawValidatorCommission) {
+    if (
+      model === MODELS.MsgWithdrawDelegatorReward ||
+      model === MODELS.MsgWithdrawValidatorCommission
+    ) {
       const log = R.pathOr(null, ['logs', i], transaction);
       return model.fromJson(msg, log);
     }
