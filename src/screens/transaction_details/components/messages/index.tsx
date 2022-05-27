@@ -1,15 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
-import { VariableSizeList as List } from 'react-window';
 import useTranslation from 'next-translate/useTranslation';
-import AutoSizer from 'react-virtualized-auto-sizer';
 import {
   Divider,
   Typography,
   Switch,
   FormControlLabel,
 } from '@material-ui/core';
-import { useList, useListRow } from '@hooks';
 import { Box, TransactionMessagesFilter } from '@components';
 import { getMessageByType } from '@msg';
 import { useStyles } from './styles';
@@ -24,13 +21,15 @@ const Messages: React.FC<{
   const { t } = useTranslation('transactions');
   const classes = useStyles();
 
-  const { listRef, getRowHeight, setRowHeight } = useList();
-
   const formattedItems = props.messages.map(x => {
     return getMessageByType(x, props.viewRaw, t);
   });
 
-  console.log(props.messages);
+  const renderMessasgesArray = (count: number) => {
+    let arr = [];
+    if (count !== 0) for (let i = 1; i <= count; ) arr.push(i++);
+    return arr;
+  };
 
   return (
     <Box className={classnames(className, classes.root)}>
@@ -67,38 +66,20 @@ const Messages: React.FC<{
       </div>
       <Divider />
       <div className={classes.list}>
-        <AutoSizer>
-          {({ height, width }) => {
-            return (
-              <List
-                className="List"
-                height={height}
-                itemCount={props.messages.length}
-                itemSize={getRowHeight}
-                ref={listRef}
-                width={width}
-              >
-                {({ index, style }) => {
-                  const { rowRef } = useListRow(index, setRowHeight);
-                  const selectedItem = formattedItems[index];
-                  return (
-                    <div style={style}>
-                      <div ref={rowRef}>
-                        <div className={classes.item}>
-                          <div className={classes.tags}>
-                            {selectedItem.type}
-                          </div>
-                          <span className="msg">{selectedItem.message}</span>
-                        </div>
-                        {index !== props.messages.length - 1 && <Divider />}
-                      </div>
-                    </div>
-                  );
-                }}
-              </List>
-            );
-          }}
-        </AutoSizer>
+        {renderMessasgesArray(props.messages.length).map((_, index) => {
+          const selectedItem = formattedItems[index];
+          return (
+            <div key={index}>
+              <div>
+                <div className={classes.item}>
+                  <div className={classes.tags}>{selectedItem.type}</div>
+                  <span className="msg">{selectedItem.message}</span>
+                </div>
+                {index !== props.messages.length - 1 && <Divider />}
+              </div>
+            </div>
+          );
+        }) || null}
       </div>
     </Box>
   );
