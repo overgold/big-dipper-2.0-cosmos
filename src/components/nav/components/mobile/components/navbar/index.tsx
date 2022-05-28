@@ -9,14 +9,10 @@ import { HOME } from '@utils/go_to_page';
 import { useStyles } from './styles';
 import { NavbarProps } from './types';
 
-const Navbar = (props:NavbarProps) => {
+const Navbar = (props: NavbarProps) => {
   const classes = useStyles();
   const selected = useRecoilValue(readSelectedNetwork);
-  const {
-    isOpen,
-    openNetwork,
-    toggleNavMenus,
-  } = props;
+  const { isOpen, openNetwork, toggleNavMenus } = props;
 
   return (
     <div className={classes.root}>
@@ -34,7 +30,7 @@ const Navbar = (props:NavbarProps) => {
         {/* =================================== */}
         {/* Network */}
         {/* =================================== */}
-        <div
+        {/* <div
           className={classes.network}
           onClick={openNetwork}
           role="button"
@@ -43,7 +39,7 @@ const Navbar = (props:NavbarProps) => {
             {selected}
           </p>
           <ExpandMore fontSize="small" />
-        </div>
+        </div> */}
         {/* =================================== */}
         {/* Hamburger */}
         {/* =================================== */}

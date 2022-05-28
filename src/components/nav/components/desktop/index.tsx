@@ -1,48 +1,29 @@
 import React from 'react';
 import classnames from 'classnames';
-import {
-  Drawer,
-  AppBar,
-  ClickAwayListener,
-} from '@material-ui/core';
+import { Drawer, AppBar, ClickAwayListener } from '@material-ui/core';
 import VipcoinGoldLogo from '@assets/vipcoin-gold-logo.svg';
 import { useStyles } from './styles';
 import { useDesktop } from './hooks';
-import {
-  MenuItems,
-  TitleBar,
-} from '..';
+import { MenuItems, TitleBar } from '..';
 import { ActionBar } from './components';
 
 const Desktop: React.FC<{
   className?: string;
   title: string;
-}> = ({
-  className, title,
-}) => {
+}> = ({ className, title }) => {
   const classes = useStyles();
-  const {
-    isMenu,
-    toggleMenu,
-    turnOffAll,
-    toggleNetwork,
-    isNetwork,
-  } = useDesktop();
+  const { isMenu, toggleMenu, turnOffAll, toggleNetwork, isNetwork } =
+    useDesktop();
   return (
     <ClickAwayListener onClickAway={turnOffAll}>
-      <div
-        className={classnames(className, classes.root)}
-      >
+      <div className={classnames(className, classes.root)}>
         <AppBar
           position="fixed"
           className={classnames(classes.appBar, {
             open: isMenu,
           })}
         >
-          <ActionBar
-            toggleNetwork={toggleNetwork}
-            isNetwork={isNetwork}
-          />
+          <ActionBar toggleNetwork={toggleNetwork} isNetwork={isNetwork} />
           <TitleBar title={title} />
         </AppBar>
         <Drawer
