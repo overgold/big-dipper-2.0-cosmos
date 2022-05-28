@@ -1,19 +1,13 @@
 import React from 'react';
 import classnames from 'classnames';
-import {
-  Nav, Footer,
-} from '@components';
+import { Nav, Footer } from '@components';
 import { LayoutProps } from './types';
 import { useStyles } from './styles';
 
-const Layout = (props:LayoutProps) => {
+const Layout = (props: LayoutProps) => {
   const classes = useStyles();
 
-  const {
-    children,
-    navTitle,
-    className,
-  } = props;
+  const { children, navTitle, className } = props;
 
   return (
     <div className={classes.root}>
