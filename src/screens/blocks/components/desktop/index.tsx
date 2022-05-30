@@ -10,9 +10,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { Typography } from '@material-ui/core';
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
 import { VariableSizeGrid as Grid } from 'react-window';
-import {
-  Loading, AvatarName,
-} from '@components';
+import { Loading, AvatarName } from '@components';
 import { useGrid } from '@hooks';
 import { mergeRefs } from '@src/utils/merge_refs';
 import { useStyles } from './styles';
@@ -25,25 +23,14 @@ const Desktop: React.FC<{
   itemCount: number;
   loadMoreItems: (any) => void;
   isItemLoaded?: (index: number) => boolean;
-}> = ({
-  className,
-  items,
-  itemCount,
-  loadMoreItems,
-  isItemLoaded,
-}) => {
+}> = ({ className, items, itemCount, loadMoreItems, isItemLoaded }) => {
   const { t } = useTranslation('blocks');
   const classes = useStyles();
-  const {
-    gridRef,
-    columnRef,
-    onResize,
-    getColumnWidth,
-    getRowHeight,
-  } = useGrid(columns);
+  const { gridRef, columnRef, onResize, getColumnWidth, getRowHeight } =
+    useGrid(columns);
 
-  const formattedItems = items.map((x) => {
-    return ({
+  const formattedItems = items.map(x => {
+    return {
       height: (
         <Link href={BLOCK_DETAILS(x.height)} passHref>
           <Typography variant="body1" className="value" component="a">
@@ -61,17 +48,16 @@ const Desktop: React.FC<{
         />
       ),
       hash: getMiddleEllipsis(x.hash, {
-        beginning: 13, ending: 15,
+        beginning: 13,
+        ending: 15,
       }),
-    });
+    };
   });
 
   return (
     <div className={classnames(className, classes.root)}>
       <AutoSizer onResize={onResize}>
-        {({
-          height, width,
-        }) => {
+        {({ height, width }) => {
           return (
             <>
               {/* ======================================= */}
@@ -80,28 +66,18 @@ const Desktop: React.FC<{
               <Grid
                 ref={columnRef}
                 columnCount={columns.length}
-                columnWidth={(index) => getColumnWidth(width, index)}
+                columnWidth={index => getColumnWidth(width, index)}
                 height={50}
                 rowCount={1}
                 rowHeight={() => 50}
                 width={width}
               >
-                {({
-                  columnIndex, style,
-                }) => {
-                  const {
-                    key, align,
-                  } = columns[columnIndex];
+                {({ columnIndex, style }) => {
+                  const { key, align } = columns[columnIndex];
 
                   return (
-                    <div
-                      style={style}
-                      className={classes.cell}
-                    >
-                      <Typography
-                        variant="h4"
-                        align={align}
-                      >
+                    <div style={style} className={classes.cell}>
+                      <Typography variant="h4" align={align}>
                         {t(key)}
                       </Typography>
                     </div>
@@ -116,9 +92,7 @@ const Desktop: React.FC<{
                 itemCount={itemCount}
                 loadMoreItems={loadMoreItems}
               >
-                {({
-                  onItemsRendered, ref,
-                }) => {
+                {({ onItemsRendered, ref }) => {
                   return (
                     <Grid
                       onItemsRendered={({
@@ -136,16 +110,14 @@ const Desktop: React.FC<{
                       }}
                       ref={mergeRefs(gridRef, ref)}
                       columnCount={columns.length}
-                      columnWidth={(index) => getColumnWidth(width, index)}
+                      columnWidth={index => getColumnWidth(width, index)}
                       height={height - 50}
                       rowCount={itemCount}
                       rowHeight={getRowHeight}
                       width={width}
-                      className="scrollbar"
+                      // className="scrollbar"
                     >
-                      {({
-                        columnIndex, rowIndex, style,
-                      }) => {
+                      {({ columnIndex, rowIndex, style }) => {
                         if (!isItemLoaded(rowIndex) && columnIndex === 0) {
                           return (
                             <div
@@ -163,9 +135,7 @@ const Desktop: React.FC<{
                           return null;
                         }
 
-                        const {
-                          key, align,
-                        } = columns[columnIndex];
+                        const { key, align } = columns[columnIndex];
                         const item = formattedItems[rowIndex][key];
                         return (
                           <div
