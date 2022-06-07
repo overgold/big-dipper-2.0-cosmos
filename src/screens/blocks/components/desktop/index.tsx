@@ -115,7 +115,7 @@ const Desktop: React.FC<{
                       rowCount={itemCount}
                       rowHeight={getRowHeight}
                       width={width}
-                      // className="scrollbar"
+                      className="no-X-scroll"
                     >
                       {({ columnIndex, rowIndex, style }) => {
                         if (!isItemLoaded(rowIndex) && columnIndex === 0) {
