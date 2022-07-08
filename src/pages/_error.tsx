@@ -1,9 +1,10 @@
-import NextErrorComponent from 'next/error';
+/* eslint-disable */
+import ErrorComponent from '@screens/error';
 
 import * as Sentry from '@sentry/nextjs';
 
-const MyError = ({ statusCode, hasGetInitialPropsRun, err }) => {
-  if (!hasGetInitialPropsRun && err) {
+const ErrorPage = ({ err }) => {
+  if (err) {
     // getInitialProps is not called in case of
     // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
     // err via _app.js so it can be captured
@@ -11,18 +12,13 @@ const MyError = ({ statusCode, hasGetInitialPropsRun, err }) => {
     // Flushing is not required in this case as it only happens on the client
   }
 
-  return <NextErrorComponent statusCode={statusCode} />;
+  return <ErrorComponent />;
 };
 
-MyError.getInitialProps = async ({ res, err, asPath }) => {
-  const errorInitialProps = await NextErrorComponent.getInitialProps({
-    res,
-    err,
-  });
-
+ErrorPage.getInitialProps = async ({ res, err, asPath }) => {
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
   // getInitialProps has run
-  errorInitialProps.hasGetInitialPropsRun = true;
 
   // Running on the server, the response object (`res`) is available.
   //
@@ -44,7 +40,7 @@ MyError.getInitialProps = async ({ res, err, asPath }) => {
     // https://vercel.com/docs/platform/limits#streaming-responses
     await Sentry.flush(2000);
 
-    return errorInitialProps;
+    return { statusCode };
   }
 
   // If this point is reached, getInitialProps was called without any
@@ -55,7 +51,7 @@ MyError.getInitialProps = async ({ res, err, asPath }) => {
   );
   await Sentry.flush(2000);
 
-  return errorInitialProps;
+  return { statusCode };
 };
 
-export default MyError;
+export default ErrorPage;

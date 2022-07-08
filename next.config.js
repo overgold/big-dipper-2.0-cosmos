@@ -19,23 +19,13 @@ const moduleExports = {
 
 
 const sentryWebpackPluginOptions = {
-  // Additional config options for the Sentry Webpack plugin. Keep in mind that
-  // the following options are set automatically, and overriding them is not
-  // recommended:
-  //   release, url, org, project, authToken, configFile, stripPrefix,
-  //   urlPrefix, include, ignore
     authToken: 'f9e0984a42294baba978b1f624365ef454bcc9f4f2e444a88fbbdf777ee556e3',
     org: 'sentry',
     project: 'big-dipper-vipcoin',
-    release: '1.0.1',
+    release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
     url: 'https://sentry-reports.vidiscount.com/',
-        // other SentryWebpackPlugin configuration
     include: "./dist",
     ignore: ["node_modules", "tsconfig.js"],
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
 
-// Make sure adding Sentry options is the last code to run before exporting, to
-// ensure that your source maps include changes from all other Webpack plugins
 module.exports = withSentryConfig(nextTranslate(moduleExports), sentryWebpackPluginOptions);
