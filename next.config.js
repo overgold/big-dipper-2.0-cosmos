@@ -19,13 +19,6 @@ const moduleExports = {
 
 
 const sentryWebpackPluginOptions = {
-    authToken: 'f9e0984a42294baba978b1f624365ef454bcc9f4f2e444a88fbbdf777ee556e3',
-    org: 'sentry',
-    project: 'big-dipper-vipcoin',
-    release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
-    url: 'https://sentry-reports.vidiscount.com/',
-    include: "./dist",
-    ignore: ["node_modules", "tsconfig.js"],
 };
 
 module.exports = withSentryConfig(nextTranslate(moduleExports), sentryWebpackPluginOptions);
