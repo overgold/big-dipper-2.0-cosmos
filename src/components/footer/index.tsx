@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import useTranslation from 'next-translate/useTranslation';
-import VipcoinGold from '@assets/logo.svg';
+import Overgold from '@assets/logo.svg';
 import {
   Divider, Typography,
 } from '@material-ui/core';
@@ -22,7 +22,7 @@ const Footer: React.FC<{ className?: string }> = ({ className }) => {
         {/* logo */}
         {/* ============================= */}
         <div className="footer__logo--container">
-          <VipcoinGold
+          <Overgold
             width="180"
             height="37"
             viewBox="0 0 211 37"

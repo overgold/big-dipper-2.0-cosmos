@@ -1,5 +1,5 @@
 import React from 'react';
-import VipcoinGold from '@assets/logo.svg';
+import Overgold from '@assets/logo.svg';
 import { LinearProgress } from '@material-ui/core';
 import { useStyles } from './styles';
 
@@ -9,7 +9,7 @@ const InitialLoad = () => {
   return (
     <div className={classes.root}>
       <div>
-        <VipcoinGold
+        <Overgold
           width="300"
           height="37"
           viewBox="0 0 211 37"

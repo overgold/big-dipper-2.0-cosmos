@@ -1,19 +1,19 @@
 const BIG_DIPPER_URL = 'https://bigdipper.live';
-
+//Fork
 export const footerLinks = [
   {
     key: 'company',
     links: [
       {
-        key: 'vipcoin',
-        url: 'https://vipcoin.gold/',
+        key: 'overgold',
+        url: 'https://overgold.io/',
       },
       {
         key: 'wallet',
         url: 'https://wallet.vipcoin.gold/',
       },
       {
-        key: 'vcg',
+        key: 'ovg',
         url: 'https://vcgpay.com/',
       },
     ],

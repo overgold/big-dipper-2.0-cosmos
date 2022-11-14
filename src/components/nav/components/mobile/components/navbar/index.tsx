@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ExpandMore } from '@material-ui/icons';
 import { useRecoilValue } from 'recoil';
 import { readSelectedNetwork } from '@recoil/big_dipper_networks';
-import VipcoinGold from '@assets/logo.svg';
+import Overgold from '@assets/logo.svg';
 import { HOME } from '@utils/go_to_page';
 import { useStyles } from './styles';
 import { NavbarProps } from './types';
@@ -18,7 +18,7 @@ const Navbar = (props: NavbarProps) => {
     <div className={classes.root}>
       <Link href={HOME}>
         <a className={classes.a}>
-          <VipcoinGold
+          <Overgold
             width="120"
             height="37"
             viewBox="0 0 211 37"

@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { Box } from '@material-ui/core';
-import VipcoinGold from '@assets/logo.svg';
+import Overgold from '@assets/logo.svg';
 import { Networks } from '@src/components/nav/components';
 import { useStyles } from './styles';
 
@@ -23,7 +23,7 @@ const NetworkList: React.FC<{
           height: actionHeight,
         }}
       >
-        <VipcoinGold
+        <Overgold
           width="218"
           height="100"
           viewBox="0 0 211 37"

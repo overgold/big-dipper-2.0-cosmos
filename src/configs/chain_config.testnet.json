@@ -1,28 +1,28 @@
 {
-  "title": "Vipcoin Block Explorer",
-  "network": "vipcoin-gold",
+  "title": "Overgold Block Explorer",
+  "network": "overgold-gold",
   "icon": "/images/icon.svg",
   "logo": {
     "default": "/images/logo.svg"
   },
   "prefix": {
-    "consensus": "vcgvalcons",
-    "validator": "vcgvaloper",
-    "account": "vcg"
+    "consensus": "ovgvalcons",
+    "validator": "ovgvaloper",
+    "account": "ovg"
   },
   "genesis": {
     "time": "2021-07-13T08:00:00",
     "height": 1
   },
-  "primaryTokenUnit": "vcg",
+  "primaryTokenUnit": "ovg",
   "votingPowerTokenUnit": "stake",
   "tokenUnits": {
     "stake": {
       "display": "stake",
       "exponent": 1
     },
-    "vcg": {
-      "display": "vcg",
+    "ovg": {
+      "display": "ovg",
       "exponent": 8
     }
   },

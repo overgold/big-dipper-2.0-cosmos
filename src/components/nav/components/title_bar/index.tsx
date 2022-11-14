@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import VipcoinGold from '@assets/logo.svg';
+import Overgold from '@assets/logo.svg';
 import { useScreenSize } from '@src/hooks';
 import { useStyles } from './styles';
 
@@ -15,7 +15,7 @@ const TitleBar:React.FC<{
 
   return (
     <div className={classnames(className, classes.root)}>
-      {isDesktop && <VipcoinGold />}
+      {isDesktop && <Overgold />}
     </div>
   );
 };

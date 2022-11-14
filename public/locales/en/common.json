@@ -3,7 +3,7 @@
   "zht": "中文",
   "bigDipper": "Big Dipper",
   "forbole": "Forbole",
-  "copyright": "Copyright 2022 © VipCoin.Gold. All rights reservered",
+  "copyright": "Copyright 2022 © Overgold. All rights reservered",
   "donate": "Donate",
   "about": "About",
   "faq": "FAQ",
@@ -61,7 +61,7 @@
   "profilesNotEnabled": "Profiles not enabled for this explorer",
   "insertValidDtag": "Please insert a valid dtag",
   "documents": "Documents",
-  "vipcoin": "VipCoin.Gold",
-  "wallet": "Wallet VipCoin.Gold",
-  "vcg": "VCG Pay"
+  "overgold": "Overgold",
+  "wallet": "Wallet Overgold",
+  "ovg": "OVG Pay"
 }

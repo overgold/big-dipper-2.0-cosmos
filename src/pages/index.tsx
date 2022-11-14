@@ -7,7 +7,7 @@ const HomePage = ({ data }) => {
 };
 
 export default HomePage;
-
+//Fork
 export const getServerSideProps: GetServerSideProps = async () => {
   const data = await fetch(
     `${

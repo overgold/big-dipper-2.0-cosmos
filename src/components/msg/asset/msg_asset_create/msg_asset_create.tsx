@@ -4,7 +4,7 @@ import { useStyles } from '../styles';
 import Link from 'next/link';
 import Trans from 'next-translate/Trans';
 import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
-
+//FORK
 const MsgAssetCreateComponent = (props: { message: MsgAssetCreate }) => {
   //   const { message } = props;
   const classes = useStyles();

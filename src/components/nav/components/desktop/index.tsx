@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { Drawer, AppBar, ClickAwayListener } from '@material-ui/core';
-import VipcoinGoldLogo from '@assets/vipcoin-gold-logo.svg';
+import OvergoldLogo from '@assets/overgold-gold-logo.svg';
 import { useStyles } from './styles';
 import { useDesktop } from './hooks';
 import { MenuItems, TitleBar } from '..';
@@ -44,7 +44,7 @@ const Desktop: React.FC<{
           }}
         >
           <div className={classes.logo}>
-            <VipcoinGoldLogo
+            <OvergoldLogo
               width="35"
               height="35"
               viewBox="0 0 28 28"
