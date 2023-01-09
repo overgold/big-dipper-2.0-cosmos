@@ -45,9 +45,9 @@ const Desktop: React.FC<{
         >
           <div className={classes.logo}>
             <OvergoldLogo
-              width="35"
-              height="35"
-              viewBox="0 0 28 28"
+              width="37"
+              height="37"
+              viewBox="0 0 37 37"
               onClick={toggleMenu}
               role="button"
             />
