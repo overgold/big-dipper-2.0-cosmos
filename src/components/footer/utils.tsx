@@ -10,25 +10,25 @@ export const footerLinks = [
       },
       {
         key: 'wallet',
-        url: 'https://wallet.vipcoin.gold/',
+        url: 'https://wallet.overgold.app/',
       },
       {
         key: 'ovg',
-        url: 'https://vcgpay.com/',
+        url: 'https://market.overgold.app/',
       },
     ],
   },
-  {
-    key: 'documents',
-    links: [
-      {
-        key: 'termsAndConditions',
-        url: `${BIG_DIPPER_URL}/terms-and-conditions`,
-      },
-      {
-        key: 'privacyPolicy',
-        url: `${BIG_DIPPER_URL}/privacy-policy`,
-      },
-    ],
-  },
+  // {
+  //   key: 'documents',
+  //   links: [
+  //     {
+  //       key: 'termsAndConditions',
+  //       url: `${BIG_DIPPER_URL}/terms-and-conditions`,
+  //     },
+  //     {
+  //       key: 'privacyPolicy',
+  //       url: `${BIG_DIPPER_URL}/privacy-policy`,
+  //     },
+  //   ],
+  // },
 ];
