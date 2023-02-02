@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const data = await fetch(
     `${
       process.env.NEXT_PUBLIC_WALLET_URL
-    }/v4/rs/price/history/eur?set=w&since=${
+    }/v4/rs/price/history/usd?set=w&since=${
       Date.parse(subtractYears(1)) / 1000
     }&until=${Date.now()}&sort=desc`
   );

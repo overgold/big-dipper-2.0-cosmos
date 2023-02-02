@@ -7,6 +7,7 @@ import { ChartData, SwitcherType } from './types';
 
 const Hero = (props: IHome & ComponentDefault) => {
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
+  console.log('🚀 ~ file: index.tsx:10 ~ Hero ~ chartData', chartData);
   const [switcher, setSwitcher] = useState<SwitcherType>(SwitcherType.price);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Hero = (props: IHome & ComponentDefault) => {
         }
       : {
           name: dateSetter(el.createdAt),
-          value: el.capitalization,
+          value: el.fiatCap,
           a: el.coinsCap,
           b: el.fiatCap,
           c: el.goldCap,
