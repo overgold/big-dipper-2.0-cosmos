@@ -33,7 +33,7 @@ const Hero = (props: IHome & ComponentDefault) => {
         }
       : {
           name: dateSetter(el.createdAt),
-          value: el.capitalization,
+          value: el.fiatCap,
           a: el.coinsCap,
           b: el.fiatCap,
           c: el.goldCap,
