@@ -7,7 +7,6 @@ import { ChartData, SwitcherType } from './types';
 
 const Hero = (props: IHome & ComponentDefault) => {
   const [chartData, setChartData] = useState<ChartData[] | null>(null);
-  console.log('🚀 ~ file: index.tsx:10 ~ Hero ~ chartData', chartData);
   const [switcher, setSwitcher] = useState<SwitcherType>(SwitcherType.price);
 
   useEffect(() => {

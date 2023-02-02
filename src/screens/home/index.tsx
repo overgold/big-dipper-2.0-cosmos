@@ -11,7 +11,6 @@ import {
 import { IHome } from './types';
 
 const Home = ({ data }: IHome) => {
-  console.log('🚀 ~ file: index.tsx:14 ~ Home ~ data', data);
   const classes = useStyles();
 
   return (

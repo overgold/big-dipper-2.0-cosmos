@@ -25,10 +25,6 @@ const TokenPrice = ({ items, type }: ITokenPrice) => {
   const { classes, theme } = useStyles();
 
   const { tickPriceFormatter } = usePrice();
-  console.log(
-    '🚀 ~ file: index.tsx:28 ~ TokenPrice ~ tickPriceFormatter',
-    tickPriceFormatter
-  );
 
   const isMobile = useMediaQuery('(max-width:400px)');
 
