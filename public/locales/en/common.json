@@ -63,5 +63,7 @@
     "documents": "Documents",
     "overgold": "Overgold",
     "wallet": "Wallet Overgold",
-    "ovg": "OVG Pay"
+    "ovg": "OVG Pay",
+    "exchanger": "OVG Exchanger",
+    "telegram": "Telegram"
 }

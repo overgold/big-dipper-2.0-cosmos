@@ -10,6 +10,9 @@ export const useStyles = () => {
         color: theme.palette.custom.fonts.fontOne,
         '& .footer': {
           padding: theme.spacing(0, 3),
+          margin: '0 auto',
+          maxWidth: '1440px',
+          width: '100%',
         },
         '& .footer__closing--container': {
           padding: theme.spacing(1),
@@ -26,6 +29,8 @@ export const useStyles = () => {
           marginBottom: theme.spacing(2),
         },
         '& .footer__logo--container': {
+          // display: 'flex',
+          // alignItems: 'center',
           '& p': {
             marginTop: theme.spacing(1),
             marginBottom: 0,
@@ -43,7 +48,8 @@ export const useStyles = () => {
           color: '#131316',
         },
         '& .footer__links': {
-          marginTop: '1rem',
+
+          // marginTop: '1rem',
         },
         '& h3': {
           color: theme.palette.custom.fonts.fontThree,
@@ -51,10 +57,12 @@ export const useStyles = () => {
           marginBottom: theme.spacing(2),
           marginTop: theme.spacing(2),
         },
+       
         '& .links__group': {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
+         
           '& a': {
             margin: '0.5rem 0',
             color: 'inherit',
@@ -105,21 +113,32 @@ export const useStyles = () => {
             marginTop: theme.spacing(5),
           },
           '& .footer': {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            display: 'flex',
           },
           '& .footer__links': {
-            gridColumn: '4/5',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            marginTop: 0,
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            justifyContent: 'space-between',
+         
           },
+       
+          '& .links__group': {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            textAlign: 'center',
+            width: '100%',
+            paddingLeft: '40px',
+            flexDirection:'row',
+          },
+           
           '& h3': {
             fontSize: '1.125rem',
             marginTop: 0,
           },
           '& .footer__social': {
-            justifyContent: 'flex-end',
+            // justifyContent: 'flex-end',
           },
         },
       },

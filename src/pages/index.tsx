@@ -17,6 +17,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
     }&until=${Date.now()}&sort=desc`
   );
   const res = await data.json();
+  if (!res) {
+    return { notFound: true };
+  }
   return {
     props: { data: res.length ? res.reverse() : [] },
   };
