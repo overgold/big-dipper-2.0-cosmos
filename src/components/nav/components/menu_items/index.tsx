@@ -16,7 +16,6 @@ const MenuItems = ({ isMenu }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
   const items = getMenuItems();
-  console.log('isMenu', isMenu);
   return (
     <List>
       {items.map(x => {
