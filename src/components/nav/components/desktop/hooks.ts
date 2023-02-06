@@ -1,11 +1,12 @@
+import { useScreenSize } from '@hooks';
+
 import {
   useState, useEffect,
 } from 'react';
-import { useScreenSize } from '@hooks';
 
 export const useDesktop = () => {
   const { isDesktop } = useScreenSize();
-  const [isMenu, setMenu] = useState(false);
+  const [isMenu, setMenu] = useState(true);
   const [isNetwork, setNetwork] = useState(false);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export const useDesktop = () => {
    * Helper that will check and turn off any open tabs
    */
   const turnOffAll = () => {
-    setMenu(false);
+    setMenu(true);
     setNetwork(false);
   };
 

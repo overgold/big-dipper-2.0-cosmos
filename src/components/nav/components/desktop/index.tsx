@@ -6,6 +6,7 @@ import { useStyles } from './styles';
 import { useDesktop } from './hooks';
 import { MenuItems, TitleBar } from '..';
 import { ActionBar } from './components';
+import { Tooltip } from 'react-tooltip';
 
 const Desktop: React.FC<{
   className?: string;
@@ -13,7 +14,7 @@ const Desktop: React.FC<{
 }> = ({ className, title }) => {
   const classes = useStyles();
   const { isMenu, toggleMenu, turnOffAll, toggleNetwork, isNetwork } =
-    useDesktop();
+  useDesktop();
   return (
     <ClickAwayListener onClickAway={turnOffAll}>
       <div className={classnames(className, classes.root)}>
@@ -43,16 +44,17 @@ const Desktop: React.FC<{
             }),
           }}
         >
-          <div className={classes.logo}>
+          <div className={classes.logo} onClick={toggleMenu}>
             <OvergoldLogo
               width="37"
               height="37"
               viewBox="0 0 37 37"
-              onClick={toggleMenu}
               role="button"
             />
+            <span className={"logo-title"}>Explorer</span>
           </div>
-          <MenuItems />
+          
+          <MenuItems isMenu={isMenu}/>
         </Drawer>
       </div>
     </ClickAwayListener>
