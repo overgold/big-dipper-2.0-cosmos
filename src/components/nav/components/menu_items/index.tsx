@@ -11,7 +11,11 @@ import { Tooltip } from 'react-tooltip';
 import { selector } from 'recoil';
 import Portal from '@src/hooks/portal';
 
-const MenuItems = ({ isMenu }) => {
+interface MenuProps {
+  isMenu?: boolean;
+}
+
+const MenuItems = ({ isMenu }:MenuProps) => {
   const classes = useStyles();
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -37,13 +41,13 @@ const MenuItems = ({ isMenu }) => {
               component="a"
               id={x.key}
             >
-              <ListItemIcon >{x.icon}</ListItemIcon>
+              <ListItemIcon>{x.icon}</ListItemIcon>
               <ListItemText primary={t(x.key)} />
               <Portal>
                 <Tooltip
                   data-tooltip-delay-hide={1000}
                   place="right"
-                  anchorId={!isMenu ? x.key: ''}
+                  anchorId={!isMenu ? x.key : ''}
                   className="tooltip"
                 >
                   {t(x.key)}
