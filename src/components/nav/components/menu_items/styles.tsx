@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Color from 'color';
+import background from 'assets/images/background-login.png';
 
 export const useStyles = () => {
   const styles = makeStyles(
@@ -15,6 +16,7 @@ export const useStyles = () => {
           '& .MuiListItemText-root': {
             color: theme.palette.custom.general.icon,
           },
+        
           '&.active': {
             background: Color(theme.palette.background.paper).lighten(0.5).string(),
             '& .MuiListItemIcon-root': {
