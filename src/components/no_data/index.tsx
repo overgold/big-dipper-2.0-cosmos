@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { readTheme } from '@recoil/settings/selectors';
 import NotFoundLight from '@assets/not-found-light.svg';
 import NotFoundDark from '@assets/not-found-dark.svg';
+import UFO from '@assets/ufo.svg';
 import { useStyles } from './styles';
 
 const NoData: React.FC<{
@@ -21,7 +22,7 @@ const NoData: React.FC<{
         {theme === 'light' ? (
           <NotFoundLight />
         ) : (
-          <NotFoundDark />
+          <UFO />
         )}
         <Typography variant="body1">
           {t('nothingToShow')}
