@@ -1,11 +1,11 @@
 export const OPEN_GRAPH_SEO = {
   type: 'website',
-  site_name: 'Big Dipper',
+  site_name: 'OverGold Explorer',
   images: [
     {
-      url: 'https://bigdipper.live/images/big-dipper-social-media.png',
-      width: 800,
-      height: 600,
+      url: 'https://github.com/vipcoin-gold/big-dipper-2.0-cosmos/blob/dev-ovg/public/icons/android-chrome-512x512.png',
+      width: 512,
+      height: 512,
       alt: 'Preview Photo',
     },
   ],
