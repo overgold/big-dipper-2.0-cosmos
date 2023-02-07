@@ -16,10 +16,6 @@ export default class MyDocument extends Document {
           <meta property="og:title" content="OVERGOLD Exchanger" />
           <meta property="og:description" content="test description" />
      
-          {/* <meta property="og:title" content="OVERGOLD Exchanger"/>
-<meta property="og:site_name" content=""/>
-<meta property="og:url" content=""/>
-<meta property="og:image" content={UFO}></meta> */}
         </Head>
         <body>
           <Main />
