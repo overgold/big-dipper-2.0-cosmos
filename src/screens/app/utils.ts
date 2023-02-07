@@ -3,7 +3,7 @@ export const OPEN_GRAPH_SEO = {
   site_name: 'OverGold Explorer',
   images: [
     {
-      url: 'https://github.com/vipcoin-gold/big-dipper-2.0-cosmos/blob/dev-ovg/public/icons/android-chrome-512x512.png',
+      url: 'https://overgold.app/img/bigDiper.png'|| 'https://overgold.app/img/bigdiper.png',
       width: 512,
       height: 512,
       alt: 'Preview Photo',

@@ -5,7 +5,12 @@ import { ServerStyleSheets } from '@material-ui/core/styles';
 import UFO from '@assets/overgold-gold-logo.svg';
 
 export default class MyDocument extends Document {
+
+  imgPreview:string = 'https://overgold.app/img/bigDiper.png'|| 'https://overgold.app/img/bigdiper.png'
+
+
   render() {
+    const image=this.imgPreview
     return (
       <Html lang="en">
         <Head>
@@ -13,8 +18,10 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
-  
-     
+          <meta property="og:title" content="OverGold Explorer" />
+          <meta property="og:site_name" content="OverGold Explorer" />
+          <meta property="og:description" content="Up-to-date and innovative Blockchain Explorer has been implemented for OverGold networks. A user-friendly and clear tool for working with transactions in blockchain, viewing statistics and monitoring the network as a whole. Blockchain Explorer allows to build custom queries and selections based on movements/transactions in the network. It has a unique opportunity to export data in a convenient format for a specific set of transactions that the user needs." />
+          <meta property="og:image" content={image} />
         </Head>
         <body>
           <Main />
