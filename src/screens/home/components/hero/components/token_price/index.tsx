@@ -48,16 +48,10 @@ const TokenPrice = ({ items, type }: ITokenPrice) => {
     return (
       <>
         <Typography>
-          {t('capitalization')} : {x.value}
+          {t('capitalization')} : {`${x.value} USD`}
         </Typography>
         <Typography>
-          {t('coins')}: {x.a}
-        </Typography>
-        <Typography>
-          {t('fiat')}: {x.b}
-        </Typography>
-        <Typography>
-          {t('gold')}: {x.c}
+          {t('coins')}: {`${x.a} OVG`}
         </Typography>
       </>
     );

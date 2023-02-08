@@ -1,32 +1,32 @@
 {
-  "title": "Overgold Block Explorer",
-  "network": "overgold-gold",
-  "icon": "/images/icon.svg",
-  "logo": {
-    "default": "/images/logo.svg"
-  },
-  "prefix": {
-    "consensus": "ovgvalcons",
-    "validator": "ovgvaloper",
-    "account": "ovg"
-  },
-  "genesis": {
-    "time": "2022-04-04T16:54:21",
-    "height": 1
-  },
-  "primaryTokenUnit": "ovg",
-  "votingPowerTokenUnit": "stake",
-  "tokenUnits": {
-    "stake": {
-      "display": "stake",
-      "exponent": 1
+    "title": "Overgold Block Explorer",
+    "network": "overgold",
+    "icon": "/images/icon.svg",
+    "logo": {
+        "default": "/images/logo.svg"
     },
-    "ovg": {
-      "display": "ovg",
-      "exponent": 8
+    "prefix": {
+        "consensus": "ovgvalcons",
+        "validator": "ovgvaloper",
+        "account": "ovg"
+    },
+    "genesis": {
+        "time": "2022-04-04T16:54:21",
+        "height": 1
+    },
+    "primaryTokenUnit": "ovg",
+    "votingPowerTokenUnit": "stake",
+    "tokenUnits": {
+        "stake": {
+            "display": "stake",
+            "exponent": 1
+        },
+        "ovg": {
+            "display": "ovg",
+            "exponent": 8
+        }
+    },
+    "extra": {
+        "profile": true
     }
-  },
-  "extra": {
-    "profile": true
-  }
 }

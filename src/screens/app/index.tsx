@@ -22,17 +22,16 @@ function App(props: AppProps) {
   const { pageProps } = props;
   const apolloClient = useApollo(pageProps.initialApolloState);
   const { t } = useTranslation();
-
   return (
     <>
       <DefaultSeo
         titleTemplate={`${chainConfig.title}`}
-        title={t('common:bigDipper')}
-        description={t('common:description')}
+        title={t('common:OverGoldExplorer')}
+        description={t('common:descriptionOVG')}
         openGraph={{
-          title: `${t('common:bigDipper')} | ${chainConfig.title}`,
+          title: chainConfig.title,
           url: process.env.NEXT_PUBLIC_URL,
-          description: t('common:description'),
+          description: t('common:descriptionOVG'),
           ...OPEN_GRAPH_SEO,
         }}
         twitter={TWITTER_SEO}

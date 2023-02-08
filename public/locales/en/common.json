@@ -63,5 +63,9 @@
     "documents": "Documents",
     "overgold": "Overgold",
     "wallet": "Wallet Overgold",
-    "ovg": "OVG Pay"
+    "ovg": "OVG Pay",
+    "exchanger": "OVG Exchanger",
+    "telegram": "Telegram",
+    "descriptionOVG": "Up-to-date and innovative Blockchain Explorer has been implemented for OverGold networks. A user-friendly and clear tool for working with transactions in blockchain, viewing statistics and monitoring the network as a whole. Blockchain Explorer allows to build custom queries and selections based on movements/transactions in the network. It has a unique opportunity to export data in a convenient format for a specific set of transactions that the user needs.",
+    "OverGoldExplorer": "OverGold Explorer"
 }

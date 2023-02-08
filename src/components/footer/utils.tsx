@@ -16,6 +16,14 @@ export const footerLinks = [
         key: 'ovg',
         url: 'https://market.overgold.app/',
       },
+      {
+        key: 'exchanger',
+        url: 'https://exchanger.overgold.app/',
+      },
+      {
+        key: 'telegram',
+        url: 'https://t.me/vipcoingoldOfficial',
+      },
     ],
   },
   // {
