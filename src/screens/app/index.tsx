@@ -7,9 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '@src/graphql/client';
 import { chainConfig } from '@configs';
 import { Main } from './components';
-import {
-  useApp,
-} from './hooks';
+import { useApp } from './hooks';
 import {
   OPEN_GRAPH_SEO,
   TWITTER_SEO,
@@ -38,9 +36,7 @@ function App(props: AppProps) {
         additionalLinkTags={ADDITIONAL_LINK_TAGS_SEO}
         additionalMetaTags={ADDITIONAL_META_TAGS}
       />
-      <ApolloProvider
-        client={apolloClient}
-      >
+      <ApolloProvider client={apolloClient}>
         <RecoilRoot>
           <Main {...props} />
         </RecoilRoot>
