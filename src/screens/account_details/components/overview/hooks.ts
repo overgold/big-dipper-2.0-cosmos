@@ -1,15 +1,20 @@
 import { useState } from 'react';
+
 import { toast } from 'react-toastify';
+
 import copy from 'copy-to-clipboard';
 
-export const useOverview = (t) => {
+export const useOverview = t => {
   const [open, setOpen] = useState(false);
+  const [addressSelected, setAddress] = useState('');
 
   const handleClose = () => {
+    setAddress('');
     setOpen(false);
   };
 
-  const handleOpen = () => {
+  const handleOpen = (value: string) => {
+    setAddress(value);
     setOpen(true);
   };
 
@@ -20,6 +25,7 @@ export const useOverview = (t) => {
 
   return {
     open,
+    addressSelected,
     handleClose,
     handleOpen,
     handleCopyToClipboard,

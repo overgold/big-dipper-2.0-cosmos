@@ -1,16 +1,18 @@
-import {
-  useState, useEffect,
-} from 'react';
-import axios from 'axios';
 import { DesmosProfileQuery } from '@graphql/desmos_profile';
 import {
-  DesmosProfileDocument, DesmosProfileLinkDocument, DesmosProfileDtagDocument,
+  DesmosProfileDocument,
+  DesmosProfileLinkDocument,
+  DesmosProfileDtagDocument,
 } from '@graphql/desmos_profile_graphql';
+
+import { useState, useEffect } from 'react';
+
+import axios from 'axios';
 
 type Options = {
   address?: string;
   onComplete: (data: DesmosProfileQuery) => any;
-}
+};
 
 const PROFILE_API = 'https://gql.mainnet.desmos.network/v1/graphql';
 
@@ -67,7 +69,7 @@ export const useDesmosProfile = (options: Options) => {
   };
 
   const fetchDesmosProfile = async (input: string) => {
-    let data:DesmosProfileQuery = {
+    let data: DesmosProfileQuery = {
       profile: [],
     };
 
@@ -93,8 +95,8 @@ export const useDesmosProfile = (options: Options) => {
     }
   };
 
-  const formatDesmosProfile = (data:DesmosProfileQuery): DesmosProfile => {
-    if (!data.profile.length) {
+  const formatDesmosProfile = (data: DesmosProfileQuery): DesmosProfile => {
+    if (!data?.profile.length) {
       return null;
     }
 
@@ -106,34 +108,34 @@ export const useDesmosProfile = (options: Options) => {
       creationTime: profile.creationTime,
     };
 
-    const applications = profile.applicationLinks.map((x) => {
-      return ({
+    const applications = profile.applicationLinks.map(x => {
+      return {
         network: x.application,
         identifier: x.username,
         creationTime: x.creationTime,
-      });
+      };
     });
 
-    const chains = profile.chainLinks.map((x) => {
-      return ({
+    const chains = profile.chainLinks.map(x => {
+      return {
         network: x.chainConfig.name,
         identifier: x.externalAddress,
         creationTime: x.creationTime,
-      });
+      };
     });
 
-    const connectionsWithoutNativeSorted = [...applications, ...chains].sort((a, b) => (
-      (a.network.toLowerCase() > b.network.toLowerCase()) ? 1 : -1
-    ));
+    const connectionsWithoutNativeSorted = [...applications, ...chains].sort(
+      (a, b) => (a.network.toLowerCase() > b.network.toLowerCase() ? 1 : -1)
+    );
 
-    return ({
+    return {
       dtag: profile.dtag,
       nickname: profile.nickname,
       imageUrl: profile.profilePic,
       coverUrl: profile.coverPic,
       bio: profile.bio,
       connections: [nativeData, ...connectionsWithoutNativeSorted],
-    });
+    };
   };
 
   return {

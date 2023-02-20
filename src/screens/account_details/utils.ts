@@ -1,6 +1,3 @@
-import axios from 'axios';
-import * as R from 'ramda';
-import { toValidatorAddress } from '@utils/prefix_convert';
 import {
   AccountCommissionDocument,
   AccountWithdrawalAddressDocument,
@@ -8,7 +5,14 @@ import {
   AccountDelegationBalanceDocument,
   AccountUnbondingBalanceDocument,
   AccountDelegationRewardsDocument,
+  AccountInfo,
 } from '@src/graphql/account_details_documents';
+
+import { toValidatorAddress } from '@utils/prefix_convert';
+
+import axios from 'axios';
+
+import * as R from 'ramda';
 
 export const fetchCommission = async (address: string) => {
   const defaultReturnValue = {
@@ -116,8 +120,25 @@ export const fetchRewards = async (address: string) => {
       },
       query: AccountDelegationRewardsDocument,
     });
+
     return R.pathOr(defaultReturnValue, ['data'], data);
   } catch (error) {
     return defaultReturnValue;
+  }
+};
+//TODO fetchTestBalance AccountInfo
+export const fetchAccountInfo = async (address: string) => {
+  try {
+    const { data } = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
+      variables: {
+        address: `%${address}%`,
+      },
+      query: AccountInfo,
+    });
+
+    return R.pathOr([], ['data'], data);
+  } catch (error) {
+    console.log('error', error);
+    return [];
   }
 };

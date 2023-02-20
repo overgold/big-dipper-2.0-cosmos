@@ -5,7 +5,7 @@ export const footerLinks = [
     key: 'company',
     links: [
       {
-        key: 'overgold',
+        key: 'overgoldSite',
         url: 'https://overgold.io/',
       },
       {

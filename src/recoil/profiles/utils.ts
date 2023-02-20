@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { DesmosProfileQuery } from '@graphql/desmos_profile';
 import {
-  DesmosProfileDocument, DesmosProfileLinkDocument,
+  DesmosProfileDocument,
+  DesmosProfileLinkDocument,
 } from '@graphql/desmos_profile_graphql';
 
 const PROFILE_API = 'https://gql.mainnet.desmos.network/v1/graphql';
@@ -47,8 +48,8 @@ const fetchDesmosProfile = async (address: string) => {
   }
 };
 
-const formatDesmosProfile = (data:DesmosProfileQuery) => {
-  if (!data.profile.length) {
+const formatDesmosProfile = (data: DesmosProfileQuery) => {
+  if (!data?.profile.length) {
     return null;
   }
 
@@ -60,37 +61,39 @@ const formatDesmosProfile = (data:DesmosProfileQuery) => {
     creationTime: profile.creationTime,
   };
 
-  const applications = profile.applicationLinks.map((x) => {
-    return ({
+  const applications = profile.applicationLinks.map(x => {
+    return {
       network: x.application,
       identifier: x.username,
       creationTime: x.creationTime,
-    });
+    };
   });
 
-  const chains = profile.chainLinks.map((x) => {
-    return ({
+  const chains = profile.chainLinks.map(x => {
+    return {
       network: x.chainConfig.name,
       identifier: x.externalAddress,
       creationTime: x.creationTime,
-    });
+    };
   });
 
-  const connectionsWithoutNativeSorted = [...applications, ...chains].sort((a, b) => (
-    (a.network.toLowerCase() > b.network.toLowerCase()) ? 1 : -1
-  ));
+  const connectionsWithoutNativeSorted = [...applications, ...chains].sort(
+    (a, b) => (a.network.toLowerCase() > b.network.toLowerCase() ? 1 : -1)
+  );
 
-  return ({
+  return {
     dtag: profile.dtag,
     nickname: profile.nickname,
     imageUrl: profile.profilePic,
     coverUrl: profile.coverPic,
     bio: profile.bio,
     connections: [nativeData, ...connectionsWithoutNativeSorted],
-  });
+  };
 };
 
-export const getProfile = async (delegatorAddress: string): Promise<DesmosProfile | null> => {
+export const getProfile = async (
+  delegatorAddress: string
+): Promise<DesmosProfile | null> => {
   const profile = await fetchDesmosProfile(delegatorAddress);
   return profile;
 };
