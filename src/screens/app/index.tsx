@@ -28,7 +28,7 @@ function App(props: AppProps) {
         description={t('common:descriptionOVG')}
         openGraph={{
           title: chainConfig.title,
-          url: process.env.NEXT_PUBLIC_URL,
+          // url: process.env.NEXT_PUBLIC_URL,
           description: t('common:descriptionOVG'),
           ...OPEN_GRAPH_SEO,
         }}
