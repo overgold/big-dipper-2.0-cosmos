@@ -11,7 +11,7 @@ import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
 import { Box } from '@components';
 import { useStyles } from './styles';
 import { useOverview } from './hooks';
-import { isNil } from 'lodash';
+import { isEmpty } from 'lodash';
 import { walletInfo } from './walletInfo';
 import { ShareInfo } from './Share';
 
@@ -34,39 +34,42 @@ const Overview: React.FC<{
 
   return (
     <>
-      {!isNil(accountData.walletOverview) &&
-        ShareInfo(addressSelected, open, handleClose)}
+      <ShareInfo
+        address={addressSelected}
+        open={open}
+        handleClose={handleClose}
+      />
       <Box className={classnames(className, classes.root)}>
-        {!isNil(accountData.walletOverview) && (
+        {!isEmpty(accountData.walletOverview) && (
           <div className={classnames(classes.list)}>
-            {walletInfo(accountData.walletOverview, t).map(wallet => (
+            {walletInfo(accountData.walletOverview, t).map(walletItem => (
               <div
-                key={wallet.title}
+                key={walletItem.title}
                 className={classnames(classes.copyText, classes.item)}
               >
                 <Typography variant="body1" className="label">
-                  <strong>{wallet.title}</strong>
+                  <strong>{walletItem.title}</strong>
                 </Typography>
                 <div className="detail">
-                  {wallet.isDetail && (
+                  {walletItem.isDetail && (
                     <>
                       <CopyIcon
-                        onClick={() => handleCopyToClipboard(wallet.value)}
+                        onClick={() => handleCopyToClipboard(walletItem.value)}
                         className={classes.actionIcons}
                       />
                       <ShareIcon
-                        onClick={() => handleOpen(wallet.value)}
+                        onClick={() => handleOpen(walletItem.value)}
                         className={classes.actionIcons}
                       />
                     </>
                   )}
                   <Typography variant="body1" className="value">
-                    {!isDesktop
-                      ? getMiddleEllipsis(wallet.value, {
+                    {!isDesktop && walletItem.isDetail
+                      ? getMiddleEllipsis(walletItem.value, {
                           beginning: 15,
                           ending: 5,
                         })
-                      : wallet.value}
+                      : walletItem.value}
                   </Typography>
                 </div>
               </div>

@@ -33,5 +33,10 @@
   "creationTime": "Creation Time",
   "bio": "Bio",
   "status": "Status",
-  "completionTime": "Completion Time"
+  "completionTime": "Completion Time",
+  "walletAddressHead": "Wallet address:",
+  "accountAddressHead": "Account address:",
+  "kindHead": "Kind:",
+  "stateHead": "State:",
+  "balanceHead": "Balance:"
 }

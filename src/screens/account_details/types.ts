@@ -23,10 +23,31 @@ export type RewardsType = {
   [value: string]: TokenUnit[];
 };
 
+type AccountAffiliatesType = {
+  address: string;
+  kind: string;
+};
+
+type WalletType = {
+  account_address: string;
+  address: string;
+  balance: string;
+  kind: string;
+  state: string;
+};
+type AccountType = {
+  address: string;
+  affiliates: AccountAffiliatesType[];
+  hash: string;
+  kind: string[];
+  wallets: string[];
+};
+
 export type AccountDetailState = {
   loading: boolean;
   exists: boolean;
   desmosProfile: DesmosProfile | null;
+  accountAddress: string | null;
   overview: OverviewType;
   balance: BalanceType;
   otherTokens: {
@@ -36,15 +57,10 @@ export type AccountDetailState = {
   rewards: RewardsType;
   accountInfo: {
     address: string;
-    account: [];
-    wallet: [];
+    account: AccountType | [];
+    wallet: WalletType | [];
     transaction: [];
-    walletOverview?: {
-      address: string;
-      account_address: string;
-      balance: string;
-      kind: string;
-      state: string;
-    };
+    walletOverview?: [];
+    accountOverview?: [];
   };
 };

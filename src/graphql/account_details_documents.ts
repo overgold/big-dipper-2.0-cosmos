@@ -134,21 +134,5 @@ export const AccountInfo = /* GraphQL */ `
       kind
       state
     }
-    transaction(
-      where: { messages: { _cast: { String: { _ilike: $address } } } }
-      limit: $limit
-      order_by: { height: desc }
-    ) {
-      height
-      hash
-      success
-      messages
-      block {
-        height
-        timestamp
-        __typename
-      }
-      __typename
-    }
   }
 `;

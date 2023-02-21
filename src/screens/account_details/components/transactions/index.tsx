@@ -8,12 +8,17 @@ import { readTx } from '@recoil/settings';
 import { useStyles } from './styles';
 import { useTransactions } from './hooks';
 
-const Transactions: React.FC<ComponentDefault> = props => {
+export interface TransactionProps {
+  className?: string;
+  accountAddress?: string;
+}
+
+const Transactions = ({ className, accountAddress }: TransactionProps) => {
   const txListFormat = useRecoilValue(readTx);
   const classes = useStyles();
   const { t } = useTranslation('validators');
 
-  const { state, loadNextPage } = useTransactions();
+  const { state, loadNextPage } = useTransactions(accountAddress);
 
   const loadMoreItems = state.isNextPageLoading ? () => null : loadNextPage;
   const isItemLoaded = index => !state.hasNextPage || index < state.data.length;
@@ -22,7 +27,7 @@ const Transactions: React.FC<ComponentDefault> = props => {
     : state.data.length;
 
   return (
-    <Box className={classnames(props.className, classes.root)}>
+    <Box className={classnames(className, classes.root)}>
       <Typography variant="h2">{t('transactions')}</Typography>
       <div className={classes.list}>
         {txListFormat === 'compact' ? (
