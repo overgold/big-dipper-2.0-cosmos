@@ -1,17 +1,19 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { convertMsgsToModels } from '@msg';
-import * as R from 'ramda';
 import {
   useGetMessagesByAddressQuery,
   GetMessagesByAddressQuery,
 } from '@graphql/types';
+
+import { convertMsgsToModels } from '@msg';
+
+import { useState } from 'react';
+
+import * as R from 'ramda';
+
 import { TransactionState } from './types';
 
-const LIMIT = 50;
+const LIMIT = 20;
 
-export const useTransactions = () => {
-  const router = useRouter();
+export const useTransactions = (accountAddress = '') => {
   const [state, setState] = useState<TransactionState>({
     data: [],
     hasNextPage: false,
@@ -20,21 +22,21 @@ export const useTransactions = () => {
   });
 
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   const transactionQuery = useGetMessagesByAddressQuery({
     variables: {
       limit: LIMIT + 1, // to check if more exist
       offset: 0,
-      address: `{${R.pathOr('', ['query', 'address'], router)}}`,
+      address: `{${accountAddress}}`,
     },
-    onCompleted: (data) => {
+    onCompleted: data => {
       const itemsLength = data.messagesByAddress.length;
       const newItems = R.uniq([...state.data, ...formatTransactions(data)]);
       const stateChange = {
         data: newItems,
-        hasNextPage: itemsLength === 51,
+        hasNextPage: itemsLength === 21,
         isNextPageLoading: false,
         offsetCount: state.offsetCount + LIMIT,
       };
@@ -48,30 +50,32 @@ export const useTransactions = () => {
       isNextPageLoading: true,
     });
     // refetch query
-    await transactionQuery.fetchMore({
-      variables: {
-        offset: state.offsetCount,
-        limit: LIMIT + 1,
-      },
-    }).then(({ data }) => {
-      const itemsLength = data.messagesByAddress.length;
-      const newItems = R.uniq([...state.data, ...formatTransactions(data)]);
-      const stateChange = {
-        data: newItems,
-        hasNextPage: itemsLength === 51,
-        isNextPageLoading: false,
-        offsetCount: state.offsetCount + LIMIT,
-      };
-      handleSetState(stateChange);
-    });
+    await transactionQuery
+      .fetchMore({
+        variables: {
+          offset: state.offsetCount,
+          limit: LIMIT + 1,
+        },
+      })
+      .then(({ data }) => {
+        const itemsLength = data.messagesByAddress.length;
+        const newItems = R.uniq([...state.data, ...formatTransactions(data)]);
+        const stateChange = {
+          data: newItems,
+          hasNextPage: itemsLength === 21,
+          isNextPageLoading: false,
+          offsetCount: state.offsetCount + LIMIT,
+        };
+        handleSetState(stateChange);
+      });
   };
 
   const formatTransactions = (data: GetMessagesByAddressQuery) => {
     let formattedData = data.messagesByAddress;
-    if (data.messagesByAddress.length === 51) {
-      formattedData = data.messagesByAddress.slice(0, 51);
+    if (data.messagesByAddress.length === 21) {
+      formattedData = data.messagesByAddress.slice(0, 21);
     }
-    return formattedData.map((x) => {
+    return formattedData.map(x => {
       const { transaction } = x;
 
       // =============================
@@ -79,7 +83,7 @@ export const useTransactions = () => {
       // =============================
       const messages = convertMsgsToModels(transaction);
 
-      return ({
+      return {
         height: transaction.height,
         hash: transaction.hash,
         messages: {
@@ -88,12 +92,12 @@ export const useTransactions = () => {
         },
         success: transaction.success,
         timestamp: transaction.block.timestamp,
-      });
+      };
     });
   };
 
-  return ({
+  return {
     state,
     loadNextPage,
-  });
+  };
 };

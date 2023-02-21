@@ -37,6 +37,7 @@ const initialState: AccountDetailState = {
   loading: true,
   exists: true,
   desmosProfile: null,
+  accountAddress: null,
   overview: {
     address: '',
     withdrawalAddress: '',
@@ -59,13 +60,7 @@ const initialState: AccountDetailState = {
     account: [],
     wallet: [],
     transaction: [],
-    walletOverview: {
-      address: '',
-      account_address: '',
-      balance: '',
-      kind: '',
-      state: '',
-    },
+    walletOverview: [],
   },
 };
 
@@ -122,19 +117,17 @@ export const useAccountDetails = () => {
     const { jsClient } = await import('js-core');
 
     if (data) {
+      const stateChange: any = {
+        loading: false,
+      };
       if (!isEmpty(data.wallet)) {
         handleSetState({
+          accountAddress: data.wallet[0].account_address,
           accountInfo: {
-            address: router.query.address,
-            account: data.account,
-            wallet: data.wallet,
-            transaction: data.transaction,
             walletOverview: {
               address: data.wallet[0].address,
               account_address: data.wallet[0].account_address,
               balance: data.wallet[0].balance[0].amount,
-              // kind: walletKindToJSON(data.wallet[0].kind),
-              // state: walletStateToJSON(data.wallet[0].state),
               kind: jsClient.walletKindToJSON(data.wallet[0].kind),
               state: jsClient.walletStateToJSON(data.wallet[0].state),
             },
@@ -144,18 +137,14 @@ export const useAccountDetails = () => {
       }
       if (!isEmpty(data.account)) {
         handleSetState({
+          accountAddress: router.query.address,
           accountInfo: {
-            address: router.query.address,
-            account: data.account,
-            wallet: data.wallet,
-            transaction: data.transaction,
             walletOverview: [],
             accountOverview: {
               address: data.account[0].address,
               hash: data.account[0].hash,
-              kind: data.account[0].kinds.map(
-                (kind: number) => jsClient.accountKindToJSON(kind)
-                // accountKindToJSON(kind)
+              kind: data.account[0].kinds.map((kind: number) =>
+                jsClient.accountKindToJSON(kind)
               ),
               affiliates: data.account[0].affiliates.map(affiliates => {
                 return {
@@ -163,7 +152,6 @@ export const useAccountDetails = () => {
                   kind: jsClient.affiliationKindToJSON(
                     affiliates.affiliation_kind
                   ),
-                  // kind: affiliationKindToJSON(affiliates.affiliation_kind),
                 };
               }),
               wallets: data.account[0].wallets,

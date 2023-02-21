@@ -13,25 +13,25 @@ export type walletInfoType = (
 
 export const walletInfo: walletInfoType = (accountData, t) => [
   {
-    title: t('Wallet address:'),
+    title: t('walletAddressHead'),
     value: accountData.address,
     isDetail: true,
   },
   {
-    title: t('Account address:'),
+    title: t('accountAddressHead'),
     value: accountData.account_address,
     isDetail: true,
   },
   {
-    title: t('Kind:'),
+    title: t('kindHead'),
     value: accountData.kind,
   },
   {
-    title: t('State:'),
+    title: t('stateHead'),
     value: accountData.state,
   },
   {
-    title: t('Balance:'),
+    title: t('balanceHead'),
     value: `${accountData.balance / 100000000} OVG`,
   },
 ];

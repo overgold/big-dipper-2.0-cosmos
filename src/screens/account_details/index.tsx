@@ -16,6 +16,7 @@ const AccountDetails = () => {
   const { t } = useTranslation('accounts');
   const classes = useStyles();
   const { state } = useAccountDetails();
+  console.log('🚀 ~ file: index.tsx:19 ~ AccountDetails ~ state:', state);
 
   return (
     <>
@@ -58,7 +59,10 @@ const AccountDetails = () => {
               otherTokens={state.otherTokens}
             />
             {/* <Staking className={classes.staking} rewards={state.rewards} /> */}
-            <Transactions className={classes.transactions} />
+            <Transactions
+              className={classes.transactions}
+              accountAddress={state.accountAddress}
+            />
           </span>
         </LoadAndExist>
       </Layout>

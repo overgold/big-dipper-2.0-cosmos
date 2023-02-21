@@ -18,13 +18,13 @@ import QRCode from 'qrcode.react';
 import { useOverview } from './hooks';
 import useTranslation from 'next-translate/useTranslation';
 
-export type ShareInfoType = (
-  address: string,
-  open: boolean,
-  handleClose: () => void
-) => JSX.Element;
+export interface ShareInfoType {
+  address: string;
+  open: boolean;
+  handleClose: () => void;
+}
 
-export const ShareInfo: ShareInfoType = (address, open, handleClose) => {
+export const ShareInfo = ({ address, open, handleClose }: ShareInfoType) => {
   const url = `${process.env.NEXT_PUBLIC_URL}accounts/${address}`;
   const hashTags = ['overgoldexplorer', 'overgold'];
   const classes = useStyles();
