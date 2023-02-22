@@ -40,6 +40,7 @@ type AccountType = {
   affiliates: AccountAffiliatesType[];
   hash: string;
   kind: string[];
+  state: string;
   wallets: string[];
 };
 
@@ -57,10 +58,7 @@ export type AccountDetailState = {
   rewards: RewardsType;
   accountInfo: {
     address: string;
-    account: AccountType | [];
-    wallet: WalletType | [];
-    transaction: [];
-    walletOverview?: [];
-    accountOverview?: [];
+    walletOverview?: WalletType | [];
+    accountOverview?: AccountType | [];
   };
 };
