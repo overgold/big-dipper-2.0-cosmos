@@ -51,13 +51,7 @@ export const useStyles = () => {
           gap: '12px',
         },
       },
-      item: {
-        width: '100%',
-        padding: theme.spacing(2, 0),
-        color: theme.palette.custom.fonts.fontTwo,
-        '&:first-child': {
-          paddingTop: 0,
-        },
+      walletsItem: {
         '&:last-child': {
           [theme.breakpoints.up('md')]: {
             gridColumn: 2,
@@ -68,6 +62,15 @@ export const useStyles = () => {
           },
           paddingBottom: 0,
         },
+      },
+      item: {
+        width: '100%',
+        padding: theme.spacing(2, 0),
+        color: theme.palette.custom.fonts.fontTwo,
+        '&:first-child': {
+          paddingTop: 0,
+        },
+
         '&:not(:last-child)': {
           borderBottom: `solid 1px ${theme.palette.divider}`,
         },
@@ -100,6 +103,9 @@ export const useStyles = () => {
             marginLeft: theme.spacing(1),
           },
         },
+      },
+      accordionContainer: {
+        paddingTop: '12px',
       },
     };
   })();

@@ -57,9 +57,7 @@ const initialState: AccountDetailState = {
   rewards: {},
   accountInfo: {
     address: '',
-    account: [],
-    wallet: [],
-    transaction: [],
+    accountOverview: [],
     walletOverview: [],
   },
 };
@@ -125,11 +123,11 @@ export const useAccountDetails = () => {
           accountAddress: data.wallet[0].account_address,
           accountInfo: {
             walletOverview: {
-              address: data.wallet[0].address,
-              account_address: data.wallet[0].account_address,
-              balance: data.wallet[0].balance[0].amount,
-              kind: jsClient.walletKindToJSON(data.wallet[0].kind),
-              state: jsClient.walletStateToJSON(data.wallet[0].state),
+              address: data.wallet[0]?.address,
+              account_address: data.wallet[0]?.account_address,
+              balance: data.wallet[0]?.balance[0]?.amount,
+              kind: jsClient.walletKindToJSON(data.wallet[0]?.kind),
+              state: jsClient.walletStateToJSON(data.wallet[0]?.state),
             },
             accountOverview: [],
           },
@@ -142,11 +140,12 @@ export const useAccountDetails = () => {
             walletOverview: [],
             accountOverview: {
               address: data.account[0].address,
-              hash: data.account[0].hash,
-              kind: data.account[0].kinds.map((kind: number) =>
-                jsClient.accountKindToJSON(kind)
-              ),
-              affiliates: data.account[0].affiliates.map(affiliates => {
+              hash: data.account[0]?.hash,
+              kind: data.account[0]?.kinds
+                .map((kind: number) => jsClient.accountKindToJSON(kind))
+                .join(', '),
+              state: jsClient.accountStateToJSON(data.account[0]?.state),
+              affiliates: data.account[0]?.affiliates.map(affiliates => {
                 return {
                   address: affiliates.address,
                   kind: jsClient.affiliationKindToJSON(
@@ -154,7 +153,7 @@ export const useAccountDetails = () => {
                   ),
                 };
               }),
-              wallets: data.account[0].wallets,
+              wallets: data.account[0]?.wallets,
             },
           },
         });

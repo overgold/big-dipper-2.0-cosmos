@@ -14,6 +14,10 @@ import { useOverview } from './hooks';
 import { isEmpty } from 'lodash';
 import { walletInfo } from './walletInfo';
 import { ShareInfo } from './Share';
+import { accountInfo } from './accountInfo';
+import Link from 'next/link';
+import { TRANSACTION_DETAILS } from '@utils/go_to_page';
+import { Accordion } from '../accordion/accordion';
 
 const Overview: React.FC<{
   className?: string;
@@ -45,7 +49,11 @@ const Overview: React.FC<{
             {walletInfo(accountData.walletOverview, t).map(walletItem => (
               <div
                 key={walletItem.title}
-                className={classnames(classes.copyText, classes.item)}
+                className={classnames(
+                  classes.copyText,
+                  classes.item,
+                  classes.walletsItem
+                )}
               >
                 <Typography variant="body1" className="label">
                   <strong>{walletItem.title}</strong>
@@ -75,6 +83,69 @@ const Overview: React.FC<{
               </div>
             ))}
           </div>
+        )}
+        {!isEmpty(accountData.accountOverview) && (
+          <>
+            <div className={classnames(classes.list)}>
+              {accountInfo(accountData.accountOverview, t).map(accountItem => (
+                <div
+                  key={accountItem.title}
+                  className={classnames(classes.copyText, classes.item)}
+                >
+                  <Typography variant="body1" className="label">
+                    <strong>{accountItem.title}</strong>
+                  </Typography>
+                  <div className="detail">
+                    {accountItem.isDetail && (
+                      <>
+                        <CopyIcon
+                          onClick={() =>
+                            handleCopyToClipboard(accountItem.value)
+                          }
+                          className={classes.actionIcons}
+                        />
+                        {!accountItem.thisHash && (
+                          <ShareIcon
+                            onClick={() => handleOpen(accountItem.value)}
+                            className={classes.actionIcons}
+                          />
+                        )}
+                      </>
+                    )}
+
+                    <Typography variant="body1" className="value">
+                      {!isDesktop && accountItem.isDetail
+                        ? getMiddleEllipsis(accountItem.value, {
+                            beginning: 15,
+                            ending: 5,
+                          })
+                        : accountItem.value}
+                    </Typography>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={classes.accordionContainer}>
+              {!isEmpty(accountData.accountOverview.affiliates) && (
+                <Accordion
+                  data={accountData.accountOverview.affiliates}
+                  headTitle={t('affiliatesHead')}
+                  options={{
+                    itemsOne: 'address',
+                    itemsTwo: 'kind',
+                    itemsOneTitle: t('address'),
+                    itemsTwoTitle: t('affiliation'),
+                  }}
+                />
+              )}
+              {!isEmpty(accountData.accountOverview.wallets) && (
+                <Accordion
+                  data={accountData.accountOverview.wallets}
+                  headTitle={t('walletsHead')}
+                />
+              )}
+            </div>
+          </>
         )}
       </Box>
     </>
