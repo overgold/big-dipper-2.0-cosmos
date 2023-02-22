@@ -1,17 +1,23 @@
-import {
-  useState, useEffect,
-} from 'react';
-import * as R from 'ramda';
-import Big from 'big.js';
-import { useRouter } from 'next/router';
-import { getDenom } from '@utils/get_denom';
-import {
-  formatToken,
-} from '@utils/format_token';
-import { chainConfig } from '@src/configs';
 import { useDesmosProfile } from '@hooks';
+
+import { chainConfig } from '@src/configs';
+
+import { getDenom } from '@utils/get_denom';
+import { formatToken } from '@utils/format_token';
+
+import { useState, useEffect } from 'react';
+
+import * as R from 'ramda';
+
+import Big from 'big.js';
+
+import { useRouter } from 'next/router';
+
+import { isNil, isEmpty } from 'lodash';
+
 import { AccountDetailState } from './types';
 import {
+  fetchAccountInfo,
   fetchAccountWithdrawalAddress,
   fetchAvailableBalances,
   fetchCommission,
@@ -31,6 +37,7 @@ const initialState: AccountDetailState = {
   loading: true,
   exists: true,
   desmosProfile: null,
+  accountAddress: null,
   overview: {
     address: '',
     withdrawalAddress: '',
@@ -48,6 +55,11 @@ const initialState: AccountDetailState = {
     total: defaultTokenUnit,
   },
   rewards: {},
+  accountInfo: {
+    address: '',
+    accountOverview: [],
+    walletOverview: [],
+  },
 };
 
 export const useAccountDetails = () => {
@@ -55,16 +67,14 @@ export const useAccountDetails = () => {
   const [state, setState] = useState<AccountDetailState>(initialState);
 
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   // ==========================
   // Desmos Profile
   // ==========================
-  const {
-    fetchDesmosProfile, formatDesmosProfile,
-  } = useDesmosProfile({
-    onComplete: (data) => {
+  const { fetchDesmosProfile, formatDesmosProfile } = useDesmosProfile({
+    onComplete: data => {
       handleSetState({
         desmosProfile: formatDesmosProfile(data),
       });
@@ -76,25 +86,79 @@ export const useAccountDetails = () => {
     if (chainConfig.extra.profile) {
       fetchDesmosProfile(router.query.address as string);
     }
-  },
-  [router.query.address]);
+  }, [router.query.address]);
 
   useEffect(() => {
     fetchWithdrawalAddress();
     fetchBalance();
+    fetchAccountInfoAddress();
   }, [router.query.address]);
 
   // ==========================
   // Fetch Data
   // ==========================
   const fetchWithdrawalAddress = async () => {
-    const data = await fetchAccountWithdrawalAddress(router.query.address as string);
+    const data = await fetchAccountWithdrawalAddress(
+      router.query.address as string
+    );
     handleSetState({
       overview: {
         address: router.query.address,
         withdrawalAddress: R.pathOr('', ['withdrawalAddress', 'address'], data),
       },
     });
+  };
+  //TODO fetchTestBalance AccountInfo
+  const fetchAccountInfoAddress = async () => {
+    const address = router.query.address as string;
+    const data = await fetchAccountInfo(address);
+    const { jsClient } = await import('js-core');
+
+    if (data) {
+      const stateChange: any = {
+        loading: false,
+      };
+      if (!isEmpty(data.wallet)) {
+        handleSetState({
+          accountAddress: data.wallet[0].account_address,
+          accountInfo: {
+            walletOverview: {
+              address: data.wallet[0]?.address,
+              account_address: data.wallet[0]?.account_address,
+              balance: data.wallet[0]?.balance[0]?.amount,
+              kind: jsClient.walletKindToJSON(data.wallet[0]?.kind),
+              state: jsClient.walletStateToJSON(data.wallet[0]?.state),
+            },
+            accountOverview: [],
+          },
+        });
+      }
+      if (!isEmpty(data.account)) {
+        handleSetState({
+          accountAddress: router.query.address,
+          accountInfo: {
+            walletOverview: [],
+            accountOverview: {
+              address: data.account[0].address,
+              hash: data.account[0]?.hash,
+              kind: data.account[0]?.kinds
+                .map((kind: number) => jsClient.accountKindToJSON(kind))
+                .join(', '),
+              state: jsClient.accountStateToJSON(data.account[0]?.state),
+              affiliates: data.account[0]?.affiliates.map(affiliates => {
+                return {
+                  address: affiliates.address,
+                  kind: jsClient.affiliationKindToJSON(
+                    affiliates.affiliation_kind
+                  ),
+                };
+              }),
+              wallets: data.account[0]?.wallets,
+            },
+          },
+        });
+      }
+    }
   };
 
   const fetchBalance = async () => {
@@ -106,20 +170,35 @@ export const useAccountDetails = () => {
       fetchUnbondingBalance(address),
       fetchRewards(address),
     ];
-    const [
-      commission,
-      available,
-      delegation,
-      unbonding,
-      rewards,
-    ] = await Promise.allSettled(promises);
+    const [commission, available, delegation, unbonding, rewards] =
+      await Promise.allSettled(promises);
 
     const formattedRawData: any = {};
-    formattedRawData.commission = R.pathOr([], ['value', 'commission'], commission);
-    formattedRawData.accountBalances = R.pathOr([], ['value', 'accountBalances'], available);
-    formattedRawData.delegationBalance = R.pathOr([], ['value', 'delegationBalance'], delegation);
-    formattedRawData.unbondingBalance = R.pathOr([], ['value', 'unbondingBalance'], unbonding);
-    formattedRawData.delegationRewards = R.pathOr([], ['value', 'delegationRewards'], rewards);
+    formattedRawData.commission = R.pathOr(
+      [],
+      ['value', 'commission'],
+      commission
+    );
+    formattedRawData.accountBalances = R.pathOr(
+      [],
+      ['value', 'accountBalances'],
+      available
+    );
+    formattedRawData.delegationBalance = R.pathOr(
+      [],
+      ['value', 'delegationBalance'],
+      delegation
+    );
+    formattedRawData.unbondingBalance = R.pathOr(
+      [],
+      ['value', 'unbondingBalance'],
+      unbonding
+    );
+    formattedRawData.delegationRewards = R.pathOr(
+      [],
+      ['value', 'delegationRewards'],
+      rewards
+    );
 
     handleSetState(formatAllBalance(formattedRawData));
   };
@@ -138,10 +217,13 @@ export const useAccountDetails = () => {
     const formatRewards = () => {
       const rewardsDict = {};
       // log all the rewards
-      R.pathOr([], ['delegationRewards'], data).forEach((x) => {
+      R.pathOr([], ['delegationRewards'], data).forEach(x => {
         const coins = R.pathOr([], ['coins'], x);
         const denomAmount = getDenom(coins, chainConfig.primaryTokenUnit);
-        const denomFormat = formatToken(denomAmount.amount, chainConfig.primaryTokenUnit);
+        const denomFormat = formatToken(
+          denomAmount.amount,
+          chainConfig.primaryTokenUnit
+        );
         rewardsDict[x.validatorAddress] = denomFormat;
       });
       return rewardsDict;
@@ -155,20 +237,29 @@ export const useAccountDetails = () => {
     const formatBalance = () => {
       const available = getDenom(
         R.pathOr([], ['accountBalances', 'coins'], data),
-        chainConfig.primaryTokenUnit,
+        chainConfig.primaryTokenUnit
       );
-      const availableAmount = formatToken(available.amount, chainConfig.primaryTokenUnit);
+      const availableAmount = formatToken(
+        available.amount,
+        chainConfig.primaryTokenUnit
+      );
       const delegate = getDenom(
         R.pathOr([], ['delegationBalance', 'coins'], data),
-        chainConfig.primaryTokenUnit,
+        chainConfig.primaryTokenUnit
       );
-      const delegateAmount = formatToken(delegate.amount, chainConfig.primaryTokenUnit);
+      const delegateAmount = formatToken(
+        delegate.amount,
+        chainConfig.primaryTokenUnit
+      );
 
       const unbonding = getDenom(
         R.pathOr([], ['unbondingBalance', 'coins'], data),
-        chainConfig.primaryTokenUnit,
+        chainConfig.primaryTokenUnit
       );
-      const unbondingAmount = formatToken(unbonding.amount, chainConfig.primaryTokenUnit);
+      const unbondingAmount = formatToken(
+        unbonding.amount,
+        chainConfig.primaryTokenUnit
+      );
 
       const rewards = data.delegationRewards.reduce((a, b) => {
         const coins = R.pathOr([], ['coins'], b);
@@ -180,9 +271,12 @@ export const useAccountDetails = () => {
 
       const commission = getDenom(
         R.pathOr([], ['commission', 'coins'], data),
-        chainConfig.primaryTokenUnit,
+        chainConfig.primaryTokenUnit
       );
-      const commissionAmount = formatToken(commission.amount, chainConfig.primaryTokenUnit);
+      const commissionAmount = formatToken(
+        commission.amount,
+        chainConfig.primaryTokenUnit
+      );
 
       const total = Big(availableAmount.value)
         .plus(delegateAmount.value)
@@ -220,15 +314,15 @@ export const useAccountDetails = () => {
       // available tokens
       const available = R.pathOr([], ['accountBalances', 'coins'], data);
 
-      available.forEach((x) => {
+      available.forEach(x => {
         otherTokenUnits.add(x.denom);
       });
 
       // rewards tokens
       const rewards = R.pathOr([], ['delegationRewards'], data);
 
-      rewards.forEach((x) => {
-        x.coins?.forEach((y) => {
+      rewards.forEach(x => {
+        x.coins?.forEach(y => {
           otherTokenUnits.add(y.denom);
         });
       });
@@ -236,7 +330,7 @@ export const useAccountDetails = () => {
       // commission tokens
       const commission = R.pathOr([], ['commission', 'coins'], data);
 
-      commission.forEach((x) => {
+      commission.forEach(x => {
         otherTokenUnits.add(x.denom);
       });
 
@@ -263,10 +357,10 @@ export const useAccountDetails = () => {
         });
       });
 
-      return ({
+      return {
         data: otherTokens,
         count: otherTokens.length,
-      });
+      };
     };
 
     formatOtherTokens();

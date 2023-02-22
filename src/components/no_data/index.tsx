@@ -19,14 +19,8 @@ const NoData: React.FC<{
   return (
     <div className={classnames(className, classes.root)}>
       <div className={classes.content}>
-        {theme === 'light' ? (
-          <NotFoundLight />
-        ) : (
-          <UFO />
-        )}
-        <Typography variant="body1">
-          {t('nothingToShow')}
-        </Typography>
+        {theme === 'light' ? <NotFoundLight /> : <UFO />}
+        <Typography variant="body1">{t('nothingToShow')}</Typography>
       </div>
     </div>
   );

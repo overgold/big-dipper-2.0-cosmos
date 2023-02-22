@@ -1,6 +1,4 @@
-import {
-  useState, useEffect,
-} from 'react';
+import { useState, useEffect } from 'react';
 import * as R from 'ramda';
 import { useRouter } from 'next/router';
 import { chainConfig } from '@src/configs';
@@ -17,19 +15,17 @@ export const useProfileDetails = () => {
   const router = useRouter();
   const [state, setState] = useState<ProfileDetailState>(initialState);
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   // ==========================
   // Desmos Profile
   // ==========================
-  const {
-    fetchDesmosProfile, formatDesmosProfile,
-  } = useDesmosProfile({
-    onComplete: (data) => {
+  const { fetchDesmosProfile, formatDesmosProfile } = useDesmosProfile({
+    onComplete: data => {
       handleSetState({
         loading: false,
-        exists: !!data.profile.length,
+        exists: !!data?.profile.length,
         desmosProfile: formatDesmosProfile(data),
       });
     },
@@ -37,9 +33,13 @@ export const useProfileDetails = () => {
 
   const shouldShowProfile = () => {
     const dtagConnections = state.desmosProfile.connections;
-    const dtagConnectionsNetwork = dtagConnections.map((x) => { return x.identifier; });
+    const dtagConnectionsNetwork = dtagConnections.map(x => {
+      return x.identifier;
+    });
     const chainPrefix = chainConfig.prefix.account;
-    const containNetwork = dtagConnectionsNetwork.some((x) => x.startsWith(chainPrefix));
+    const containNetwork = dtagConnectionsNetwork.some(x =>
+      x.startsWith(chainPrefix)
+    );
     if (containNetwork) {
       return true;
     }
@@ -66,8 +66,16 @@ export const useProfileDetails = () => {
 
       if (showProfile) {
         const dtagInput = router.query.dtag as string;
-        if ((`@${state.desmosProfile.dtag}` !== dtagInput) && (`@${state.desmosProfile.dtag.toUpperCase()}` === dtagInput.toUpperCase())) {
-          router.push({ pathname: `/@${state.desmosProfile.dtag}` }, `/@${state.desmosProfile.dtag}`, { shallow: true });
+        if (
+          `@${state.desmosProfile.dtag}` !== dtagInput &&
+          `@${state.desmosProfile.dtag.toUpperCase()}` ===
+            dtagInput.toUpperCase()
+        ) {
+          router.push(
+            { pathname: `/@${state.desmosProfile.dtag}` },
+            `/@${state.desmosProfile.dtag}`,
+            { shallow: true }
+          );
         }
       } else {
         handleSetState({

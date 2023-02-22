@@ -1,182 +1,152 @@
 import React from 'react';
 import classnames from 'classnames';
 import useTranslation from 'next-translate/useTranslation';
-import {
-  Typography,
-  Dialog,
-} from '@material-ui/core';
-import QRCode from 'qrcode.react';
+import { Typography, Dialog } from '@material-ui/core';
+
 import { useScreenSize } from '@hooks';
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  TelegramShareButton,
-  TelegramIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
-  EmailShareButton,
-  EmailIcon,
-} from 'react-share';
+
 import CopyIcon from '@assets/icon-copy.svg';
 import ShareIcon from '@assets/icon-share.svg';
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
 import { Box } from '@components';
 import { useStyles } from './styles';
 import { useOverview } from './hooks';
+import { isEmpty } from 'lodash';
+import { walletInfo } from './walletInfo';
+import { ShareInfo } from './Share';
+import { accountInfo } from './accountInfo';
+import Link from 'next/link';
+import { TRANSACTION_DETAILS } from '@utils/go_to_page';
+import { Accordion } from '../accordion/accordion';
 
 const Overview: React.FC<{
   className?: string;
   withdrawalAddress: string;
   address: string;
-}> = ({
-  className,
-  address,
-  withdrawalAddress,
-}) => {
+  accountData: any;
+}> = ({ className, address, withdrawalAddress, accountData }) => {
   const { isDesktop } = useScreenSize();
   const classes = useStyles();
   const { t } = useTranslation('accounts');
   const {
     open,
+    addressSelected,
     handleClose,
     handleOpen,
     handleCopyToClipboard,
   } = useOverview(t);
 
-  const url = `${process.env.NEXT_PUBLIC_URL}/accounts/${address}`;
-  const hashTags = ['bigdipperexplorer', 'bigdipper'];
   return (
     <>
-      <Dialog
-        maxWidth="xl"
-        onClose={handleClose}
-        aria-labelledby="simple-dialog-title"
+      <ShareInfo
+        address={addressSelected}
         open={open}
-      >
-        <Box className={classes.dialog}>
-          <Typography variant="body1" align="center">
-            {t('scanForAddress')}
-          </Typography>
-          <QRCode
-            value={address}
-            size={200}
-            bgColor="#ffffff"
-            fgColor="#000000"
-            renderAs="svg"
-          />
-          <div className="dialog__share--wrapper">
-            <Typography variant="body1">
-              {t('shareTo')}
-            </Typography>
-            <div className={classes.icons}>
-              <FacebookShareButton
-                url={url}
-                quote={address}
-                hashtag={hashTags[0]}
-                className="share-buttons"
-              >
-                <FacebookIcon
-                  round
-                />
-              </FacebookShareButton>
-              <TwitterShareButton
-                url={url}
-                title={address}
-                hashtags={hashTags}
-                className="share-buttons"
-              >
-                <TwitterIcon
-                  round
-                />
-              </TwitterShareButton>
-
-              <TelegramShareButton
-                url={url}
-                title={address}
-                className="share-buttons"
-              >
-                <TelegramIcon
-                  round
-                />
-              </TelegramShareButton>
-
-              <WhatsappShareButton
-                url={url}
-                title={address}
-                separator=":: "
-                className="share-buttons"
-              >
-                <WhatsappIcon
-                  round
-                />
-              </WhatsappShareButton>
-              <EmailShareButton
-                url={url}
-                subject="address"
-                body={address}
-                separator=":: "
-                className="share-buttons email"
-              >
-                <EmailIcon
-                  round
-                />
-              </EmailShareButton>
-            </div>
-          </div>
-        </Box>
-      </Dialog>
+        handleClose={handleClose}
+      />
       <Box className={classnames(className, classes.root)}>
-        <div className={classnames(classes.copyText, classes.item)}>
-          <Typography variant="body1" className="label">
-            {t('address')}
-          </Typography>
-          <div className="detail">
-            <CopyIcon
-              onClick={() => handleCopyToClipboard(address)}
-              className={classes.actionIcons}
-            />
-            <ShareIcon
-              onClick={handleOpen}
-              className={classes.actionIcons}
-            />
-            <Typography variant="body1" className="value">
-              {
-                !isDesktop ? (
-                  getMiddleEllipsis(address, {
-                    beginning: 15, ending: 5,
-                  })
-                ) : (
-                  address
-                )
-              }
-            </Typography>
+        {!isEmpty(accountData.walletOverview) && (
+          <div className={classnames(classes.list)}>
+            {walletInfo(accountData.walletOverview, t).map(walletItem => (
+              <div
+                key={walletItem.title}
+                className={classnames(
+                  classes.copyText,
+                  classes.item,
+                  classes.walletsItem
+                )}
+              >
+                <Typography variant="body1" className="label">
+                  <strong>{walletItem.title}</strong>
+                </Typography>
+                <div className="detail">
+                  {walletItem.isDetail && (
+                    <>
+                      <CopyIcon
+                        onClick={() => handleCopyToClipboard(walletItem.value)}
+                        className={classes.actionIcons}
+                      />
+                      <ShareIcon
+                        onClick={() => handleOpen(walletItem.value)}
+                        className={classes.actionIcons}
+                      />
+                    </>
+                  )}
+                  <Typography variant="body1" className="value">
+                    {!isDesktop && walletItem.isDetail
+                      ? getMiddleEllipsis(walletItem.value, {
+                          beginning: 15,
+                          ending: 5,
+                        })
+                      : walletItem.value}
+                  </Typography>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
+        )}
+        {!isEmpty(accountData.accountOverview) && (
+          <>
+            <div className={classnames(classes.list)}>
+              {accountInfo(accountData.accountOverview, t).map(accountItem => (
+                <div
+                  key={accountItem.title}
+                  className={classnames(classes.copyText, classes.item)}
+                >
+                  <Typography variant="body1" className="label">
+                    <strong>{accountItem.title}</strong>
+                  </Typography>
+                  <div className="detail">
+                    {accountItem.isDetail && (
+                      <>
+                        <CopyIcon
+                          onClick={() =>
+                            handleCopyToClipboard(accountItem.value)
+                          }
+                          className={classes.actionIcons}
+                        />
+                        {!accountItem.thisHash && (
+                          <ShareIcon
+                            onClick={() => handleOpen(accountItem.value)}
+                            className={classes.actionIcons}
+                          />
+                        )}
+                      </>
+                    )}
 
-        <div className={classnames(classes.copyText, classes.item)}>
-          <Typography variant="body1" className="label">
-            {t('rewardAddress')}
-          </Typography>
-          <div className="detail">
-            <CopyIcon
-              className={classes.actionIcons}
-              onClick={() => handleCopyToClipboard(withdrawalAddress)}
-            />
-            <Typography variant="body1" className="value">
-              {
-                !isDesktop ? (
-                  getMiddleEllipsis(withdrawalAddress, {
-                    beginning: 15, ending: 5,
-                  })
-                ) : (
-                  withdrawalAddress
-                )
-              }
-            </Typography>
-          </div>
-        </div>
+                    <Typography variant="body1" className="value">
+                      {!isDesktop && accountItem.isDetail
+                        ? getMiddleEllipsis(accountItem.value, {
+                            beginning: 15,
+                            ending: 5,
+                          })
+                        : accountItem.value}
+                    </Typography>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={classes.accordionContainer}>
+              {!isEmpty(accountData.accountOverview.affiliates) && (
+                <Accordion
+                  data={accountData.accountOverview.affiliates}
+                  headTitle={t('affiliatesHead')}
+                  options={{
+                    itemsOne: 'address',
+                    itemsTwo: 'kind',
+                    itemsOneTitle: t('address'),
+                    itemsTwoTitle: t('affiliation'),
+                  }}
+                />
+              )}
+              {!isEmpty(accountData.accountOverview.wallets) && (
+                <Accordion
+                  data={accountData.accountOverview.wallets}
+                  headTitle={t('walletsHead')}
+                />
+              )}
+            </div>
+          </>
+        )}
       </Box>
     </>
   );
