@@ -16,7 +16,7 @@ import { walletInfo } from './walletInfo';
 import { ShareInfo } from './Share';
 import { accountInfo } from './accountInfo';
 import Link from 'next/link';
-import { TRANSACTION_DETAILS } from '@utils/go_to_page';
+import { ACCOUNT_DETAILS, TRANSACTION_DETAILS } from '@utils/go_to_page';
 import { Accordion } from '../accordion/accordion';
 
 const Overview: React.FC<{
@@ -72,12 +72,18 @@ const Overview: React.FC<{
                     </>
                   )}
                   <Typography variant="body1" className="value">
-                    {!isDesktop && walletItem.isDetail
-                      ? getMiddleEllipsis(walletItem.value, {
-                          beginning: 15,
-                          ending: 5,
-                        })
-                      : walletItem.value}
+                    {walletItem.isDetail ? (
+                      <Link href={ACCOUNT_DETAILS(walletItem.value)} passHref>
+                        {!isDesktop
+                          ? getMiddleEllipsis(walletItem.value, {
+                              beginning: 15,
+                              ending: 5,
+                            })
+                          : walletItem.value}
+                      </Link>
+                    ) : (
+                      walletItem.value
+                    )}
                   </Typography>
                 </div>
               </div>
@@ -114,12 +120,23 @@ const Overview: React.FC<{
                     )}
 
                     <Typography variant="body1" className="value">
-                      {!isDesktop && accountItem.isDetail
-                        ? getMiddleEllipsis(accountItem.value, {
-                            beginning: 15,
-                            ending: 5,
-                          })
-                        : accountItem.value}
+                      {accountItem.isDetail ? (
+                        <Link href={ACCOUNT_DETAILS(accountItem.value)}>
+                          {!isDesktop
+                            ? getMiddleEllipsis(accountItem.value, {
+                                beginning: 15,
+                                ending: 5,
+                              })
+                            : accountItem.value}
+                        </Link>
+                      ) : !isDesktop && accountItem.thisHash ? (
+                        getMiddleEllipsis(accountItem.value, {
+                          beginning: 15,
+                          ending: 5,
+                        })
+                      ) : (
+                        accountItem.value
+                      )}
                     </Typography>
                   </div>
                 </div>

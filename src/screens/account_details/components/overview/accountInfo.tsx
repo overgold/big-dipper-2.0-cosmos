@@ -25,7 +25,6 @@ export const accountInfo: accountInfoType = (accountData, t) => [
   {
     title: t('hashHead'),
     value: accountData.hash,
-    isDetail: true,
     thisHash: true,
   },
   {
