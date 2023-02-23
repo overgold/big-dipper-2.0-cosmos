@@ -52,13 +52,14 @@ export const useStyles = () => {
         },
       },
       walletsItem: {
-        '&:last-child': {
-          [theme.breakpoints.up('md')]: {
-            gridColumn: 2,
-            gridRow: '1 / 5',
-          },
+        '&:first-child': {
+          // [theme.breakpoints.up('md')]: {
+          //   gridColumn: 2,
+          //   gridRow: '1 / 5',
+          // },
           '& .value': {
             fontWeight: 700,
+            fontSize: '20px',
           },
           paddingBottom: 0,
         },
