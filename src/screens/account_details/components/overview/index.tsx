@@ -163,9 +163,10 @@ const Overview: React.FC<{
                   headTitle={t('walletsHead')}
                   options={{
                     itemsOne: 'address',
-                    itemsTwo: 'kind',
+                    itemsTwo: 'balance',
+                    prefix: 'denom',
                     itemsOneTitle: t('address'),
-                    itemsTwoTitle: t('kindHead'),
+                    itemsTwoTitle: t('balanceHead'),
                   }}
                 />
               )}

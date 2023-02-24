@@ -1,4 +1,5 @@
 import { useDesmosProfile } from '@hooks';
+import { bech32 } from 'bech32';
 
 import { chainConfig } from '@src/configs';
 import { convertCoinToSatoshi } from '@src/utils/coinFormatting';
@@ -165,6 +166,9 @@ export const useAccountDetails = () => {
                   balance: convertCoinToSatoshi(
                     !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
                   ),
+                  denom: !isEmpty(wallet.balance)
+                    ? wallet.balance[0]?.denom
+                    : bech32.decode(wallet.address).prefix,
                 };
               }),
               totalWalletsBalance: convertCoinToSatoshi(
@@ -279,7 +283,6 @@ export const useAccountDetails = () => {
         unbonding.amount,
         chainConfig.primaryTokenUnit
       );
-      console.log('data', data);
       const rewards = data.delegationRewards.reduce((a, b) => {
         const coins = R.pathOr([], ['coins'], b);
         const dsmCoins = getDenom(coins, chainConfig.primaryTokenUnit);
