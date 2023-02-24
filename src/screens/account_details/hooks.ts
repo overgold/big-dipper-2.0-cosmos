@@ -1,6 +1,7 @@
 import { useDesmosProfile } from '@hooks';
 
 import { chainConfig } from '@src/configs';
+import { convertCoinToSatoshi } from '@src/utils/coinFormatting';
 
 import { getDenom } from '@utils/get_denom';
 import { formatToken } from '@utils/format_token';
@@ -25,6 +26,7 @@ import {
   fetchRewards,
   fetchUnbondingBalance,
 } from './utils';
+import { sumBalances } from '@src/utils/sumBalances';
 
 const defaultTokenUnit: TokenUnit = {
   value: '0',
@@ -110,16 +112,18 @@ export const useAccountDetails = () => {
   };
   //TODO fetchTestBalance AccountInfo
   const fetchAccountInfoAddress = async () => {
+    handleSetState({
+      loading: true,
+    });
     const address = router.query.address as string;
     const data = await fetchAccountInfo(address);
+
     const { jsClient } = await import('js-core');
 
     if (data) {
-      const stateChange: any = {
-        loading: false,
-      };
       if (!isEmpty(data.wallet)) {
         handleSetState({
+          loading: false,
           accountAddress: data.wallet[0].account_address,
           accountInfo: {
             walletOverview: {
@@ -135,6 +139,7 @@ export const useAccountDetails = () => {
       }
       if (!isEmpty(data.account)) {
         handleSetState({
+          loading: false,
           accountAddress: router.query.address,
           accountInfo: {
             walletOverview: [],
@@ -153,7 +158,21 @@ export const useAccountDetails = () => {
                   ),
                 };
               }),
-              wallets: data.account[0]?.wallets,
+              wallets: data.account[0]?.wallets_data.map(wallet => {
+                return {
+                  address: wallet.address,
+                  kind: jsClient.walletKindToJSON(wallet.kind),
+                  balance: convertCoinToSatoshi(
+                    !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
+                  ),
+                };
+              }),
+              totalWalletsBalance: convertCoinToSatoshi(
+                sumBalances(data.account[0]?.wallets_data, {
+                  paramsOne: 'balance',
+                  paramsTwo: 'amount',
+                })
+              ),
             },
           },
         });
@@ -260,7 +279,7 @@ export const useAccountDetails = () => {
         unbonding.amount,
         chainConfig.primaryTokenUnit
       );
-
+      console.log('data', data);
       const rewards = data.delegationRewards.reduce((a, b) => {
         const coins = R.pathOr([], ['coins'], b);
         const dsmCoins = getDenom(coins, chainConfig.primaryTokenUnit);

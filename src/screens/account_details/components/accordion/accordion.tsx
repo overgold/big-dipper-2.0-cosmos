@@ -53,7 +53,7 @@ export const Accordion = ({ headTitle, data, options }: AccordionProps) => {
               <li className={classes.list} key={index}>
                 <>
                   <Typography variant="body1">
-                    <strong>{`${options.itemsOneTitle}: `}</strong>
+                    <strong>{`${options.itemsOneTitle} `}</strong>
                     <Link
                       href={ACCOUNT_DETAILS(item[options.itemsOne])}
                       passHref
@@ -67,7 +67,7 @@ export const Accordion = ({ headTitle, data, options }: AccordionProps) => {
                     </Link>
                   </Typography>
                   <Typography variant="body1">
-                    <strong>{`${options.itemsTwoTitle}: `}</strong>
+                    <strong>{`${options.itemsTwoTitle} `}</strong>
                     {item[options.itemsTwo]}
                   </Typography>
                 </>
