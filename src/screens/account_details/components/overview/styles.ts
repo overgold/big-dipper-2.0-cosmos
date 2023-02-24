@@ -47,16 +47,11 @@ export const useStyles = () => {
         gridTemplateColumns: '1fr',
         [theme.breakpoints.up('md')]: {
           gridTemplateColumns: '1fr 1fr',
-          justifyItems: 'center',
           gap: '12px',
         },
       },
       walletsItem: {
         '&:first-child': {
-          // [theme.breakpoints.up('md')]: {
-          //   gridColumn: 2,
-          //   gridRow: '1 / 5',
-          // },
           '& .value': {
             fontWeight: 700,
             fontSize: '20px',

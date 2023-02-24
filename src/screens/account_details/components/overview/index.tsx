@@ -21,10 +21,8 @@ import { Accordion } from '../accordion/accordion';
 
 const Overview: React.FC<{
   className?: string;
-  withdrawalAddress: string;
-  address: string;
   accountData: any;
-}> = ({ className, address, withdrawalAddress, accountData }) => {
+}> = ({ className, accountData }) => {
   const { isDesktop } = useScreenSize();
   const classes = useStyles();
   const { t } = useTranslation('accounts');
@@ -96,13 +94,17 @@ const Overview: React.FC<{
               {accountInfo(accountData.accountOverview, t).map(accountItem => (
                 <div
                   key={accountItem.title}
-                  className={classnames(classes.copyText, classes.item)}
+                  className={classnames(
+                    classes.copyText,
+                    classes.item,
+                    classes.walletsItem
+                  )}
                 >
                   <Typography variant="body1" className="label">
                     <strong>{accountItem.title}</strong>
                   </Typography>
                   <div className="detail">
-                    {accountItem.isDetail && (
+                    {(accountItem.isDetail || accountItem.thisHash) && (
                       <>
                         <CopyIcon
                           onClick={() =>
@@ -159,6 +161,12 @@ const Overview: React.FC<{
                 <Accordion
                   data={accountData.accountOverview.wallets}
                   headTitle={t('walletsHead')}
+                  options={{
+                    itemsOne: 'address',
+                    itemsTwo: 'kind',
+                    itemsOneTitle: t('address'),
+                    itemsTwoTitle: t('kindHead'),
+                  }}
                 />
               )}
             </div>

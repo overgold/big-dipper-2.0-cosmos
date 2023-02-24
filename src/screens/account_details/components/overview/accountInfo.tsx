@@ -14,21 +14,27 @@ export type accountInfoType = (
 
 export const accountInfo: accountInfoType = (accountData, t) => [
   {
-    title: t('accountAddressHead'),
-    value: accountData.address,
-    isDetail: true,
+    title: t('balanceHead'),
+    value: accountData.totalWalletsBalance
+      ? `${accountData.totalWalletsBalance} OVG`
+      : '0 OVG',
   },
   {
     title: t('kindHead'),
     value: accountData.kind,
   },
   {
-    title: t('hashHead'),
-    value: accountData.hash,
-    thisHash: true,
+    title: t('accountAddressHead'),
+    value: accountData.address,
+    isDetail: true,
   },
   {
     title: t('stateHead'),
     value: accountData.state,
+  },
+  {
+    title: t('hashHead'),
+    value: accountData.hash,
+    thisHash: true,
   },
 ];

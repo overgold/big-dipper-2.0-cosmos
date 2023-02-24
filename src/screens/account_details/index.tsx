@@ -45,8 +45,6 @@ const AccountDetails = () => {
             <Overview
               className={classes.overview}
               accountData={state.accountInfo}
-              withdrawalAddress={state.overview.withdrawalAddress}
-              address={state.overview.address}
             />
             {/* <Balance
               className={classes.balance}
