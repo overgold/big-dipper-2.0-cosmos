@@ -13,6 +13,7 @@ export interface AccordionProps {
   options?: {
     itemsOne?: string;
     itemsTwo?: string;
+    prefix?: string;
     itemsOneTitle?: () => string;
     itemsTwoTitle?: () => string;
   };
@@ -68,7 +69,9 @@ export const Accordion = ({ headTitle, data, options }: AccordionProps) => {
                   </Typography>
                   <Typography variant="body1">
                     <strong>{`${options.itemsTwoTitle} `}</strong>
-                    {item[options.itemsTwo]}
+                    {`${item[options.itemsTwo]} ${
+                      options.prefix ? item[options.prefix].toUpperCase() : ''
+                    }`}
                   </Typography>
                 </>
               </li>
