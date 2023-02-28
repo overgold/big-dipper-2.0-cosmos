@@ -1,11 +1,13 @@
 import { useDesmosProfile } from '@hooks';
-import { bech32 } from 'bech32';
 
 import { chainConfig } from '@src/configs';
 import { convertCoinToSatoshi } from '@src/utils/coinFormatting';
+import { sumBalances } from '@src/utils/sumBalances';
 
 import { getDenom } from '@utils/get_denom';
 import { formatToken } from '@utils/format_token';
+
+import { bech32 } from 'bech32';
 
 import { useState, useEffect } from 'react';
 
@@ -19,6 +21,7 @@ import { isNil, isEmpty } from 'lodash';
 
 import { AccountDetailState } from './types';
 import {
+  fetchAccountHash,
   fetchAccountInfo,
   fetchAccountWithdrawalAddress,
   fetchAvailableBalances,
@@ -27,7 +30,6 @@ import {
   fetchRewards,
   fetchUnbondingBalance,
 } from './utils';
-import { sumBalances } from '@src/utils/sumBalances';
 
 const defaultTokenUnit: TokenUnit = {
   value: '0',
@@ -95,6 +97,7 @@ export const useAccountDetails = () => {
     fetchWithdrawalAddress();
     fetchBalance();
     fetchAccountInfoAddress();
+    fetchAddressHash()
   }, [router.query.address]);
 
   // ==========================
@@ -111,7 +114,7 @@ export const useAccountDetails = () => {
       },
     });
   };
-  //TODO fetchTestBalance AccountInfo
+  //fetch AccountInfo
   const fetchAccountInfoAddress = async () => {
     handleSetState({
       loading: true,
@@ -182,6 +185,61 @@ export const useAccountDetails = () => {
         });
       }
     }
+  };
+
+  const fetchAddressHash = async () => {
+    handleSetState({
+      loading: true,
+    });
+    const address = router.query.account_hash as string;
+    const data = await fetchAccountHash(address);
+
+    const { jsClient } = await import('js-core');
+
+      if (!isEmpty(data.account)) {
+        handleSetState({
+          loading: false,
+          accountAddress: data.account[0].address,
+          accountInfo: {
+            walletOverview: [],
+            accountOverview: {
+              address: data.account[0].address,
+              hash: data.account[0]?.hash,
+              kind: data.account[0]?.kinds
+                .map((kind: number) => jsClient.accountKindToJSON(kind))
+                .join(', '),
+              state: jsClient.accountStateToJSON(data.account[0]?.state),
+              affiliates: data.account[0]?.affiliates.map(affiliates => {
+                return {
+                  address: affiliates.address,
+                  kind: jsClient.affiliationKindToJSON(
+                    affiliates.affiliation_kind
+                  ),
+                };
+              }),
+              wallets: data.account[0]?.wallets_data.map(wallet => {
+                return {
+                  address: wallet.address,
+                  kind: jsClient.walletKindToJSON(wallet.kind),
+                  balance: convertCoinToSatoshi(
+                    !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
+                  ),
+                  denom: !isEmpty(wallet.balance)
+                    ? wallet.balance[0]?.denom
+                    : bech32.decode(wallet.address).prefix,
+                };
+              }),
+              totalWalletsBalance: convertCoinToSatoshi(
+                sumBalances(data.account[0]?.wallets_data, {
+                  paramsOne: 'balance',
+                  paramsTwo: 'amount',
+                })
+              ),
+            },
+          },
+        });
+      }
+    
   };
 
   const fetchBalance = async () => {

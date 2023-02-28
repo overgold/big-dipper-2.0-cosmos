@@ -103,7 +103,7 @@ export const AccountUndelegationsDocument = /* GraphQL */ `
     }
   }
 `;
-//TODO AccountInfo
+//AccountInfo
 export const AccountInfo = /* GraphQL */ `
   query MyQuery($address: String, $limit: Int) {
     account: overgold_chain_accounts_accounts(
@@ -135,4 +135,25 @@ export const AccountInfo = /* GraphQL */ `
       state
     }
   }
+`;
+//AccountHash
+export const AccountHash = /* GraphQL */ `
+query AccountHash($hash: String) {
+  account: overgold_chain_accounts_accounts(where: {hash: {_eq: $hash}}) {
+    address
+    extras
+    hash
+    kinds
+    state
+    wallets
+    affiliates {
+      address
+      affiliation_kind
+    }
+    wallets_data {
+      address
+      balance
+    }
+  }
+}
 `;

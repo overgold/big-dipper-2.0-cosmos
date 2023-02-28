@@ -6,6 +6,7 @@ import {
   AccountUnbondingBalanceDocument,
   AccountDelegationRewardsDocument,
   AccountInfo,
+  AccountHash,
 } from '@src/graphql/account_details_documents';
 
 import { toValidatorAddress } from '@utils/prefix_convert';
@@ -126,7 +127,7 @@ export const fetchRewards = async (address: string) => {
     return defaultReturnValue;
   }
 };
-//TODO fetchTestBalance AccountInfo
+// fetch AccountInfo
 export const fetchAccountInfo = async (address: string) => {
   try {
     const { data } = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
@@ -134,6 +135,22 @@ export const fetchAccountInfo = async (address: string) => {
         address: `%${address}%`,
       },
       query: AccountInfo,
+    });
+
+    return R.pathOr([], ['data'], data);
+  } catch (error) {
+    console.log('error', error);
+    return [];
+  }
+};
+// fetch Account Hash
+export const fetchAccountHash = async (hash: string) => {
+  try {
+    const { data } = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
+      variables: {
+        hash,
+      },
+      query: AccountHash,
     });
 
     return R.pathOr([], ['data'], data);
