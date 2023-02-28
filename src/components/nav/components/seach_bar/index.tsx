@@ -4,11 +4,9 @@ import { Search } from '@components';
 import { chainConfig } from '@src/configs';
 import { useSearchBar } from './hooks';
 
-const SearchBar: React.FC<{className?: string}> = ({ className }) => {
+const SearchBar: React.FC<{ className?: string }> = ({ className }) => {
   const { t } = useTranslation('common');
-  const {
-    handleOnSubmit,
-  } = useSearchBar(t);
+  const { handleOnSubmit } = useSearchBar(t);
 
   let placeholderText;
   if (chainConfig.extra.profile) {

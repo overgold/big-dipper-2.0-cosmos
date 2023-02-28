@@ -16,7 +16,7 @@ import { walletInfo } from './walletInfo';
 import { ShareInfo } from './Share';
 import { accountInfo } from './accountInfo';
 import Link from 'next/link';
-import { ACCOUNT_DETAILS, TRANSACTION_DETAILS } from '@utils/go_to_page';
+import { ACCOUNT_DETAILS, ACCOUNT_HASH } from '@utils/go_to_page';
 import { Accordion } from '../accordion/accordion';
 
 const Overview: React.FC<{
@@ -131,11 +131,15 @@ const Overview: React.FC<{
                               })
                             : accountItem.value}
                         </Link>
-                      ) : !isDesktop && accountItem.thisHash ? (
-                        getMiddleEllipsis(accountItem.value, {
-                          beginning: 15,
-                          ending: 5,
-                        })
+                      ) : accountItem.thisHash ? (
+                        <Link href={ACCOUNT_HASH(accountItem.value)}>
+                          {!isDesktop
+                            ? getMiddleEllipsis(accountItem.value, {
+                                beginning: 15,
+                                ending: 5,
+                              })
+                            : accountItem.value}
+                        </Link>
                       ) : (
                         accountItem.value
                       )}
