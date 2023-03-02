@@ -1,23 +1,33 @@
-import React from 'react';
-import classnames from 'classnames';
-import useTranslation from 'next-translate/useTranslation';
-import { Typography, Dialog } from '@material-ui/core';
+import CopyIcon from '@assets/icon-copy.svg';
+import ShareIcon from '@assets/icon-share.svg';
+
+import { Box } from '@components';
 
 import { useScreenSize } from '@hooks';
 
-import CopyIcon from '@assets/icon-copy.svg';
-import ShareIcon from '@assets/icon-share.svg';
+import { Typography, Dialog } from '@material-ui/core';
+
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
-import { Box } from '@components';
-import { useStyles } from './styles';
-import { useOverview } from './hooks';
+import { ACCOUNT_DETAILS, ACCOUNT_HASH } from '@utils/go_to_page';
+
+import React from 'react';
+
+import classnames from 'classnames';
+
+import useTranslation from 'next-translate/useTranslation';
+
 import { isEmpty } from 'lodash';
-import { walletInfo } from './walletInfo';
+
+import Link from 'next/link';
+
+import AccountDetailsTab from '../accountDetailsTab';
+import { Accordion } from '../accordion/accordion';
+
 import { ShareInfo } from './Share';
 import { accountInfo } from './accountInfo';
-import Link from 'next/link';
-import { ACCOUNT_DETAILS, ACCOUNT_HASH } from '@utils/go_to_page';
-import { Accordion } from '../accordion/accordion';
+import { useOverview } from './hooks';
+import { useStyles } from './styles';
+import { walletInfo } from './walletInfo';
 
 const Overview: React.FC<{
   className?: string;
@@ -41,8 +51,9 @@ const Overview: React.FC<{
         open={open}
         handleClose={handleClose}
       />
-      <Box className={classnames(className, classes.root)}>
-        {!isEmpty(accountData.walletOverview) && (
+      {/* <Box className={classnames(className, classes.root)}> */}
+      {!isEmpty(accountData.walletOverview) && (
+        <Box className={classnames(className, classes.root)}>
           <div className={classnames(classes.list)}>
             {walletInfo(accountData.walletOverview, t).map(walletItem => (
               <div
@@ -87,9 +98,11 @@ const Overview: React.FC<{
               </div>
             ))}
           </div>
-        )}
-        {!isEmpty(accountData.accountOverview) && (
-          <>
+        </Box>
+      )}
+      {!isEmpty(accountData.accountOverview) && (
+        <>
+          <Box className={classnames(className, classes.root)}>
             <div className={classnames(classes.list)}>
               {accountInfo(accountData.accountOverview, t).map(accountItem => (
                 <div
@@ -175,9 +188,12 @@ const Overview: React.FC<{
                 />
               )}
             </div>
-          </>
-        )}
-      </Box>
+          </Box>
+          
+           <AccountDetailsTab data={accountData.accountOverview}/>
+        </>
+      )}
+      {/* </Box> */}
     </>
   );
 };

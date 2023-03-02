@@ -60,6 +60,7 @@ const AccountDetails = () => {
               otherTokens={state.otherTokens}
             /> */}
             {/* <Staking className={classes.staking} rewards={state.rewards} /> */}
+           
             <Transactions
               className={classes.transactions}
               accountAddress={state.accountAddress}

@@ -19,10 +19,10 @@ export const accountInfo: accountInfoType = (accountData, t) => [
       ? `${accountData.totalWalletsBalance} OVG`
       : '0 OVG',
   },
-  {
-    title: t('kindHead'),
-    value: accountData.kind,
-  },
+  // {
+  //   title: t('kindHead'),
+  //   value: accountData.kind,
+  // },
   {
     title: t('accountAddressHead'),
     value: accountData.address,

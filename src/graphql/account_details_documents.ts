@@ -123,6 +123,7 @@ export const AccountInfo = /* GraphQL */ `
         address
         balance
         kind
+        state
       }
     }
     wallet: overgold_chain_wallets_wallets(
