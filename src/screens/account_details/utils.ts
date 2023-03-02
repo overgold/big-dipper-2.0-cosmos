@@ -136,7 +136,6 @@ export const fetchAccountInfo = async (address: string) => {
       },
       query: AccountInfo,
     });
-
     return R.pathOr([], ['data'], data);
   } catch (error) {
     console.log('error', error);

@@ -97,7 +97,7 @@ export const useAccountDetails = () => {
     fetchWithdrawalAddress();
     fetchBalance();
     fetchAccountInfoAddress();
-    fetchAddressHash()
+    fetchAddressHash();
   }, [router.query.address]);
 
   // ==========================
@@ -150,9 +150,11 @@ export const useAccountDetails = () => {
             accountOverview: {
               address: data.account[0].address,
               hash: data.account[0]?.hash,
-              kind: data.account[0]?.kinds
-                .map((kind: number) => jsClient.accountKindToJSON(kind))
-                .join(', '),
+              kind: data.account[0]?.kinds.map((kindItem: number) => {
+                return {
+                  kind: jsClient.accountKindToJSON(kindItem),
+                };
+              }),
               state: jsClient.accountStateToJSON(data.account[0]?.state),
               affiliates: data.account[0]?.affiliates.map(affiliates => {
                 return {
@@ -164,8 +166,9 @@ export const useAccountDetails = () => {
               }),
               wallets: data.account[0]?.wallets_data.map(wallet => {
                 return {
-                  address: wallet.address,
                   kind: jsClient.walletKindToJSON(wallet.kind),
+                  address: wallet.address,
+                  state: jsClient.walletStateToJSON(data.account[0]?.state),
                   balance: convertCoinToSatoshi(
                     !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
                   ),
@@ -196,50 +199,56 @@ export const useAccountDetails = () => {
 
     const { jsClient } = await import('js-core');
 
-      if (!isEmpty(data.account)) {
-        handleSetState({
-          loading: false,
-          accountAddress: data.account[0].address,
-          accountInfo: {
-            walletOverview: [],
-            accountOverview: {
-              address: data.account[0].address,
-              hash: data.account[0]?.hash,
-              kind: data.account[0]?.kinds
-                .map((kind: number) => jsClient.accountKindToJSON(kind))
-                .join(', '),
-              state: jsClient.accountStateToJSON(data.account[0]?.state),
-              affiliates: data.account[0]?.affiliates.map(affiliates => {
-                return {
-                  address: affiliates.address,
-                  kind: jsClient.affiliationKindToJSON(
-                    affiliates.affiliation_kind
-                  ),
-                };
-              }),
-              wallets: data.account[0]?.wallets_data.map(wallet => {
-                return {
-                  address: wallet.address,
-                  kind: jsClient.walletKindToJSON(wallet.kind),
-                  balance: convertCoinToSatoshi(
-                    !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
-                  ),
-                  denom: !isEmpty(wallet.balance)
-                    ? wallet.balance[0]?.denom
-                    : bech32.decode(wallet.address).prefix,
-                };
-              }),
-              totalWalletsBalance: convertCoinToSatoshi(
-                sumBalances(data.account[0]?.wallets_data, {
-                  paramsOne: 'balance',
-                  paramsTwo: 'amount',
-                })
-              ),
-            },
+    if (!isEmpty(data.account)) {
+      handleSetState({
+        loading: false,
+        accountAddress: data.account[0].address,
+        accountInfo: {
+          walletOverview: [],
+          accountOverview: {
+            address: data.account[0].address,
+            hash: data.account[0]?.hash,
+            kind: data.account[0]?.kinds.map((kindItem: number) => {
+              return {
+                kind: jsClient.accountKindToJSON(kindItem),
+              };
+            }),
+            state: jsClient.accountStateToJSON(data.account[0]?.state),
+            affiliates: data.account[0]?.affiliates.map(affiliates => {
+              return {
+                address: affiliates.address,
+                kind: jsClient.affiliationKindToJSON(
+                  affiliates.affiliation_kind
+                ),
+              };
+            }),
+            wallets: data.account[0]?.wallets_data.map(wallet => {
+              return {
+                address: wallet.address,
+                kind: jsClient.walletKindToJSON(wallet.kind),
+                state: jsClient.walletStateToJSON(data.account[0]?.state),
+                balance: convertCoinToSatoshi(
+                  !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
+                ),
+                denom: !isEmpty(wallet.balance)
+                  ? wallet.balance[0]?.denom
+                  : bech32.decode(wallet.address).prefix,
+              };
+            }),
+            totalWalletsBalance: convertCoinToSatoshi(
+              sumBalances(data.account[0]?.wallets_data, {
+                paramsOne: 'balance',
+                paramsTwo: 'amount',
+              })
+            ),
           },
-        });
-      }
-    
+        },
+      });
+    } else {
+      handleSetState({
+        loading: false,
+      });
+    }
   };
 
   const fetchBalance = async () => {
