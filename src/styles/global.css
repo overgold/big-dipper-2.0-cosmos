@@ -100,8 +100,7 @@ svg {
     fill: #999999;
 }
 
-
-/* .scrollbar::-webkit-scrollbar {
+.scrollbar::-webkit-scrollbar {
     display: none;
 }
 
@@ -119,7 +118,7 @@ svg {
 .no-X-scroll::-webkit-scrollbar-thumb {
     background: #f3a50d;
     border-radius: 3px;
-} */
+}
 
 
 /* полоса прокрутки (скроллбар) */

@@ -15,6 +15,7 @@ import {
 } from './components';
 import { useAccountDetails } from './hooks';
 import { useStyles } from './styles';
+import Transfers from './components/transfers';
 
 const AccountDetails = () => {
   const { t } = useTranslation('accounts');
@@ -61,6 +62,9 @@ const AccountDetails = () => {
             /> */}
             {/* <Staking className={classes.staking} rewards={state.rewards} /> */}
            
+            <Transfers
+              className={classes.transactions}
+            />
             <Transactions
               className={classes.transactions}
               accountAddress={state.accountAddress}

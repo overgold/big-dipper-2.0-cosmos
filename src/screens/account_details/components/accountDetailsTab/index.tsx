@@ -1,7 +1,7 @@
 import { Box } from '@components';
 
 import { Typography } from '@material-ui/core';
-
+import dynamic from 'next/dynamic';
 import TabsHeader from '@src/screens/account_details/components/accountDetailsTab/tabs';
 
 import React from 'react';
@@ -27,36 +27,32 @@ const AccountDetailsTab: React.FC<{
       <div className={classnames(classes.wrapper)}>
         <TabsHeader tab={state.tab} handleTabChange={handleTabChange} />
       </div>
-      <div className={classnames(classes.container)}>
-        {
-          <>
-            {/* head */}
-            <ul className={classnames(classes.list)}>
-              {columns.map(column => (
-                <li className={classnames(classes.item)} key={column.key}>
-                  <p className={classnames(classes.headTitle)}>
-                    {column.value}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            {/* row */}
-            <ul className={classnames(classes.listRow)}>
-              {sorted.map(row => (
-                <li className={classnames(classes.itemRow)} key={row.key}>
-                  {columns.map(column => {
-                    return (
-                      <p className={classnames(classes.headTitleRow)}>
-                        {formatItem(row, column.key)}
-                      </p>
-                    );
-                  })}
-                </li>
-              ))}
-            </ul>
-          </>
-        }
-      </div>
+      {sorted.length !== 0 && (
+        <div className={classnames(classes.container)}>
+          {/* head */}
+          <ul className={classnames(classes.list)}>
+            {columns.map(column => (
+              <li className={classnames(classes.item)} key={column.key}>
+                <p className={classnames(classes.headTitle)}>{column.value}</p>
+              </li>
+            ))}
+          </ul>
+          {/* row */}
+          <ul className={classnames(classes.listRow)}>
+            {sorted.map(row => (
+              <li className={classnames(classes.itemRow)} key={row.key}>
+                {columns.map(column => {
+                  return (
+                    <p className={classnames(classes.headTitleRow)}>
+                      {formatItem(row, column.key)}
+                    </p>
+                  );
+                })}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </Box>
   );
 };

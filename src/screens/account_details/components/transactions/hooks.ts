@@ -44,6 +44,7 @@ export const useTransactions = (accountAddress = '') => {
       handleSetState(stateChange);
     },
   });
+    
 
   const loadNextPage = async () => {
     handleSetState({

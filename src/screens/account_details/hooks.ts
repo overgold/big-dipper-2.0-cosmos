@@ -1,7 +1,7 @@
 import { useDesmosProfile } from '@hooks';
 
 import { chainConfig } from '@src/configs';
-import { convertCoinToSatoshi } from '@src/utils/coinFormatting';
+import { convertCoinToSatoshi, roundToFixed } from '@src/utils/coinFormatting';
 import { sumBalances } from '@src/utils/sumBalances';
 
 import { getDenom } from '@utils/get_denom';
@@ -133,7 +133,7 @@ export const useAccountDetails = () => {
             walletOverview: {
               address: data.wallet[0]?.address,
               account_address: data.wallet[0]?.account_address,
-              balance: data.wallet[0]?.balance[0]?.amount,
+              balance: roundToFixed(data.wallet[0]?.balance[0]?.amount,8),
               kind: jsClient.walletKindToJSON(data.wallet[0]?.kind),
               state: jsClient.walletStateToJSON(data.wallet[0]?.state),
             },
@@ -169,9 +169,10 @@ export const useAccountDetails = () => {
                   kind: jsClient.walletKindToJSON(wallet.kind),
                   address: wallet.address,
                   state: jsClient.walletStateToJSON(data.account[0]?.state),
-                  balance: convertCoinToSatoshi(
-                    !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
+                  balance: roundToFixed(
+                    !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0,8
                   ),
+                 
                   denom: !isEmpty(wallet.balance)
                     ? wallet.balance[0]?.denom
                     : bech32.decode(wallet.address).prefix,

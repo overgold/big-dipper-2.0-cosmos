@@ -50,6 +50,18 @@ export const useStyles = () => {
           gap: '12px',
         },
       },
+      listAccount: {
+        display: 'grid',
+        gridTemplateColumns: '1fr',
+        [theme.breakpoints.between('md','lg')]: {
+          gridTemplateColumns: '1fr 1fr',
+          gap: '12px',
+        },
+        [theme.breakpoints.up('lg')]: {
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gap: '12px',
+        },
+      },
       walletsItem: {
         '&:first-child': {
           '& .value': {
@@ -59,6 +71,7 @@ export const useStyles = () => {
           paddingBottom: 0,
         },
       },
+    
       item: {
         width: '100%',
         padding: theme.spacing(2, 0),

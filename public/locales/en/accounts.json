@@ -49,5 +49,6 @@
     "kindTab": "Kind",
     "stateTab": "State",
     "addressTab": "Address",
-    "affiliationTab": "Affiliation"
+    "affiliationTab": "Affiliation",
+    "transfers": "Transfers"
 }
