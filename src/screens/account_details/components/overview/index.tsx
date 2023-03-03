@@ -33,7 +33,7 @@ const Overview: React.FC<{
   className?: string;
   accountData: any;
 }> = ({ className, accountData }) => {
-  const { isDesktop } = useScreenSize();
+  const { isDesktop,isXlDesktop } = useScreenSize();
   const classes = useStyles();
   const { t } = useTranslation('accounts');
   const {
@@ -103,14 +103,13 @@ const Overview: React.FC<{
       {!isEmpty(accountData.accountOverview) && (
         <>
           <Box className={classnames(className, classes.root)}>
-            <div className={classnames(classes.list)}>
+            <div className={classnames(classes.listAccount)}>
               {accountInfo(accountData.accountOverview, t).map(accountItem => (
                 <div
                   key={accountItem.title}
                   className={classnames(
                     classes.copyText,
                     classes.item,
-                    classes.walletsItem
                   )}
                 >
                   <Typography variant="body1" className="label">
@@ -137,7 +136,7 @@ const Overview: React.FC<{
                     <Typography variant="body1" className="value">
                       {accountItem.isDetail ? (
                         <Link href={ACCOUNT_DETAILS(accountItem.value)}>
-                          {!isDesktop
+                          {!isXlDesktop
                             ? getMiddleEllipsis(accountItem.value, {
                                 beginning: 15,
                                 ending: 5,
@@ -146,7 +145,7 @@ const Overview: React.FC<{
                         </Link>
                       ) : accountItem.thisHash ? (
                         <Link href={ACCOUNT_HASH(accountItem.value)}>
-                          {!isDesktop
+                          {!isXlDesktop
                             ? getMiddleEllipsis(accountItem.value, {
                                 beginning: 15,
                                 ending: 5,
@@ -161,36 +160,9 @@ const Overview: React.FC<{
                 </div>
               ))}
             </div>
-            <div className={classes.accordionContainer}>
-              {!isEmpty(accountData.accountOverview.affiliates) && (
-                <Accordion
-                  data={accountData.accountOverview.affiliates}
-                  headTitle={t('affiliatesHead')}
-                  options={{
-                    itemsOne: 'address',
-                    itemsTwo: 'kind',
-                    itemsOneTitle: t('address'),
-                    itemsTwoTitle: t('affiliation'),
-                  }}
-                />
-              )}
-              {!isEmpty(accountData.accountOverview.wallets) && (
-                <Accordion
-                  data={accountData.accountOverview.wallets}
-                  headTitle={t('walletsHead')}
-                  options={{
-                    itemsOne: 'address',
-                    itemsTwo: 'balance',
-                    prefix: 'denom',
-                    itemsOneTitle: t('address'),
-                    itemsTwoTitle: t('balanceHead'),
-                  }}
-                />
-              )}
-            </div>
           </Box>
-          
-           <AccountDetailsTab data={accountData.accountOverview}/>
+
+          <AccountDetailsTab data={accountData.accountOverview} />
         </>
       )}
       {/* </Box> */}

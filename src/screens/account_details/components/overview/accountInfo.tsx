@@ -13,12 +13,12 @@ export type accountInfoType = (
 ) => accountInfoReturnType[];
 
 export const accountInfo: accountInfoType = (accountData, t) => [
-  {
-    title: t('balanceHead'),
-    value: accountData.totalWalletsBalance
-      ? `${accountData.totalWalletsBalance} OVG`
-      : '0 OVG',
-  },
+  // {
+  //   title: t('balanceHead'),
+  //   value: accountData.totalWalletsBalance
+  //     ? `${accountData.totalWalletsBalance} OVG`
+  //     : '0 OVG',
+  // },
   // {
   //   title: t('kindHead'),
   //   value: accountData.kind,
@@ -29,12 +29,12 @@ export const accountInfo: accountInfoType = (accountData, t) => [
     isDetail: true,
   },
   {
-    title: t('stateHead'),
-    value: accountData.state,
-  },
-  {
     title: t('hashHead'),
     value: accountData.hash,
     thisHash: true,
+  },
+  {
+    title: t('stateHead'),
+    value: accountData.state,
   },
 ];

@@ -15,7 +15,7 @@ export const walletInfo: walletInfoType = (accountData, t) => [
   {
     title: t('balanceHead'),
     value: accountData.balance
-      ? `${accountData.balance / 100000000} OVG`
+      ? `${accountData.balance} OVG`
       : `0 OVG`,
   },
   {

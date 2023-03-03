@@ -21,8 +21,7 @@ export const useStyles = () => {
       container: {
         padding: '0 20px 20px 20px',
         maxHeight: '360px',
-        overflow: 'auto',
-       
+        overflow: 'hidden',
       },
 
       list: {
@@ -44,12 +43,15 @@ export const useStyles = () => {
       },
       listRow: {
         width: '100%',
+        overflow: 'auto',
+        maxHeight: '320px',
         display: 'flex',
         flexDirection: 'column',
         listStyle: 'none',
       },
       itemRow: {
         display: 'grid',
+       
         [theme.breakpoints.up('lg')]: {
           gridTemplateColumns: 'repeat(3,1fr) minmax(100px, 140px)',
           '&:nth-child(odd)': {
