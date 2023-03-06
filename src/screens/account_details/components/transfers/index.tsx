@@ -51,7 +51,7 @@ const Transfers = ({ className, transferWallets }: TransferProps) => {
           tabLabelsHead={tabTransfer}
         />
       </div>
-      <div className={classes.lis65t}>
+      <div className={classes.list}>
         <TransactionsList
           transactions={items.data}
           itemCount={itemCount}
