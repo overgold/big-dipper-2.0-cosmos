@@ -158,3 +158,15 @@ export const fetchAccountHash = async (hash: string) => {
     return [];
   }
 };
+
+export const tabLabels = [
+  'walletsTab',
+  'affiliatesTab',
+  'kindsTab',
+];
+export const tabTransfer = [
+  'payment',
+  'system',
+  'withdrawSystem',
+  'issueSystem',
+];

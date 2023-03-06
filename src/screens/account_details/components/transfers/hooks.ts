@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import * as R from 'ramda';
 
 import { TransferState } from './types';
+import isEmpty from 'lodash-es/isEmpty';
 import {
   fetchIssueSystemTransfersByWallets,
   fetchPaymentTransfersByWallets,
@@ -14,8 +15,10 @@ import {
 
 const LIMIT = 20;
 
-export const useTransfer = () => {
+export const useTransfer = (transferWallets: string[]) => {
   const [state, setState] = useState<TransferState>({
+    tab: 0,
+    loading: true,
     payment: {
       data: [],
       hasNextPage: false,
@@ -47,16 +50,19 @@ export const useTransfer = () => {
   };
 
   useEffect(() => {
+    if (isEmpty(transferWallets)) {
+      return;
+    }
     fetchPaymentTransfers();
     fetchSystemTransfers();
-    fetchIssueSystemTransfers();
     fetchWithdrawSystemTransfers();
-  }, []);
+    fetchIssueSystemTransfers();
+  }, [transferWallets]);
   //PaymentTransfers
   const fetchPaymentTransfers = async () => {
     const { jsClient } = await import('js-core');
     const data = await fetchPaymentTransfersByWallets({
-      address: ['ovg1ynu2uxkpmjzdgpwfc8zph886tmmlg6gcxahguu'],
+      address: transferWallets,
       limit: LIMIT + 1,
       offset: state.payment.offsetCount,
     });
@@ -79,7 +85,7 @@ export const useTransfer = () => {
   const fetchSystemTransfers = async () => {
     const { jsClient } = await import('js-core');
     const data = await fetchSystemTransfersByWallets({
-      address: ['ovg1ynu2uxkpmjzdgpwfc8zph886tmmlg6gcxahguu'],
+      address: transferWallets,
       limit: LIMIT + 1,
       offset: state.system.offsetCount,
     });
@@ -101,7 +107,7 @@ export const useTransfer = () => {
   const fetchIssueSystemTransfers = async () => {
     const { jsClient } = await import('js-core');
     const data = await fetchIssueSystemTransfersByWallets({
-      address: ['ovg1nqqqe5rrjtt6zndpvtv32fdkysny2y3ascajte'],
+      address: transferWallets,
       limit: LIMIT + 1,
       offset: state.issueSystem.offsetCount,
     });
@@ -123,7 +129,7 @@ export const useTransfer = () => {
   const fetchWithdrawSystemTransfers = async () => {
     const { jsClient } = await import('js-core');
     const data = await fetchWithdrawSystemTransfersByWallets({
-      address: ['ovg1dzx4fj4gyh3m5fp32jxf43pjkuy06hsegkm0xf'],
+      address: transferWallets,
       limit: LIMIT + 1,
       offset: state.withdrawSystem.offsetCount,
     });
@@ -146,9 +152,50 @@ export const useTransfer = () => {
     handleSetState({
       isNextPageLoading: true,
     });
+
     // refetch query
-    fetchPaymentTransfers();
+    if (state.tab === 0) {
+      fetchPaymentTransfers();
+    }
+    if (state.tab === 1) {
+      fetchSystemTransfers();
+    }
+    if (state.tab === 2) {
+      fetchWithdrawSystemTransfers();
+    }
+    if (state.tab === 3) {
+      fetchIssueSystemTransfers();
+    }
+
+    
   };
+  const sortItems = () => {
+    let items;
+
+    if (state.tab === 0) {
+      items = state.payment;
+    }
+
+    if (state.tab === 1) {
+      items = state.system;
+    }
+
+    if (state.tab === 2) {
+      items = state.withdrawSystem;
+    }
+    if (state.tab === 3) {
+      items = state.issueSystem;
+    }
+
+    return items;
+  };
+  const handleTabChange = (_event: any, newValue: number) => {
+    setState(prevState => ({
+      ...prevState,
+      tab: newValue,
+    }));
+  };
+
   const formatTransfer = (data: any, jsClient) => {
     let formattedData = data.transfers;
     if (!formattedData) {
@@ -159,8 +206,9 @@ export const useTransfer = () => {
         ...item,
         amount: convertCoinToSatoshi(item.amount),
         kind: jsClient.walletKindToJSON(item.kind),
-        walletFrom: item.wallets.wallet_from,
-        walletTo: item.wallets.wallet_to,
+        walletFrom: item.wallets?.wallet_from ?? '',
+        walletTo: item.wallets?.wallet_to ?? '',
+        wallet: item.wallets?.wallet,
         height: item.block[0].height,
         hash: item.tx_hash,
       };
@@ -170,5 +218,7 @@ export const useTransfer = () => {
   return {
     state,
     loadNextPage,
+    sortItems,
+    handleTabChange,
   };
 };

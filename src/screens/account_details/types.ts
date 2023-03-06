@@ -64,6 +64,7 @@ export type AccountDetailState = {
     count: number;
   };
   rewards: RewardsType;
+  transferWallets:string[];
   accountInfo: {
     address: string;
     walletOverview?: WalletType | [];

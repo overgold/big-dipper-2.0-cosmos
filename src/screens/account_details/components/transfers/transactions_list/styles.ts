@@ -4,26 +4,19 @@ export const useStyles = () => {
   const styles = makeStyles(
     (theme) => {
       return ({
-        root: {
-          '& .MuiTypography-h2': {
-            marginBottom: theme.spacing(2),
+        mobile: {
+          [theme.breakpoints.up('lg')]: {
+            display: 'none',
           },
         },
-        wrapperTab: {
-          paddingBottom:'10px',
+        desktop: {
+          display: 'none',
           [theme.breakpoints.up('lg')]: {
-            paddingBottom:'20px',
-          },
-        },
-        list: {
-          minHeight: '500px',
-          height: '30vh',
-          [theme.breakpoints.up('lg')]: {
-            minHeight: '40vh',
+            display: 'block',
           },
         },
       });
-    },
+    }, { index: 1 },
   )();
 
   return styles;

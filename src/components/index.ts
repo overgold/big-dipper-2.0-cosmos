@@ -2,6 +2,7 @@ import Layout from './layout';
 import Nav from './nav';
 import Footer from './footer';
 import SingleBlockMobile from './single_block_mobile';
+import SingleTransferMobile from './single_transfer_mobile';
 import Avatar from './avatar';
 import AvatarName from './avatar_name';
 import Tag from './tag';
@@ -62,4 +63,5 @@ export {
   DesmosProfile,
   TransactionListDetails,
   AvatarNameListMsg,
+  SingleTransferMobile
 };

@@ -21,13 +21,13 @@ import { isEmpty } from 'lodash';
 import Link from 'next/link';
 
 import AccountDetailsTab from '../accountDetailsTab';
-import { Accordion } from '../accordion/accordion';
 
 import { ShareInfo } from './Share';
 import { accountInfo } from './accountInfo';
 import { useOverview } from './hooks';
 import { useStyles } from './styles';
 import { walletInfo } from './walletInfo';
+import { tabLabels } from '@src/screens/account_details/utils';
 
 const Overview: React.FC<{
   className?: string;
@@ -162,7 +162,7 @@ const Overview: React.FC<{
             </div>
           </Box>
 
-          <AccountDetailsTab data={accountData.accountOverview} />
+          <AccountDetailsTab data={accountData.accountOverview} tabLabelsHead={tabLabels}/>
         </>
       )}
       {/* </Box> */}
