@@ -5,6 +5,8 @@ export type TransactionState = {
   data: Transactions[];
 };
 export type TransferState = {
+  tab: number;
+  loading: boolean,
   payment: TransactionState;
   system: TransactionState;
   withdrawSystem: TransactionState;

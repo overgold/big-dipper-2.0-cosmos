@@ -64,6 +64,7 @@ const AccountDetails = () => {
            
             <Transfers
               className={classes.transactions}
+              transferWallets={state.transferWallets}
             />
             <Transactions
               className={classes.transactions}

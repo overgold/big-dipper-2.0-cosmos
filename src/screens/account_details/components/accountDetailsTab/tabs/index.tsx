@@ -9,13 +9,13 @@ import classnames from 'classnames';
 import useTranslation from 'next-translate/useTranslation';
 
 import { useStyles } from './styles';
-import { tabLabels } from './utils';
 
 const TabsHeader: React.FC<{
   className?: string;
   tab: number;
   handleTabChange: (event: any, newvalue: number) => void;
-}> = ({ className, tab, handleTabChange }) => {
+  tabLabelsHead?:string[];
+}> = ({ className, tab, handleTabChange,tabLabelsHead }) => {
   const classes = useStyles();
   const { t } = useTranslation('accounts');
 
@@ -30,7 +30,7 @@ const TabsHeader: React.FC<{
          className={classnames(className, classes.tabs)}
       >
    
-          {tabLabels.map((x, i) => (
+          {tabLabelsHead.map((x, i) => (
             <Tab key={x} label={t(x)} {...a11yProps(i)} />
           ))}
       </Tabs>

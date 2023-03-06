@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import classnames from 'classnames';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import numeral from 'numeral';
 import dayjs from '@utils/dayjs';
 import Link from 'next/link';
-import { TRANSACTION_DETAILS, BLOCK_DETAILS } from '@utils/go_to_page';
+import {
+  TRANSACTION_DETAILS,
+  BLOCK_DETAILS,
+  ACCOUNT_DETAILS,
+  ACCOUNT_HASH,
+} from '@utils/go_to_page';
 import InfiniteLoader from 'react-window-infinite-loader';
 import { VariableSizeGrid as Grid } from 'react-window';
 import { Typography } from '@material-ui/core';
@@ -14,7 +19,7 @@ import { Loading, Result } from '@components';
 import { useGrid } from '@hooks';
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
 import { TransactionsListState } from '../../types';
-import { columns } from './utils';
+import { columnsPaymentAndSystem, columnsWithdrawAndIssue } from './utils';
 import { useStyles } from './styles';
 
 const Desktop: React.FC<TransactionsListState> = ({
@@ -23,34 +28,101 @@ const Desktop: React.FC<TransactionsListState> = ({
   loadMoreItems,
   isItemLoaded,
   transactions,
+  typeTabs,
 }) => {
+  const columns =
+    typeTabs === 1 ? columnsPaymentAndSystem : columnsWithdrawAndIssue;
+
   const { gridRef, columnRef, onResize, getColumnWidth, getRowHeight } =
     useGrid(columns);
 
   const classes = useStyles();
-  const { t } = useTranslation('transactions');
-  const items = transactions.map(x => ({
-    block: (
-      <Link href={BLOCK_DETAILS(x.height)} passHref>
-        <Typography variant="body1" component="a">
-          {numeral(x.height).format('0,0')}
-        </Typography>
-      </Link>
-    ),
-    hash: (
-      <Link href={TRANSACTION_DETAILS(x.hash)} passHref>
-        <Typography variant="body1" component="a">
-          {getMiddleEllipsis(x.hash, {
-            beginning: 20,
-            ending: 15,
-          })}
-        </Typography>
-      </Link>
-    ),
-    result: <Result success={x.success} />,
-    time: dayjs.utc(x.timestamp).fromNow(),
-    messages: numeral(x.messages.count).format('0,0'),
-  }));
+  const { t } = useTranslation('accounts');
+  const items =
+    typeTabs === 1
+      ? transactions.map(x => ({
+          hash: (
+            <Link href={ACCOUNT_HASH(x.hash)} passHref>
+              <Typography variant="body1" component="a">
+                {getMiddleEllipsis(x.hash, {
+                  beginning: 10,
+                  ending: 5,
+                })}
+              </Typography>
+            </Link>
+          ),
+          kind: x.kind,
+          walletFrom: (
+            <Link href={ACCOUNT_DETAILS(x.walletFrom)} passHref>
+              <Typography variant="body1" component="a">
+                {getMiddleEllipsis(x.walletFrom, {
+                  beginning: 8,
+                  ending: 5,
+                })}
+              </Typography>
+            </Link>
+          ),
+          walletTo: (
+            <Link href={ACCOUNT_DETAILS(x.walletTo)} passHref>
+              <Typography variant="body1" component="a">
+                {getMiddleEllipsis(x.walletTo, {
+                  beginning: 8,
+                  ending: 5,
+                })}
+              </Typography>
+            </Link>
+          ),
+          amount: `${x.amount} ${x.asset.toUpperCase()}`,
+          time: (
+            <div style={{ whiteSpace: 'pre-wrap' }}>
+              {dayjs.utc(x.timestamp).fromNow()}
+            </div>
+          ),
+          block: (
+            <Link href={BLOCK_DETAILS(x.height)} passHref>
+              <Typography variant="body1" component="a">
+                {numeral(x.height).format('0,0')}
+              </Typography>
+            </Link>
+          ),
+        }))
+      : transactions.map(x => ({
+          hash: (
+            <Link href={ACCOUNT_HASH(x.hash)} passHref>
+              <Typography variant="body1" component="a">
+                {getMiddleEllipsis(x.hash, {
+                  beginning: 10,
+                  ending: 5,
+                })}
+              </Typography>
+            </Link>
+          ),
+          kind: x.kind,
+          wallet: (
+            <Link href={ACCOUNT_DETAILS(x.wallet)} passHref>
+              <Typography variant="body1" component="a">
+                {getMiddleEllipsis(x.wallet, {
+                  beginning: 8,
+                  ending: 5,
+                })}
+              </Typography>
+            </Link>
+          ),
+          amount: `${x.amount} ${x.asset.toUpperCase()}`,
+          time: (
+            <div style={{ whiteSpace: 'pre-wrap' }}>
+              {dayjs.utc(x.timestamp).fromNow()}
+            </div>
+          ),
+          block: (
+            <Link href={BLOCK_DETAILS(x.height)} passHref>
+              <Typography variant="body1" component="a">
+                {numeral(x.height).format('0,0')}
+              </Typography>
+            </Link>
+          ),
+        }));
+
   return (
     <div className={classnames(className, classes.root)}>
       <AutoSizer onResize={onResize}>

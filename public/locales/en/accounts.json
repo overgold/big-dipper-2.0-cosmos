@@ -50,5 +50,16 @@
     "stateTab": "State",
     "addressTab": "Address",
     "affiliationTab": "Affiliation",
-    "transfers": "Transfers"
+    "transfers": "Transfers",
+    "payment": "Payment",
+    "system": "System",
+    "withdrawSystem": "Withdraw",
+    "issueSystem": "Issue",
+    "hash": "Hash",
+    "walletFrom": "Wallet From",
+    "walletTo": "Wallet To",
+    "time": "Time",
+    "block": "Block",
+    "kind": "Kind",
+    "wallet": "Wallet"
 }

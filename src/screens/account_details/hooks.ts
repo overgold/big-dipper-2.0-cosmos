@@ -60,6 +60,7 @@ const initialState: AccountDetailState = {
     total: defaultTokenUnit,
   },
   rewards: {},
+  transferWallets:[],
   accountInfo: {
     address: '',
     accountOverview: [],
@@ -129,6 +130,7 @@ export const useAccountDetails = () => {
         handleSetState({
           loading: false,
           accountAddress: data.wallet[0].account_address,
+          transferWallets:[data.wallet[0]?.address],
           accountInfo: {
             walletOverview: {
               address: data.wallet[0]?.address,
@@ -145,6 +147,7 @@ export const useAccountDetails = () => {
         handleSetState({
           loading: false,
           accountAddress: router.query.address,
+          transferWallets:data.account[0].wallets,
           accountInfo: {
             walletOverview: [],
             accountOverview: {
