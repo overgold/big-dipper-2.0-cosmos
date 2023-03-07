@@ -13,9 +13,11 @@ import { isEmpty } from 'lodash';
 import Link from 'next/link';
 
 import { affiliatesColumns, kindColumns, walletsColumns } from './utils';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useDetailsAccount = () => {
   const { isDesktop } = useScreenSize();
+  const { t } = useTranslation('accounts');
   const [state, setState] = useState({
     loading: true,
     tab: 0,
@@ -69,6 +71,12 @@ export const useDetailsAccount = () => {
       
       const balance = `${item[key]} ${asset}`
       return balance
+    }
+    if (key === 'kind') {
+      return t(item[key])
+    }
+    if (key === 'state') {
+      return t(item[key])
     }
     return item[key];
   };

@@ -28,6 +28,7 @@ import {
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
 import { useStyles } from './styles';
 import { TransactionsListState } from '../../types';
+import useTranslation from 'next-translate/useTranslation';
 
 const Mobile: React.FC<TransactionsListState> = ({
   className,
@@ -38,7 +39,7 @@ const Mobile: React.FC<TransactionsListState> = ({
   typeTabs
 }) => {
   const classes = useStyles();
-
+  const { t } = useTranslation('accounts');
   const {
     listRef,
     getRowHeight,
@@ -58,7 +59,7 @@ const Mobile: React.FC<TransactionsListState> = ({
               </Typography>
             </Link>
           ),
-          kind: x.kind,
+          kind: t(`${x.kind}`),
           walletFrom: (
             <Link href={ACCOUNT_DETAILS(x.walletFrom)} passHref>
               <Typography variant="body1" component="a">
@@ -100,7 +101,7 @@ const Mobile: React.FC<TransactionsListState> = ({
               </Typography>
             </Link>
           ),
-          kind: x.kind,
+          kind: t(`${x.kind}`),
           wallet: (
             <Link href={ACCOUNT_DETAILS(x.wallet)} passHref>
               <Typography variant="body1" component="a">

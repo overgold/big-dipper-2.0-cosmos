@@ -14,13 +14,11 @@ export type walletInfoType = (
 export const walletInfo: walletInfoType = (accountData, t) => [
   {
     title: t('balanceHead'),
-    value: accountData.balance
-      ? `${accountData.balance} OVG`
-      : `0 OVG`,
+    value: accountData.balance ? `${accountData.balance} OVG` : `0 OVG`,
   },
   {
     title: t('kindHead'),
-    value: accountData.kind,
+    value: t(accountData.kind),
   },
   {
     title: t('walletAddressHead'),
@@ -29,7 +27,7 @@ export const walletInfo: walletInfoType = (accountData, t) => [
   },
   {
     title: t('stateHead'),
-    value: accountData.state,
+    value: t(accountData.state),
   },
   {
     title: t('accountAddressHead'),
