@@ -28,9 +28,9 @@ export const useStyles = () => {
         display: 'grid',
         width: '100%',
         [theme.breakpoints.up('lg')]: {
-          gridTemplateColumns: 'repeat(3,1fr) minmax(100px, 140px)',
+          gridTemplateColumns: 'minmax(100px, 160px) 1fr repeat(2,minmax(100px, 160px))',
         },
-        gridTemplateColumns:'repeat(3,1fr) minmax(100px, 140px)',
+        gridTemplateColumns:'rminmax(100px, 160px) 1fr repeat(2,minmax(100px, 160px))',
         listStyle: 'none',
         padding: '0 14px',
       },
@@ -53,12 +53,12 @@ export const useStyles = () => {
         display: 'grid',
        
         [theme.breakpoints.up('lg')]: {
-          gridTemplateColumns: 'repeat(3,1fr) minmax(100px, 140px)',
+          gridTemplateColumns: 'minmax(100px, 160px) 1fr repeat(2,minmax(100px, 160px))',
           '&:nth-child(odd)': {
             background: '#282828   ',
           },
         },
-        gridTemplateColumns: 'repeat(3,minmax(100px,1fr)) minmax(100px, 140px)',
+        gridTemplateColumns: 'minmax(100px, 160px) 1fr repeat(2,minmax(100px, 160px))',
         padding: '14px',
       },
       headTitleRow: {

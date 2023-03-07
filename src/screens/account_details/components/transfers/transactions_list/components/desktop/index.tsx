@@ -51,7 +51,7 @@ const Desktop: React.FC<TransactionsListState> = ({
               </Typography>
             </Link>
           ),
-          kind: x.kind,
+          kind: t(`${x.kind}`),
           walletFrom: (
             <Link href={ACCOUNT_DETAILS(x.walletFrom)} passHref>
               <Typography variant="body1" component="a">
@@ -97,7 +97,7 @@ const Desktop: React.FC<TransactionsListState> = ({
               </Typography>
             </Link>
           ),
-          kind: x.kind,
+          kind: t(`${x.kind}`),
           wallet: (
             <Link href={ACCOUNT_DETAILS(x.wallet)} passHref>
               <Typography variant="body1" component="a">

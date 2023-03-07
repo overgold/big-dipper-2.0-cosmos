@@ -13,16 +13,6 @@ export type accountInfoType = (
 ) => accountInfoReturnType[];
 
 export const accountInfo: accountInfoType = (accountData, t) => [
-  // {
-  //   title: t('balanceHead'),
-  //   value: accountData.totalWalletsBalance
-  //     ? `${accountData.totalWalletsBalance} OVG`
-  //     : '0 OVG',
-  // },
-  // {
-  //   title: t('kindHead'),
-  //   value: accountData.kind,
-  // },
   {
     title: t('accountAddressHead'),
     value: accountData.address,
@@ -35,6 +25,6 @@ export const accountInfo: accountInfoType = (accountData, t) => [
   },
   {
     title: t('stateHead'),
-    value: accountData.state,
+    value: t(accountData.state),
   },
 ];
