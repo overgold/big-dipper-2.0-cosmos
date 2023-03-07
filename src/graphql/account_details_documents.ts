@@ -139,22 +139,44 @@ export const AccountInfo = /* GraphQL */ `
 `;
 //AccountHash
 export const AccountHash = /* GraphQL */ `
-query AccountHash($hash: String) {
-  account: overgold_chain_accounts_accounts(where: {hash: {_eq: $hash}}) {
-    address
-    extras
-    hash
-    kinds
-    state
-    wallets
-    affiliates {
+  query AccountHash($hash: String) {
+    account: overgold_chain_accounts_accounts(where: { hash: { _eq: $hash } }) {
       address
-      affiliation_kind
-    }
-    wallets_data {
-      address
-      balance
+      extras
+      hash
+      kinds
+      state
+      wallets
+      affiliates {
+        address
+        affiliation_kind
+      }
+      wallets_data {
+        address
+        balance
+      }
     }
   }
-}
+`;
+//Staking Info
+export const StakingStats = /* GraphQL */ `
+  query StakingStats($hash: String!) {
+    user_api {
+      info: user_api_users(where: { account_hash: { _eq: $hash } }) {
+        balance: staking_users {
+          amount_sell
+          amount_stake
+        }
+        reward: staking_distribution_aggregate(
+          where: { kind: { _eq: "reward" } }
+        ) {
+          aggregate {
+            sum {
+              amount
+            }
+          }
+        }
+      }
+    }
+  }
 `;

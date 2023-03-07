@@ -16,7 +16,6 @@ export const useScreenSize = () => {
     width: number;
     height: number;
   }>(getSize());
-  const [isXlDesktop, setIsXlMobile] = useState<boolean>(false);
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const [isTablet, setIsTablet] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(true);
@@ -56,19 +55,13 @@ export const useScreenSize = () => {
 
     // is desktop
     if (
-      width >= theme?.breakpoints?.values?.lg &&
-      width < theme?.breakpoints?.values?.xl
+      width >= theme?.breakpoints?.values?.lg 
     ) {
       setIsDesktop(true);
     } else {
       setIsDesktop(false);
     }
-    // is XL desktop
-    if (width >= theme?.breakpoints?.values?.xl) {
-      setIsXlMobile(true);
-    } else {
-      setIsXlMobile(false);
-    }
+    
   }, [windowSize.width]);
 
   return {
@@ -76,6 +69,5 @@ export const useScreenSize = () => {
     isDesktop,
     isTablet,
     isMobile,
-    isXlDesktop,
   };
 };

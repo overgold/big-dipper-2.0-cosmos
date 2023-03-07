@@ -1,44 +1,50 @@
 import { formatNumber } from '@utils/format_token';
+
 import Big from 'big.js';
 
 export const formatBalanceData = (data: {
-  available: TokenUnit;
-  delegate: TokenUnit;
-  unbonding: TokenUnit;
-  reward: TokenUnit;
-  commission?: TokenUnit;
+  regular: TokenUnit;
+  staked: TokenUnit;
+  steakForRansom: TokenUnit;
+  refReward: TokenUnit;
+  steakReward: TokenUnit;
   total?: TokenUnit;
 }) => {
   const balanceChart = [
     {
-      key: 'balanceAvailable',
-      display: `${formatNumber(data.available.value, data.available.exponent)} ${data.available.displayDenom.toUpperCase()}`,
-      value: data.available.value,
+      key: 'balanceRegular',
+      display: `${formatNumber(data.regular.value, data.regular.exponent)} ${data.regular.displayDenom.toUpperCase()}`,
+      value: data.regular.value,
     },
     {
-      key: 'balanceDelegate',
-      display: `${formatNumber(data.delegate.value, data.delegate.exponent)} ${data.delegate.displayDenom.toUpperCase()}`,
-      value: data.delegate.value,
+      key: 'balanceStaked',
+      display: `${formatNumber(data.staked.value, data.staked.exponent)} ${data.staked.displayDenom.toUpperCase()}`,
+      value: data.staked.value,
     },
     {
-      key: 'balanceUnbonding',
-      display: `${formatNumber(data.unbonding.value, data.unbonding.exponent)} ${data.unbonding.displayDenom.toUpperCase()}`,
-      value: data.unbonding.value,
+      key: 'balanceStakeForRansom',
+      display: `${formatNumber(data.steakForRansom.value, data.steakForRansom.exponent)} ${data.steakForRansom.displayDenom.toUpperCase()}`,
+      value: data.steakForRansom.value,
     },
     {
-      key: 'balanceReward',
-      display: `${formatNumber(data.reward.value, data.reward.exponent)} ${data.reward.displayDenom.toUpperCase()}`,
-      value: data.reward.value,
+      key: 'balanceRefReward',
+      display: `${formatNumber(data.refReward.value, data.refReward.exponent)} ${data.refReward.displayDenom.toUpperCase()}`,
+      value: data.refReward.value,
+    },
+    {
+      key: 'balanceStakeReward',
+      display: `${formatNumber(data.steakReward.value, data.steakReward.exponent)} ${data.steakReward.displayDenom.toUpperCase()}`,
+      value: data.steakReward.value,
     },
   ];
 
-  if (data.commission && Big(data.commission.value).gt(0)) {
-    balanceChart.push({
-      key: 'balanceCommission',
-      display: `${formatNumber(data.commission.value, data.commission.exponent)} ${data.commission.displayDenom.toUpperCase()}`,
-      value: data.commission.value,
-    });
-  }
+  // if (data.commission && Big(data.commission.value).gt(0)) {
+  //   balanceChart.push({
+  //     key: 'balanceCommission',
+  //     display: `${formatNumber(data.commission.value, data.commission.exponent)} ${data.commission.displayDenom.toUpperCase()}`,
+  //     value: data.commission.value,
+  //   });
+  // }
 
   return balanceChart;
 };

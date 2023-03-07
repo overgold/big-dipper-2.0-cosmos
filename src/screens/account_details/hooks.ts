@@ -28,6 +28,7 @@ import {
   fetchCommission,
   fetchDelegationBalance,
   fetchRewards,
+  fetchStakingInfo,
   fetchUnbondingBalance,
 } from './utils';
 
@@ -52,15 +53,15 @@ const initialState: AccountDetailState = {
     data: [],
   },
   balance: {
-    available: defaultTokenUnit,
-    delegate: defaultTokenUnit,
-    unbonding: defaultTokenUnit,
-    reward: defaultTokenUnit,
-    commission: defaultTokenUnit,
+    regular: defaultTokenUnit,
+    staked: defaultTokenUnit,
+    steakForRansom: defaultTokenUnit,
+    refReward: defaultTokenUnit,
+    steakReward: defaultTokenUnit,
     total: defaultTokenUnit,
   },
   rewards: {},
-  transferWallets:[],
+  transferWallets: [],
   accountInfo: {
     address: '',
     accountOverview: [],
@@ -96,7 +97,7 @@ export const useAccountDetails = () => {
 
   useEffect(() => {
     fetchWithdrawalAddress();
-    fetchBalance();
+    // fetchBalance();
     fetchAccountInfoAddress();
     fetchAddressHash();
   }, [router.query.address]);
@@ -115,6 +116,7 @@ export const useAccountDetails = () => {
       },
     });
   };
+
   //fetch AccountInfo
   const fetchAccountInfoAddress = async () => {
     handleSetState({
@@ -130,12 +132,12 @@ export const useAccountDetails = () => {
         handleSetState({
           loading: false,
           accountAddress: data.wallet[0].account_address,
-          transferWallets:[data.wallet[0]?.address],
+          transferWallets: [data.wallet[0]?.address],
           accountInfo: {
             walletOverview: {
               address: data.wallet[0]?.address,
               account_address: data.wallet[0]?.account_address,
-              balance: roundToFixed(data.wallet[0]?.balance[0]?.amount,8),
+              balance: roundToFixed(data.wallet[0]?.balance[0]?.amount, 8),
               kind: jsClient.walletKindToJSON(data.wallet[0]?.kind),
               state: jsClient.walletStateToJSON(data.wallet[0]?.state),
             },
@@ -144,10 +146,17 @@ export const useAccountDetails = () => {
         });
       }
       if (!isEmpty(data.account)) {
+        const stateInfo = await fetchStakingInfo(data.account[0]?.hash);
+        const stateBalance = R.pathOr([], ['user_api', 'info', '0'], stateInfo);
+
+        handleSetState(
+          formatBalance(data.account[0]?.wallets_data, stateBalance)
+        );
+
         handleSetState({
           loading: false,
           accountAddress: router.query.address,
-          transferWallets:data.account[0].wallets,
+          transferWallets: data.account[0].wallets,
           accountInfo: {
             walletOverview: [],
             accountOverview: {
@@ -173,20 +182,15 @@ export const useAccountDetails = () => {
                   address: wallet.address,
                   state: jsClient.walletStateToJSON(data.account[0]?.state),
                   balance: roundToFixed(
-                    !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0,8
+                    !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0,
+                    8
                   ),
-                 
+
                   denom: !isEmpty(wallet.balance)
                     ? wallet.balance[0]?.denom
                     : bech32.decode(wallet.address).prefix,
                 };
               }),
-              totalWalletsBalance: convertCoinToSatoshi(
-                sumBalances(data.account[0]?.wallets_data, {
-                  paramsOne: 'balance',
-                  paramsTwo: 'amount',
-                })
-              ),
             },
           },
         });
@@ -255,211 +259,91 @@ export const useAccountDetails = () => {
     }
   };
 
-  const fetchBalance = async () => {
-    const address = router.query.address as string;
-    const promises = [
-      fetchCommission(address),
-      fetchAvailableBalances(address),
-      fetchDelegationBalance(address),
-      fetchUnbondingBalance(address),
-      fetchRewards(address),
-    ];
-    const [commission, available, delegation, unbonding, rewards] =
-      await Promise.allSettled(promises);
 
-    const formattedRawData: any = {};
-    formattedRawData.commission = R.pathOr(
-      [],
-      ['value', 'commission'],
-      commission
-    );
-    formattedRawData.accountBalances = R.pathOr(
-      [],
-      ['value', 'accountBalances'],
-      available
-    );
-    formattedRawData.delegationBalance = R.pathOr(
-      [],
-      ['value', 'delegationBalance'],
-      delegation
-    );
-    formattedRawData.unbondingBalance = R.pathOr(
-      [],
-      ['value', 'unbondingBalance'],
-      unbonding
-    );
-    formattedRawData.delegationRewards = R.pathOr(
-      [],
-      ['value', 'delegationRewards'],
-      rewards
-    );
-
-    handleSetState(formatAllBalance(formattedRawData));
-  };
-
-  // ==========================
-  // Format Data
-  // ==========================
-  const formatAllBalance = (data: any) => {
+  const formatBalance = (walletData, stakeData) => {
     const stateChange: any = {
       loading: false,
     };
 
-    // ============================
-    // rewards
-    // ============================
-    const formatRewards = () => {
-      const rewardsDict = {};
-      // log all the rewards
-      R.pathOr([], ['delegationRewards'], data).forEach(x => {
-        const coins = R.pathOr([], ['coins'], x);
-        const denomAmount = getDenom(coins, chainConfig.primaryTokenUnit);
-        const denomFormat = formatToken(
-          denomAmount.amount,
-          chainConfig.primaryTokenUnit
-        );
-        rewardsDict[x.validatorAddress] = denomFormat;
-      });
-      return rewardsDict;
-    };
+    const formatBalances = () => {
+      const regularAmount = sumBalances(
+        walletData.filter(item => item.kind !== 7),
+        {
+          paramsOne: 'balance',
+          paramsTwo: 'amount',
+        }
+      );
 
-    stateChange.rewards = formatRewards();
-
-    // ============================
-    // balance
-    // ============================
-    const formatBalance = () => {
-      const available = getDenom(
-        R.pathOr([], ['accountBalances', 'coins'], data),
-        chainConfig.primaryTokenUnit
-      );
-      const availableAmount = formatToken(
-        available.amount,
-        chainConfig.primaryTokenUnit
-      );
-      const delegate = getDenom(
-        R.pathOr([], ['delegationBalance', 'coins'], data),
-        chainConfig.primaryTokenUnit
-      );
-      const delegateAmount = formatToken(
-        delegate.amount,
+      const regularBalances = formatToken(
+        regularAmount,
         chainConfig.primaryTokenUnit
       );
 
-      const unbonding = getDenom(
-        R.pathOr([], ['unbondingBalance', 'coins'], data),
-        chainConfig.primaryTokenUnit
+      const refRewardAmount = R.pathOr(
+        {value:'0',denom:''},
+        ['0', 'balance', '0', 'amount'],
+        walletData.filter(item => item.kind === 7)
       );
-      const unbondingAmount = formatToken(
-        unbonding.amount,
-        chainConfig.primaryTokenUnit
-      );
-      const rewards = data.delegationRewards.reduce((a, b) => {
-        const coins = R.pathOr([], ['coins'], b);
-        const dsmCoins = getDenom(coins, chainConfig.primaryTokenUnit);
 
-        return Big(a).plus(dsmCoins.amount).toPrecision();
-      }, '0');
-      const rewardsAmount = formatToken(rewards, chainConfig.primaryTokenUnit);
-
-      const commission = getDenom(
-        R.pathOr([], ['commission', 'coins'], data),
-        chainConfig.primaryTokenUnit
-      );
-      const commissionAmount = formatToken(
-        commission.amount,
+      const refRewardBalances = formatToken(
+        refRewardAmount,
         chainConfig.primaryTokenUnit
       );
 
-      const total = Big(availableAmount.value)
-        .plus(delegateAmount.value)
-        .plus(unbondingAmount.value)
-        .plus(rewardsAmount.value)
-        .plus(commissionAmount.value)
+      //stake
+      const stakeAmount = R.pathOr({value:'0',denom:''}, ['balance', 'amount_stake'], stakeData);
+      const steakForRansomAmount = R.pathOr(
+        {value:'0',denom:''},
+        ['balance', 'amount_sell'],
+        stakeData
+      );
+      const steakReward = R.pathOr(
+        {value:'0',denom:''},
+        ['reward', 'aggregate', 'sum', 'amount'],
+        stakeData
+      );
+      const stakeBalances = formatToken(
+        stakeAmount,
+        chainConfig.primaryTokenUnit,
+        true
+      );
+      const steakForRansomBalances = formatToken(
+        steakForRansomAmount,
+        chainConfig.primaryTokenUnit,
+        true
+      );
+      const steakRewardBalance = formatToken(
+        steakReward,
+        chainConfig.primaryTokenUnit,
+        true
+      );
+
+      const total = Big(steakRewardBalance.value)
+        .plus(regularBalances.value)
+        .plus(refRewardBalances.value)
+        .plus(stakeBalances.value)
+        .plus(steakForRansomBalances.value)
         .toFixed(chainConfig.tokenUnits[chainConfig.primaryTokenUnit].exponent);
 
+      //return balance
       const balance = {
-        available: availableAmount,
-        delegate: delegateAmount,
-        unbonding: unbondingAmount,
-        reward: rewardsAmount,
-        commission: commissionAmount,
+        regular: regularBalances,
+        staked: stakeBalances,
+        steakForRansom: steakForRansomBalances,
+        refReward: refRewardBalances,
+        steakReward: steakRewardBalance,
+
         total: {
           value: total,
-          displayDenom: availableAmount.displayDenom,
-          baseDenom: availableAmount.baseDenom,
-          exponent: availableAmount.exponent,
+          displayDenom: regularBalances.displayDenom,
+          baseDenom: regularBalances.baseDenom,
+          exponent: regularBalances.exponent,
         },
       };
-
       return balance;
     };
 
-    stateChange.balance = formatBalance();
-
-    // ============================
-    // other tokens
-    // ============================
-    const formatOtherTokens = () => {
-      // Loop through balance and delegation to figure out what the other tokens are
-      const otherTokenUnits = new Set();
-      const otherTokens = [];
-      // available tokens
-      const available = R.pathOr([], ['accountBalances', 'coins'], data);
-
-      available.forEach(x => {
-        otherTokenUnits.add(x.denom);
-      });
-
-      // rewards tokens
-      const rewards = R.pathOr([], ['delegationRewards'], data);
-
-      rewards.forEach(x => {
-        x.coins?.forEach(y => {
-          otherTokenUnits.add(y.denom);
-        });
-      });
-
-      // commission tokens
-      const commission = R.pathOr([], ['commission', 'coins'], data);
-
-      commission.forEach(x => {
-        otherTokenUnits.add(x.denom);
-      });
-
-      // remove the primary token unit thats being shown in balance
-      otherTokenUnits.delete(chainConfig.primaryTokenUnit);
-
-      otherTokenUnits.forEach((x: string) => {
-        const availableRawAmount = getDenom(available, x);
-        const availableAmount = formatToken(availableRawAmount.amount, x);
-        const rewardsRawAmount = rewards.reduce((a, b) => {
-          const coins = R.pathOr([], ['coins'], b);
-          const denom = getDenom(coins, x);
-          return Big(a).plus(denom.amount).toPrecision();
-        }, 0);
-        const rewardAmount = formatToken(rewardsRawAmount, x);
-        const commissionRawAmount = getDenom(commission, x);
-        const commissionAmount = formatToken(commissionRawAmount.amount, x);
-
-        otherTokens.push({
-          denom: R.pathOr(x, ['tokenUnits', x, 'display'], chainConfig),
-          available: availableAmount,
-          reward: rewardAmount,
-          commission: commissionAmount,
-        });
-      });
-
-      return {
-        data: otherTokens,
-        count: otherTokens.length,
-      };
-    };
-
-    formatOtherTokens();
-
-    stateChange.otherTokens = formatOtherTokens();
-
+    stateChange.balance = formatBalances();
     return stateChange;
   };
 
