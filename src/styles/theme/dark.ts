@@ -71,6 +71,7 @@ export const darkThemeOverride = {
         three: '#AE73F8',
         four: '#E3AB55',
         five: '#C25396',
+        six: '#F44747',
       },
     },
   },

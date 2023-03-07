@@ -7,6 +7,7 @@ import {
   AccountDelegationRewardsDocument,
   AccountInfo,
   AccountHash,
+  StakingStats,
 } from '@src/graphql/account_details_documents';
 
 import { toValidatorAddress } from '@utils/prefix_convert';
@@ -158,12 +159,23 @@ export const fetchAccountHash = async (hash: string) => {
     return [];
   }
 };
+export const fetchStakingInfo = async (hash: string) => {
+  try {
+    const {data} = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
+      variables: {
+        hash,
+      },
+      query: StakingStats,
+    });
 
-export const tabLabels = [
-  'walletsTab',
-  'affiliatesTab',
-  'kindsTab',
-];
+    return R.pathOr([], ['data'], data);
+  } catch (error) {
+    console.log('error', error);
+    return [];
+  }
+};
+
+export const tabLabels = ['walletsTab', 'affiliatesTab', 'kindsTab'];
 export const tabTransfer = [
   'payment',
   'system',

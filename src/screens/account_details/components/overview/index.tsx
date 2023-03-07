@@ -2,6 +2,7 @@ import CopyIcon from '@assets/icon-copy.svg';
 import ShareIcon from '@assets/icon-share.svg';
 
 import { Box } from '@components';
+import { Balance } from '@src/screens/account_details/components';
 
 import { useScreenSize } from '@hooks';
 
@@ -28,12 +29,14 @@ import { useOverview } from './hooks';
 import { useStyles } from './styles';
 import { walletInfo } from './walletInfo';
 import { tabLabels } from '@src/screens/account_details/utils';
+import { BalanceType } from '../../types';
 
 const Overview: React.FC<{
   className?: string;
   accountData: any;
-}> = ({ className, accountData }) => {
-  const { isDesktop,isXlDesktop } = useScreenSize();
+  balance?: BalanceType;
+}> = ({ className, accountData, balance }) => {
+  const { isDesktop } = useScreenSize();
   const classes = useStyles();
   const { t } = useTranslation('accounts');
   const {
@@ -107,10 +110,7 @@ const Overview: React.FC<{
               {accountInfo(accountData.accountOverview, t).map(accountItem => (
                 <div
                   key={accountItem.title}
-                  className={classnames(
-                    classes.copyText,
-                    classes.item,
-                  )}
+                  className={classnames(classes.copyText, classes.item)}
                 >
                   <Typography variant="body1" className="label">
                     <strong>{accountItem.title}</strong>
@@ -136,7 +136,7 @@ const Overview: React.FC<{
                     <Typography variant="body1" className="value">
                       {accountItem.isDetail ? (
                         <Link href={ACCOUNT_DETAILS(accountItem.value)}>
-                          {!isXlDesktop
+                          {!isDesktop
                             ? getMiddleEllipsis(accountItem.value, {
                                 beginning: 15,
                                 ending: 5,
@@ -145,7 +145,7 @@ const Overview: React.FC<{
                         </Link>
                       ) : accountItem.thisHash ? (
                         <Link href={ACCOUNT_HASH(accountItem.value)}>
-                          {!isXlDesktop
+                          {!isDesktop
                             ? getMiddleEllipsis(accountItem.value, {
                                 beginning: 15,
                                 ending: 5,
@@ -162,7 +162,20 @@ const Overview: React.FC<{
             </div>
           </Box>
 
-          <AccountDetailsTab data={accountData.accountOverview} tabLabelsHead={tabLabels}/>
+          <Balance
+            // className={classes.balance}
+            regular={balance.regular}
+            staked={balance.staked}
+            steakForRansom={balance.steakForRansom}
+            refReward={balance.refReward}
+            steakReward={balance.steakReward}
+            total={balance.total}
+          />
+
+          <AccountDetailsTab
+            data={accountData.accountOverview}
+            tabLabelsHead={tabLabels}
+          />
         </>
       )}
       {/* </Box> */}

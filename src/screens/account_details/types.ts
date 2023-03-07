@@ -4,11 +4,11 @@ export type OverviewType = {
 };
 
 export type BalanceType = {
-  available: TokenUnit;
-  delegate: TokenUnit;
-  unbonding: TokenUnit;
-  reward: TokenUnit;
-  commission?: TokenUnit;
+  regular: TokenUnit;
+  staked: TokenUnit;
+  steakForRansom: TokenUnit;
+  refReward: TokenUnit;
+  steakReward: TokenUnit;
   total: TokenUnit;
 };
 

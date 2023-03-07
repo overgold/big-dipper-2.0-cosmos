@@ -4,7 +4,7 @@
     "overview": "Overview",
     "address": "Address:",
     "rewardAddress": "Reward Address",
-    "total": "Total {{unit}}",
+    "total": "Total",
     "delegations": "Delegations ({{num}})",
     "redelegations": "Redelegations ({{num}})",
     "unbondings": "Unbondings ({{num}})",
@@ -61,5 +61,10 @@
     "time": "Time",
     "block": "Block",
     "kind": "Kind",
-    "wallet": "Wallet"
+    "wallet": "Wallet",
+    "balanceRegular": "Regular",
+    "balanceStaked": "Staked",
+    "balanceStakeForRansom": "Stake For Ransom",
+    "balanceStakeReward": "Stake Reward",
+    "balanceRefReward": "Referral Reward"
 }

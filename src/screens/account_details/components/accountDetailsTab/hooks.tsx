@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { affiliatesColumns, kindColumns, walletsColumns } from './utils';
 
 export const useDetailsAccount = () => {
-  const { isXlDesktop,isDesktop } = useScreenSize();
+  const { isDesktop } = useScreenSize();
   const [state, setState] = useState({
     loading: true,
     tab: 0,
@@ -54,7 +54,7 @@ export const useDetailsAccount = () => {
     if (key === 'address') {
       return (
         <Link href={ACCOUNT_DETAILS(item[key])}>
-          {!isXlDesktop
+          {!isDesktop
             ? getMiddleEllipsis(item[key], {
                 beginning: 15,
                 ending: 5,

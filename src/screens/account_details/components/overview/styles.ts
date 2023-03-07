@@ -57,7 +57,7 @@ export const useStyles = () => {
           gridTemplateColumns: '1fr 1fr',
           gap: '12px',
         },
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up('xl')]: {
           gridTemplateColumns: '1fr 1fr 1fr',
           gap: '12px',
         },
