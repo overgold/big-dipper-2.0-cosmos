@@ -31,6 +31,7 @@ jobs:
           NEXT_PUBLIC_URL="https://testnet.cosmos.bigdipper.live"
           NEXT_PUBLIC_RPC_WEBSOCKET="wss://rpc-testnet.cosmos.forbole.com/websocket"
           NEXT_PUBLIC_CHAIN_TYPE="testnet"
+          NEXT_PUBLIC_ASSET=ovg
           NODE_ENV="production"
           PORT=3000
           NEXT_PUBLIC_MATOMO_URL="https://analytics.bigdipper.live"
@@ -40,6 +41,7 @@ jobs:
           echo ::set-output name=NEXT_PUBLIC_URL::${NEXT_PUBLIC_URL}
           echo ::set-output name=NEXT_PUBLIC_RPC_WEBSOCKET::${NEXT_PUBLIC_RPC_WEBSOCKET}
           echo ::set-output name=NEXT_PUBLIC_CHAIN_TYPE::${NEXT_PUBLIC_CHAIN_TYPE}
+          echo ::set-output name=NEXT_PUBLIC_ASSET::${NEXT_PUBLIC_ASSET}
           echo ::set-output name=NODE_ENV::${NODE_ENV}
           echo ::set-output name=PORT::${PORT}
           echo ::set-output name=NEXT_PUBLIC_MATOMO_URL::${NEXT_PUBLIC_MATOMO_URL}
@@ -64,6 +66,7 @@ jobs:
             "NEXT_PUBLIC_URL=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_URL }}"
             "NEXT_PUBLIC_RPC_WEBSOCKET=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_RPC_WEBSOCKET }}"
             "NEXT_PUBLIC_CHAIN_TYPE=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_CHAIN_TYPE }}"
+            "NEXT_PUBLIC_ASSET=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_ASSET }}"
             "NODE_ENV=${{ steps.dockerPrep.outputs.NODE_ENV }}"
             "PORT=${{ steps.dockerPrep.outputs.PORT }}"
             "NEXT_PUBLIC_MATOMO_URL=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_MATOMO_URL }}"

@@ -155,7 +155,7 @@ export const useAccountDetails = () => {
 
         handleSetState({
           loading: false,
-          accountAddress: router.query.address,
+          accountAddress: data.account[0].address,
           transferWallets: data.account[0].wallets,
           accountInfo: {
             walletOverview: [],

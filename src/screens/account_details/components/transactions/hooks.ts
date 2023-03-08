@@ -14,6 +14,7 @@ import { TransactionState } from './types';
 const LIMIT = 20;
 
 export const useTransactions = (accountAddress = '') => {
+  console.log("🚀 ~ file: hooks.ts:17 ~ useTransactions ~ accountAddress:", accountAddress)
   const [state, setState] = useState<TransactionState>({
     data: [],
     hasNextPage: false,

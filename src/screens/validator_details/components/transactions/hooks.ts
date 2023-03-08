@@ -1,11 +1,16 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { convertMsgsToModels } from '@msg';
-import * as R from 'ramda';
 import {
   useGetMessagesByAddressQuery,
   GetMessagesByAddressQuery,
 } from '@graphql/types';
+
+import { convertMsgsToModels } from '@msg';
+
+import { useState } from 'react';
+
+import { useRouter } from 'next/router';
+
+import * as R from 'ramda';
+
 import { TransactionState } from './types';
 
 const LIMIT = 50;
