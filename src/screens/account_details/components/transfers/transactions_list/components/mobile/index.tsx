@@ -4,27 +4,19 @@ import numeral from 'numeral';
 import dayjs from '@utils/dayjs';
 import Link from 'next/link';
 import {
+  TRANSACTION_DETAILS,
   ACCOUNT_HASH,
   ACCOUNT_DETAILS,
   BLOCK_DETAILS,
 } from '@utils/go_to_page';
-import {
-  Typography, Divider,
-} from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 import { VariableSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
 import { mergeRefs } from '@utils/merge_refs';
-import {
-  SingleTransferMobile,
-  Loading,
-  Result,
-} from '@components';
-import {
-  useList,
-  useListRow,
-} from '@hooks';
+import { SingleTransferMobile, Loading, Result } from '@components';
+import { useList, useListRow } from '@hooks';
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
 import { useStyles } from './styles';
 import { TransactionsListState } from '../../types';
@@ -36,21 +28,17 @@ const Mobile: React.FC<TransactionsListState> = ({
   loadMoreItems,
   isItemLoaded,
   transactions,
-  typeTabs
+  typeTabs,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation('accounts');
-  const {
-    listRef,
-    getRowHeight,
-    setRowHeight,
-  } = useList();
+  const { listRef, getRowHeight, setRowHeight } = useList();
 
   const items =
     typeTabs === 1
       ? transactions.map(x => ({
           hash: (
-            <Link href={ACCOUNT_HASH(x.hash)} passHref>
+            <Link href={TRANSACTION_DETAILS(x.hash)} passHref>
               <Typography variant="body1" component="a">
                 {getMiddleEllipsis(x.hash, {
                   beginning: 10,
@@ -92,7 +80,7 @@ const Mobile: React.FC<TransactionsListState> = ({
         }))
       : transactions.map(x => ({
           hash: (
-            <Link href={ACCOUNT_HASH(x.hash)} passHref>
+            <Link href={TRANSACTION_DETAILS(x.hash)} passHref>
               <Typography variant="body1" component="a">
                 {getMiddleEllipsis(x.hash, {
                   beginning: 10,
@@ -126,18 +114,14 @@ const Mobile: React.FC<TransactionsListState> = ({
   return (
     <div className={classnames(className, classes.root)}>
       <AutoSizer>
-        {({
-          height, width,
-        }) => {
+        {({ height, width }) => {
           return (
             <InfiniteLoader
               isItemLoaded={isItemLoaded}
               itemCount={itemCount}
               loadMoreItems={loadMoreItems}
             >
-              {({
-                onItemsRendered, ref,
-              }) => (
+              {({ onItemsRendered, ref }) => (
                 <List
                   className="List"
                   height={height}
@@ -147,9 +131,7 @@ const Mobile: React.FC<TransactionsListState> = ({
                   ref={mergeRefs(listRef, ref)}
                   width={width}
                 >
-                  {({
-                    index, style,
-                  }) => {
+                  {({ index, style }) => {
                     const { rowRef } = useListRow(index, setRowHeight);
                     if (!isItemLoaded(index)) {
                       return (
