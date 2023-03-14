@@ -1,4 +1,4 @@
-import { convertCoinToSatoshi } from '@src/utils/coinFormatting';
+import { convertCoinToSatoshi, roundToFixed } from '@src/utils/coinFormatting';
 
 import { useEffect, useState } from 'react';
 
@@ -166,8 +166,6 @@ export const useTransfer = (transferWallets: string[]) => {
     if (state.tab === 3) {
       fetchIssueSystemTransfers();
     }
-
-    
   };
   const sortItems = () => {
     let items;
@@ -204,7 +202,7 @@ export const useTransfer = (transferWallets: string[]) => {
     return formattedData.map(item => {
       return {
         ...item,
-        amount: convertCoinToSatoshi(item.amount),
+        amount: roundToFixed(item.amount, 8),
         kind: jsClient.walletKindToJSON(item.kind),
         walletFrom: item.wallets?.wallet_from ?? '',
         walletTo: item.wallets?.wallet_to ?? '',
