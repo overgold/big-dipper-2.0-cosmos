@@ -42,7 +42,7 @@ const Desktop: React.FC<TransactionsListState> = ({
     typeTabs === 1
       ? transactions.map(x => ({
           hash: (
-            <Link href={ACCOUNT_HASH(x.hash)} passHref>
+            <Link href={TRANSACTION_DETAILS(x.hash)} passHref>
               <Typography variant="body1" component="a">
                 {getMiddleEllipsis(x.hash, {
                   beginning: 10,
@@ -88,7 +88,7 @@ const Desktop: React.FC<TransactionsListState> = ({
         }))
       : transactions.map(x => ({
           hash: (
-            <Link href={ACCOUNT_HASH(x.hash)} passHref>
+            <Link href={TRANSACTION_DETAILS(x.hash)} passHref>
               <Typography variant="body1" component="a">
                 {getMiddleEllipsis(x.hash, {
                   beginning: 10,
