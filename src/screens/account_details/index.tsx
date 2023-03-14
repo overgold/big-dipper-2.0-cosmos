@@ -48,7 +48,7 @@ const AccountDetails = () => {
               accountData={state.accountInfo}
               balance={state.balance}
             />
-            <TransfACCOUNT_HASHers
+            <Transfers
               className={classes.transactions}
               transferWallets={state.transferWallets}
             />

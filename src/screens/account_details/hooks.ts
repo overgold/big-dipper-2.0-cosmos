@@ -1,7 +1,7 @@
 import { useDesmosProfile } from '@hooks';
 
 import { chainConfig } from '@src/configs';
-import { convertCoinToSatoshi, roundToFixed } from '@src/utils/coinFormatting';
+import { roundToFixed } from '@src/utils/coinFormatting';
 import { sumBalances } from '@src/utils/sumBalances';
 
 import { getDenom } from '@utils/get_denom';
@@ -211,6 +211,7 @@ export const useAccountDetails = () => {
       handleSetState({
         loading: false,
         accountAddress: data.account[0].address,
+        transferWallets: data.account[0].wallets,
         accountInfo: {
           walletOverview: [],
           accountOverview: {
@@ -235,19 +236,21 @@ export const useAccountDetails = () => {
                 address: wallet.address,
                 kind: jsClient.walletKindToJSON(wallet.kind),
                 state: jsClient.walletStateToJSON(data.account[0]?.state),
-                balance: convertCoinToSatoshi(
-                  !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0
+                balance: roundToFixed(
+                  !isEmpty(wallet.balance) ? wallet.balance[0]?.amount : 0,
+                  8
                 ),
                 denom: !isEmpty(wallet.balance)
                   ? wallet.balance[0]?.denom
                   : bech32.decode(wallet.address).prefix,
               };
             }),
-            totalWalletsBalance: convertCoinToSatoshi(
+            totalWalletsBalance: roundToFixed(
               sumBalances(data.account[0]?.wallets_data, {
                 paramsOne: 'balance',
                 paramsTwo: 'amount',
-              })
+              }),
+              8
             ),
           },
         },
@@ -258,7 +261,6 @@ export const useAccountDetails = () => {
       });
     }
   };
-
 
   const formatBalance = (walletData, stakeData) => {
     const stateChange: any = {
@@ -280,7 +282,7 @@ export const useAccountDetails = () => {
       );
 
       const refRewardAmount = R.pathOr(
-        {value:'0',denom:''},
+        { value: '0', denom: '' },
         ['0', 'balance', '0', 'amount'],
         walletData.filter(item => item.kind === 7)
       );
@@ -291,14 +293,18 @@ export const useAccountDetails = () => {
       );
 
       //stake
-      const stakeAmount = R.pathOr({value:'0',denom:''}, ['balance', 'amount_stake'], stakeData);
+      const stakeAmount = R.pathOr(
+        { value: '0', denom: '' },
+        ['balance', 'amount_stake'],
+        stakeData
+      );
       const steakForRansomAmount = R.pathOr(
-        {value:'0',denom:''},
+        { value: '0', denom: '' },
         ['balance', 'amount_sell'],
         stakeData
       );
       const steakReward = R.pathOr(
-        {value:'0',denom:''},
+        { value: '0', denom: '' },
         ['reward', 'aggregate', 'sum', 'amount'],
         stakeData
       );
