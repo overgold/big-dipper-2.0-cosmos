@@ -31,6 +31,7 @@ jobs:
           NEXT_PUBLIC_URL=
           NEXT_PUBLIC_RPC_WEBSOCKET=
           NEXT_PUBLIC_CHAIN_TYPE=
+          NEXT_PUBLIC_ASSET=
           NODE_ENV="production"
           PORT=3000
           if [[ $GITHUB_REF == refs/tags/desmos-morpheus-apollo-1* ]]; then
@@ -39,12 +40,14 @@ jobs:
             NEXT_PUBLIC_URL="https://morpheus.desmos.network"
             NEXT_PUBLIC_RPC_WEBSOCKET="wss://rpc.morpheus.desmos.network/websocket"
             NEXT_PUBLIC_CHAIN_TYPE="testnet"
+            NEXT_PUBLIC_ASSET="ovg"
           fi
           echo ::set-output name=NEXT_PUBLIC_GRAPHQL_URL::${NEXT_PUBLIC_GRAPHQL_URL}
           echo ::set-output name=NEXT_PUBLIC_GRAPHQL_WS::${NEXT_PUBLIC_GRAPHQL_WS}
           echo ::set-output name=NEXT_PUBLIC_URL::${NEXT_PUBLIC_URL}
           echo ::set-output name=NEXT_PUBLIC_RPC_WEBSOCKET::${NEXT_PUBLIC_RPC_WEBSOCKET}
           echo ::set-output name=NEXT_PUBLIC_CHAIN_TYPE::${NEXT_PUBLIC_CHAIN_TYPE}
+          echo ::set-output name=NEXT_PUBLIC_ASSET::${NEXT_PUBLIC_ASSET}
           echo ::set-output name=NODE_ENV::${NODE_ENV}
           echo ::set-output name=PORT::${PORT}
       - name: Set up Docker Buildx

@@ -4,11 +4,11 @@ export type OverviewType = {
 };
 
 export type BalanceType = {
-  available: TokenUnit;
-  delegate: TokenUnit;
-  unbonding: TokenUnit;
-  reward: TokenUnit;
-  commission?: TokenUnit;
+  regular: TokenUnit;
+  staked: TokenUnit;
+  steakForRansom: TokenUnit;
+  refReward: TokenUnit;
+  steakReward: TokenUnit;
   total: TokenUnit;
 };
 
@@ -28,20 +28,28 @@ type AccountAffiliatesType = {
   kind: string;
 };
 
-type WalletType = {
+export type WalletType = {
   account_address: string;
   address: string;
   balance: string;
   kind: string;
   state: string;
 };
-type AccountType = {
+export type AccountWalletsType = {
+  address: string;
+  kind: string;
+  state: string;
+  denom: string;
+  balance: number;
+};
+
+export type AccountType = {
   address: string;
   affiliates: AccountAffiliatesType[];
   hash: string;
-  kind: string[];
+  kind: any;
   state: string;
-  wallets: string[];
+  wallets: AccountWalletsType[];
 };
 
 export type AccountDetailState = {
@@ -56,6 +64,7 @@ export type AccountDetailState = {
     count: number;
   };
   rewards: RewardsType;
+  transferWallets:string[];
   accountInfo: {
     address: string;
     walletOverview?: WalletType | [];

@@ -120,6 +120,28 @@ svg {
     border-radius: 3px;
 }
 
+
+/* полоса прокрутки (скроллбар) */
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+
+/* ползунок скроллбара */
+
+::-webkit-scrollbar-thumb {
+    background-color: #F0A521;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+    /* border: 0.5px solid #fff; */
+}
+
 .react-tooltip {
     z-index: 99999999;
 }

@@ -29,7 +29,6 @@ const Desktop: React.FC<TransactionsListState> = ({
 
   const classes = useStyles();
   const { t } = useTranslation('transactions');
-
   const items = transactions.map(x => ({
     block: (
       <Link href={BLOCK_DETAILS(x.height)} passHref>

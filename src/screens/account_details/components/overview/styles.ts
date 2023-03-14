@@ -47,22 +47,31 @@ export const useStyles = () => {
         gridTemplateColumns: '1fr',
         [theme.breakpoints.up('md')]: {
           gridTemplateColumns: '1fr 1fr',
-          justifyItems: 'center',
+          gap: '12px',
+        },
+      },
+      listAccount: {
+        display: 'grid',
+        gridTemplateColumns: '1fr',
+        [theme.breakpoints.between('md','lg')]: {
+          gridTemplateColumns: '1fr 1fr',
+          gap: '12px',
+        },
+        [theme.breakpoints.up('xl')]: {
+          gridTemplateColumns: '1fr 1fr 1fr',
           gap: '12px',
         },
       },
       walletsItem: {
-        '&:last-child': {
-          [theme.breakpoints.up('md')]: {
-            gridColumn: 2,
-            gridRow: '1 / 5',
-          },
+        '&:first-child': {
           '& .value': {
             fontWeight: 700,
+            fontSize: '20px',
           },
           paddingBottom: 0,
         },
       },
+    
       item: {
         width: '100%',
         padding: theme.spacing(2, 0),

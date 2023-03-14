@@ -10,7 +10,18 @@ import { chainConfig } from '@configs';
  * @param denom the denom to convert the amount in to
  * @returns TokenUnit
  */
-export const formatToken = (value: number | string, denom = ''): TokenUnit => {
+
+type formatTokenProps = (
+  value: number | string,
+  denom: string,
+  withoutRatio?: boolean
+) => TokenUnit;
+
+export const formatToken: formatTokenProps = (
+  value,
+  denom = '',
+  withoutRatio = false
+) => {
   const selectedDenom = chainConfig.tokenUnits[denom];
 
   if (typeof value !== 'string' && typeof value !== 'number') {
@@ -33,7 +44,9 @@ export const formatToken = (value: number | string, denom = ''): TokenUnit => {
   }
 
   const ratio = 10 ** selectedDenom.exponent;
-  results.value = Big(value).div(ratio).toFixed(selectedDenom.exponent);
+  results.value = withoutRatio
+    ? Big(value).toFixed(selectedDenom.exponent)
+    : Big(value).div(ratio).toFixed(selectedDenom.exponent);
   results.displayDenom = selectedDenom.display;
   return results;
 };
@@ -45,7 +58,10 @@ export const formatToken = (value: number | string, denom = ''): TokenUnit => {
  * @param exponent the exponent to div by
  * @returns string value of formatted
  */
-export const formatTokenByExponent = (value: number | string, exponent = 0): string => {
+export const formatTokenByExponent = (
+  value: number | string,
+  exponent = 0
+): string => {
   if (typeof value !== 'string' && typeof value !== 'number') {
     value = '0';
   }
@@ -66,7 +82,10 @@ export const formatTokenByExponent = (value: number | string, exponent = 0): str
  * @param toFixed defaults null
  * @returns formatted number with all the decimal places one can wish for
  */
-export const formatNumber = (tokenUnit: string, toFixed: number = null): string => {
+export const formatNumber = (
+  tokenUnit: string,
+  toFixed: number = null
+): string => {
   // split whole number and decimal if any
   const split = `${tokenUnit}`.split('.');
   // whole number
@@ -89,7 +108,9 @@ export const formatNumber = (tokenUnit: string, toFixed: number = null): string 
     // merge the full number together and return it.
     // If for some insane reason after removing all the 0s we ended up with
     // '' in the decimal place we just return the full number
-    return `${formatWholeNumber}${formatDecimal.length ? '.' : ''}${formatDecimal}`;
+    return `${formatWholeNumber}${
+      formatDecimal.length ? '.' : ''
+    }${formatDecimal}`;
   }
 
   // else we return whole number

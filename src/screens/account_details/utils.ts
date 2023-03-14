@@ -6,6 +6,8 @@ import {
   AccountUnbondingBalanceDocument,
   AccountDelegationRewardsDocument,
   AccountInfo,
+  AccountHash,
+  StakingStats,
 } from '@src/graphql/account_details_documents';
 
 import { toValidatorAddress } from '@utils/prefix_convert';
@@ -126,7 +128,7 @@ export const fetchRewards = async (address: string) => {
     return defaultReturnValue;
   }
 };
-//TODO fetchTestBalance AccountInfo
+// fetch AccountInfo
 export const fetchAccountInfo = async (address: string) => {
   try {
     const { data } = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
@@ -135,6 +137,21 @@ export const fetchAccountInfo = async (address: string) => {
       },
       query: AccountInfo,
     });
+    return R.pathOr([], ['data'], data);
+  } catch (error) {
+    console.log('error', error);
+    return [];
+  }
+};
+// fetch Account Hash
+export const fetchAccountHash = async (hash: string) => {
+  try {
+    const { data } = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
+      variables: {
+        hash,
+      },
+      query: AccountHash,
+    });
 
     return R.pathOr([], ['data'], data);
   } catch (error) {
@@ -142,3 +159,26 @@ export const fetchAccountInfo = async (address: string) => {
     return [];
   }
 };
+export const fetchStakingInfo = async (hash: string) => {
+  try {
+    const {data} = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
+      variables: {
+        hash,
+      },
+      query: StakingStats,
+    });
+
+    return R.pathOr([], ['data'], data);
+  } catch (error) {
+    console.log('error', error);
+    return [];
+  }
+};
+
+export const tabLabels = ['walletsTab', 'affiliatesTab', 'kindsTab'];
+export const tabTransfer = [
+  'payment',
+  'system',
+  'withdrawSystem',
+  'issueSystem',
+];

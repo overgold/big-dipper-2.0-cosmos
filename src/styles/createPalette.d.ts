@@ -53,6 +53,7 @@ declare module '@material-ui/core/styles/createPalette' {
             three: string;
             four: string;
             five: string;
+            six: string;
         },
         condition: {
             zero: string;

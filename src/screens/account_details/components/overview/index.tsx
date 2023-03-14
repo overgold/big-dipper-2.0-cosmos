@@ -1,30 +1,41 @@
-import React from 'react';
-import classnames from 'classnames';
-import useTranslation from 'next-translate/useTranslation';
-import { Typography, Dialog } from '@material-ui/core';
+import CopyIcon from '@assets/icon-copy.svg';
+import ShareIcon from '@assets/icon-share.svg';
+
+import { Box } from '@components';
+import { Balance } from '@src/screens/account_details/components';
 
 import { useScreenSize } from '@hooks';
 
-import CopyIcon from '@assets/icon-copy.svg';
-import ShareIcon from '@assets/icon-share.svg';
+import { Typography, Dialog } from '@material-ui/core';
+
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
-import { Box } from '@components';
-import { useStyles } from './styles';
-import { useOverview } from './hooks';
+import { ACCOUNT_DETAILS, ACCOUNT_HASH } from '@utils/go_to_page';
+
+import React from 'react';
+
+import classnames from 'classnames';
+
+import useTranslation from 'next-translate/useTranslation';
+
 import { isEmpty } from 'lodash';
-import { walletInfo } from './walletInfo';
+
+import Link from 'next/link';
+
+import AccountDetailsTab from '../accountDetailsTab';
+
 import { ShareInfo } from './Share';
 import { accountInfo } from './accountInfo';
-import Link from 'next/link';
-import { TRANSACTION_DETAILS } from '@utils/go_to_page';
-import { Accordion } from '../accordion/accordion';
+import { useOverview } from './hooks';
+import { useStyles } from './styles';
+import { walletInfo } from './walletInfo';
+import { tabLabels } from '@src/screens/account_details/utils';
+import { BalanceType } from '../../types';
 
 const Overview: React.FC<{
   className?: string;
-  withdrawalAddress: string;
-  address: string;
   accountData: any;
-}> = ({ className, address, withdrawalAddress, accountData }) => {
+  balance?: BalanceType;
+}> = ({ className, accountData, balance }) => {
   const { isDesktop } = useScreenSize();
   const classes = useStyles();
   const { t } = useTranslation('accounts');
@@ -43,8 +54,9 @@ const Overview: React.FC<{
         open={open}
         handleClose={handleClose}
       />
-      <Box className={classnames(className, classes.root)}>
-        {!isEmpty(accountData.walletOverview) && (
+      {/* <Box className={classnames(className, classes.root)}> */}
+      {!isEmpty(accountData.walletOverview) && (
+        <Box className={classnames(className, classes.root)}>
           <div className={classnames(classes.list)}>
             {walletInfo(accountData.walletOverview, t).map(walletItem => (
               <div
@@ -72,21 +84,29 @@ const Overview: React.FC<{
                     </>
                   )}
                   <Typography variant="body1" className="value">
-                    {!isDesktop && walletItem.isDetail
-                      ? getMiddleEllipsis(walletItem.value, {
-                          beginning: 15,
-                          ending: 5,
-                        })
-                      : walletItem.value}
+                    {walletItem.isDetail ? (
+                      <Link href={ACCOUNT_DETAILS(walletItem.value)} passHref>
+                        {!isDesktop
+                          ? getMiddleEllipsis(walletItem.value, {
+                              beginning: 15,
+                              ending: 5,
+                            })
+                          : walletItem.value}
+                      </Link>
+                    ) : (
+                      walletItem.value
+                    )}
                   </Typography>
                 </div>
               </div>
             ))}
           </div>
-        )}
-        {!isEmpty(accountData.accountOverview) && (
-          <>
-            <div className={classnames(classes.list)}>
+        </Box>
+      )}
+      {!isEmpty(accountData.accountOverview) && (
+        <>
+          <Box className={classnames(className, classes.root)}>
+            <div className={classnames(classes.listAccount)}>
               {accountInfo(accountData.accountOverview, t).map(accountItem => (
                 <div
                   key={accountItem.title}
@@ -96,7 +116,7 @@ const Overview: React.FC<{
                     <strong>{accountItem.title}</strong>
                   </Typography>
                   <div className="detail">
-                    {accountItem.isDetail && (
+                    {(accountItem.isDetail || accountItem.thisHash) && (
                       <>
                         <CopyIcon
                           onClick={() =>
@@ -114,40 +134,51 @@ const Overview: React.FC<{
                     )}
 
                     <Typography variant="body1" className="value">
-                      {!isDesktop && accountItem.isDetail
-                        ? getMiddleEllipsis(accountItem.value, {
-                            beginning: 15,
-                            ending: 5,
-                          })
-                        : accountItem.value}
+                      {accountItem.isDetail ? (
+                        <Link href={ACCOUNT_DETAILS(accountItem.value)}>
+                          {!isDesktop
+                            ? getMiddleEllipsis(accountItem.value, {
+                                beginning: 15,
+                                ending: 5,
+                              })
+                            : accountItem.value}
+                        </Link>
+                      ) : accountItem.thisHash ? (
+                        <Link href={ACCOUNT_HASH(accountItem.value)}>
+                          {!isDesktop
+                            ? getMiddleEllipsis(accountItem.value, {
+                                beginning: 15,
+                                ending: 5,
+                              })
+                            : accountItem.value}
+                        </Link>
+                      ) : (
+                        accountItem.value
+                      )}
                     </Typography>
                   </div>
                 </div>
               ))}
             </div>
-            <div className={classes.accordionContainer}>
-              {!isEmpty(accountData.accountOverview.affiliates) && (
-                <Accordion
-                  data={accountData.accountOverview.affiliates}
-                  headTitle={t('affiliatesHead')}
-                  options={{
-                    itemsOne: 'address',
-                    itemsTwo: 'kind',
-                    itemsOneTitle: t('address'),
-                    itemsTwoTitle: t('affiliation'),
-                  }}
-                />
-              )}
-              {!isEmpty(accountData.accountOverview.wallets) && (
-                <Accordion
-                  data={accountData.accountOverview.wallets}
-                  headTitle={t('walletsHead')}
-                />
-              )}
-            </div>
-          </>
-        )}
-      </Box>
+          </Box>
+
+          <Balance
+            // className={classes.balance}
+            regular={balance.regular}
+            staked={balance.staked}
+            steakForRansom={balance.steakForRansom}
+            refReward={balance.refReward}
+            steakReward={balance.steakReward}
+            total={balance.total}
+          />
+
+          <AccountDetailsTab
+            data={accountData.accountOverview}
+            tabLabelsHead={tabLabels}
+          />
+        </>
+      )}
+      {/* </Box> */}
     </>
   );
 };

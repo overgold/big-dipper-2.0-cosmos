@@ -1,15 +1,23 @@
-import { useState } from 'react';
-import Big from 'big.js';
-import * as R from 'ramda';
-import numeral from 'numeral';
 import {
   useValidatorsQuery,
   ValidatorsQuery,
 } from '@graphql/types';
+
+import { SlashingParams } from '@models';
+
+import { chainConfig } from '@src/configs';
+
 import { getValidatorCondition } from '@utils/get_validator_condition';
 import { formatToken } from '@utils/format_token';
-import { SlashingParams } from '@models';
-import { chainConfig } from '@src/configs';
+
+import { useState } from 'react';
+
+import Big from 'big.js';
+
+import * as R from 'ramda';
+
+import numeral from 'numeral';
+
 import {
   ValidatorsState,
   ItemType,
