@@ -154,6 +154,8 @@ export const AccountHash = /* GraphQL */ `
       wallets_data {
         address
         balance
+        kind
+        state
       }
     }
   }
