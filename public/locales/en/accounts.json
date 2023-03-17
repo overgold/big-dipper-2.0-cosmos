@@ -94,5 +94,13 @@
     "ACCOUNT_STATE_BLOCKED": "Blocked",
     "AFFILIATION_KIND_UNSPECIFIED": "Unspecified",
     "AFFILIATION_KIND_REFERRER": "Referrer",
-    "AFFILIATION_KIND_REFERRAL": "Referral"
+    "TRANSFER_KIND_UNSPECIFIED": "Unspecified",
+    "TRANSFER_KIND_ISSUE": "Issue",
+    "TRANSFER_KIND_PAYMENT": "Payment",
+    "TRANSFER_KIND_WITHDRAW": "Withdraw",
+    "TRANSFER_KIND_DEFERRED": "Deferred",
+    "TRANSFER_KIND_SYSTEM": "System transfer",
+    "TRANSFER_KIND_SYSTEM_REWARD": "System reward",
+    "TRANSFER_KIND_SYSTEM_REF_REWARD": "Referer reward",
+    " ": " "
 }

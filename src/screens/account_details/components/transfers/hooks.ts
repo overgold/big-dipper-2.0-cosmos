@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 
 import * as R from 'ramda';
 
-import { TransferState } from './types';
 import isEmpty from 'lodash-es/isEmpty';
+
+import { TransferState } from './types';
 import {
   fetchIssueSystemTransfersByWallets,
   fetchPaymentTransfersByWallets,
@@ -203,7 +204,7 @@ export const useTransfer = (transferWallets: string[]) => {
       return {
         ...item,
         amount: roundToFixed(item.amount, 8),
-        kind: jsClient.walletKindToJSON(item.kind),
+        kind: jsClient.transferKindToJSON(item.kind),
         walletFrom: item.wallets?.wallet_from ?? '',
         walletTo: item.wallets?.wallet_to ?? '',
         wallet: item.wallets?.wallet,
