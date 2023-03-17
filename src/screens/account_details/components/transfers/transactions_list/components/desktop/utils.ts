@@ -1,4 +1,4 @@
-export const columnsPaymentAndSystem:{
+export const columnsPaymentAndSystem: {
   key: string;
   align?: 'left' | 'center' | 'right' | 'justify' | 'inherit';
   width: number;
@@ -22,7 +22,7 @@ export const columnsPaymentAndSystem:{
   {
     key: 'amount',
     width: 18,
-    align:'right'
+    align: 'right',
   },
   {
     key: 'time',
@@ -33,7 +33,7 @@ export const columnsPaymentAndSystem:{
     width: 10,
   },
 ];
-export const columnsWithdrawAndIssue:{
+export const columnsWithdrawAndIssue: {
   key: string;
   align?: 'left' | 'center' | 'right' | 'justify' | 'inherit';
   width: number;
@@ -47,7 +47,7 @@ export const columnsWithdrawAndIssue:{
     width: 15,
   },
   {
-    key: 'walletFrom',
+    key: ' ',
     width: 15,
   },
   {
@@ -57,7 +57,7 @@ export const columnsWithdrawAndIssue:{
   {
     key: 'amount',
     width: 18,
-    align:'right'
+    align: 'right',
   },
   {
     key: 'time',
