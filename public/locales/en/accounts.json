@@ -94,6 +94,7 @@
     "ACCOUNT_STATE_BLOCKED": "Blocked",
     "AFFILIATION_KIND_UNSPECIFIED": "Unspecified",
     "AFFILIATION_KIND_REFERRER": "Referrer",
+    "AFFILIATION_KIND_REFERRAL": "Referral",
     "TRANSFER_KIND_UNSPECIFIED": "Unspecified",
     "TRANSFER_KIND_ISSUE": "Issue",
     "TRANSFER_KIND_PAYMENT": "Payment",
