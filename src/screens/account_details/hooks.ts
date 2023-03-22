@@ -208,6 +208,13 @@ export const useAccountDetails = () => {
     const { jsClient } = await import('js-core');
 
     if (!isEmpty(data.account)) {
+      const stateInfo = await fetchStakingInfo(data.account[0]?.hash);
+      const stateBalance = R.pathOr([], ['user_api', 'info', '0'], stateInfo);
+
+      handleSetState(
+        formatBalance(data.account[0]?.wallets_data, stateBalance)
+      );
+
       handleSetState({
         loading: false,
         accountAddress: data.account[0].address,

@@ -30,7 +30,8 @@ const Transfers = ({ className, transferWallets }: TransferProps) => {
   const classes = useStyles();
   const { t } = useTranslation('accounts');
 
-  const { state, loadNextPage, sortItems, handleTabChange} = useTransfer(transferWallets);
+  const { state, loadNextPage, sortItems, handleTabChange } =
+    useTransfer(transferWallets);
 
   const items = sortItems();
   const loadMoreItems = items.isNextPageLoading ? () => null : loadNextPage;
@@ -63,7 +64,6 @@ const Transfers = ({ className, transferWallets }: TransferProps) => {
           typeTabs={typeTabs}
         />
       </div>
- 
     </Box>
   );
 };
