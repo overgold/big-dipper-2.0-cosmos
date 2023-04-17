@@ -1,7 +1,7 @@
 import React from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import { NextSeo } from 'next-seo';
-import { Layout } from '@components';
+import { Layout, NoData } from '@components';
 import { useStyles } from './styles';
 import { List } from './components';
 import { useProposals } from './hooks';
@@ -31,9 +31,7 @@ const Proposals = () => {
             loadMoreItems={loadMoreItems}
           />
         ) : (
-          <div className="wrapper-icon">
-            <UFO />
-          </div>
+          <NoData />
         )}
       </Layout>
     </>
