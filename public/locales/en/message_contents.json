@@ -57,7 +57,7 @@
   "MsgCreateVestingAccount": "Vesting account created for <0>{{toAddress}}</0>",
   "MsgCreatePeriodicVestingAccount": "Periodic vesting account created for <0>{{toAddress}}</0>",
   "MsgPayment": "Transfer {{amount}} {{asset}} from <0></0> to <1></1> <2></2> by <3></3>",
-  "MsgWithdraw": "Withdraw {{amount}} from <0></0> <1></1> by <2></2>",
+  "MsgWithdraw": "Withdraw {{amount}} from wallet <0></0> <1></1> by <2></2>",
   "MsgSetTransferExtra": "Set Transfer Extra: <0></0> by <1></1>",
   "MsgIssue": "Issue {{amount}} to wallet <0></0> <1></1> by <2></2>",
   "MsgSystemTransfer": "Transfer {{amount}} {{asset}} from <0></0> to <1></1> <2></2> by <3></3>",
