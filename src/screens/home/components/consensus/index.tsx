@@ -3,28 +3,16 @@ import classnames from 'classnames';
 import numeral from 'numeral';
 import { Typography } from '@material-ui/core';
 import useTranslation from 'next-translate/useTranslation';
-import {
-  Box,
-  AvatarName,
-} from '@components';
-import {
-  RadialBarChart,
-  PolarAngleAxis,
-  RadialBar,
-  Tooltip,
-} from 'recharts';
-import {
-  useProfileRecoil,
-} from '@recoil/profiles';
+import { Box, AvatarName } from '@components';
+import { RadialBarChart, PolarAngleAxis, RadialBar, Tooltip } from 'recharts';
+import { useProfileRecoil } from '@recoil/profiles';
 import { useStyles } from './styles';
 import { useConsensus } from './hooks';
 
 const Consensus: React.FC<{
   className?: string;
 }> = ({ className }) => {
-  const {
-    classes, theme,
-  } = useStyles();
+  const { classes, theme } = useStyles();
   const { state } = useConsensus();
   const { t } = useTranslation('home');
 
@@ -87,11 +75,7 @@ const Consensus: React.FC<{
             angleAxisId={0}
             tick={false}
           />
-          <RadialBar
-            background
-            dataKey="value"
-            cornerRadius={circleSize / 2}
-          />
+          <RadialBar background dataKey="value" cornerRadius={circleSize / 2} />
           <Tooltip />
           <text
             x={circleSize / 2}
@@ -107,8 +91,8 @@ const Consensus: React.FC<{
             </tspan>
           </text>
           <text
-            x={(circleSize / 2) - 32}
-            y={(circleSize / 2) + 35}
+            x={circleSize / 2 - 32}
+            y={circleSize / 2 + 35}
             className={classes.chartExtraLabel}
           >
             <tspan className={classes.chartLabel}>

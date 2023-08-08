@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
+import { convertCoinFromSatoshi } from '@src/utils/coinFormatting';
 
 const MsgIssueComponent = (props: { message: MsgIssue }) => {
   const { message } = props;
@@ -38,6 +39,11 @@ const MsgIssueComponent = (props: { message: MsgIssue }) => {
             {message.creator}
           </Link>,
         ]}
+        values={{
+          amount: `${convertCoinFromSatoshi(
+            message.amount
+          )} ${message.asset.toLocaleUpperCase()}`,
+        }}
       />
     </div>
   );

@@ -42,6 +42,7 @@ const MsgCreateWalletComponent = (props: { message: MsgCreateWallet }) => {
         ]}
         values={{
           address: message.address,
+          cost: '0,01 OVG',
         }}
       />
     </div>
