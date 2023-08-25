@@ -1,8 +1,12 @@
 import Home from '@screens/home';
 import { subtractYears } from '@src/utils/time';
 import { GetServerSideProps } from 'next';
+import axios from 'axios';
+import usePlug from '@src/hooks/usePlug';
 
 const HomePage = ({ data }) => {
+  const { isEnabledFullPagePlug, FullPagePlugComponent } = usePlug();
+  if (isEnabledFullPagePlug) return FullPagePlugComponent;
   return <Home data={data} />;
 };
 
@@ -24,3 +28,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: { data: res.length ? res.reverse() : [] },
   };
 };
+
+export const getPlug = async () => {
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_WALLET_URL}/v4/plug-service/plugs/star_bridge?language=en-GB`
+    );
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+getPlug();
