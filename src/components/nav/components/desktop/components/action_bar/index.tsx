@@ -8,12 +8,18 @@ import { SearchBar } from '../../..';
 const ActionBar: React.FC<{
   isNetwork: boolean;
   className?: string;
+  isEnabledNotificationPlug?: boolean;
   toggleNetwork: () => void;
-}> = ({ toggleNetwork, className, isNetwork }) => {
+}> = ({ toggleNetwork, className, isNetwork, isEnabledNotificationPlug }) => {
   const { ref: heightRef, height } = useGetComponentDimension();
   const classes = useStyles();
   return (
-    <div className={classnames(className, classes.root)} ref={heightRef}>
+    <div
+      className={classnames(className, classes.root, {
+        plug: isEnabledNotificationPlug,
+      })}
+      ref={heightRef}
+    >
       <div className={classes.actions}>
         <SearchBar
           className={classnames(classes.searchBar, { open: isNetwork })}

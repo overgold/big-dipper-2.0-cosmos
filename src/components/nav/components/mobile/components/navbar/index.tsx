@@ -13,19 +13,15 @@ const Navbar = (props: NavbarProps) => {
   const classes = useStyles();
   const selected = useRecoilValue(readSelectedNetwork);
   const { isOpen, openNetwork, toggleNavMenus } = props;
-  const {
-    isEnabledNotificationPlug,
-    NotificationPlugComponent,
-  } = usePlug();
+  const { isEnabledNotificationPlug, NotificationPlugComponent } = usePlug();
   return (
     <div className={classes.wrapper}>
       {isEnabledNotificationPlug && NotificationPlugComponent}
 
       <div
-        className={classes.root}
-        style={{
-          marginTop: isOpen && isEnabledNotificationPlug ? '-40px' : '0px',
-        }}
+        className={classnames(classes.root, {
+          plug: isEnabledNotificationPlug,
+        })}
       >
         <Link href={HOME}>
           <a className={classes.a}>

@@ -15,10 +15,7 @@ const Desktop: React.FC<{
   const classes = useStyles();
   const { isMenu, toggleMenu, turnOffAll, toggleNetwork, isNetwork } =
     useDesktop();
-  const {
-    isEnabledNotificationPlug,
-    NotificationPlugComponent,
-  } = usePlug();
+  const { isEnabledNotificationPlug, NotificationPlugComponent } = usePlug();
   return (
     <ClickAwayListener onClickAway={turnOffAll}>
       <div className={classnames(className, classes.root)}>
@@ -29,7 +26,11 @@ const Desktop: React.FC<{
           })}
         >
           {isEnabledNotificationPlug && NotificationPlugComponent}
-          <ActionBar toggleNetwork={toggleNetwork} isNetwork={isNetwork} />
+          <ActionBar
+            toggleNetwork={toggleNetwork}
+            isNetwork={isNetwork}
+            isEnabledNotificationPlug={isEnabledNotificationPlug}
+          />
           <TitleBar title={title} />
         </AppBar>
         <Drawer
@@ -49,7 +50,12 @@ const Desktop: React.FC<{
             }),
           }}
         >
-          <div className={classes.logo} onClick={toggleMenu}>
+          <div
+            className={classnames(className, classes.logo, {
+              plug: isEnabledNotificationPlug,
+            })}
+            onClick={toggleMenu}
+          >
             <OvergoldLogo
               width="37"
               height="37"

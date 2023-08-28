@@ -13,5 +13,7 @@ export const useStyles = makeStyles(theme => ({
     width: '100%',
     height: 39,
     backgroundColor: '#F3A50D',
+    position: 'fixed',
+    zIndex: 10000,
   },
 }));
