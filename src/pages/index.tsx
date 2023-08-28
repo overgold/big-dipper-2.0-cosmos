@@ -28,15 +28,3 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: { data: res.length ? res.reverse() : [] },
   };
 };
-
-export const getPlug = async () => {
-  try {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_WALLET_URL}/v4/plug-service/plugs/star_bridge?language=en-GB`
-    );
-    return data;
-  } catch (error) {
-    return error;
-  }
-};
-getPlug();
