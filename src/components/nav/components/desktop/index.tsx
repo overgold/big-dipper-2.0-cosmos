@@ -7,14 +7,15 @@ import { useDesktop } from './hooks';
 import { MenuItems, TitleBar } from '..';
 import { ActionBar } from './components';
 import { Tooltip } from 'react-tooltip';
-
+import usePlug from '@src/hooks/usePlug';
 const Desktop: React.FC<{
   className?: string;
   title: string;
 }> = ({ className, title }) => {
   const classes = useStyles();
   const { isMenu, toggleMenu, turnOffAll, toggleNetwork, isNetwork } =
-  useDesktop();
+    useDesktop();
+  const { isEnabledNotificationPlug, NotificationPlugComponent } = usePlug();
   return (
     <ClickAwayListener onClickAway={turnOffAll}>
       <div className={classnames(className, classes.root)}>
@@ -24,7 +25,12 @@ const Desktop: React.FC<{
             open: isMenu,
           })}
         >
-          <ActionBar toggleNetwork={toggleNetwork} isNetwork={isNetwork} />
+          {isEnabledNotificationPlug && NotificationPlugComponent}
+          <ActionBar
+            toggleNetwork={toggleNetwork}
+            isNetwork={isNetwork}
+            isEnabledNotificationPlug={isEnabledNotificationPlug}
+          />
           <TitleBar title={title} />
         </AppBar>
         <Drawer
@@ -44,17 +50,22 @@ const Desktop: React.FC<{
             }),
           }}
         >
-          <div className={classes.logo} onClick={toggleMenu}>
+          <div
+            className={classnames(className, classes.logo, {
+              plug: isEnabledNotificationPlug,
+            })}
+            onClick={toggleMenu}
+          >
             <OvergoldLogo
               width="37"
               height="37"
               viewBox="0 0 37 37"
               role="button"
             />
-            <span className={"logo-title"}>Explorer</span>
+            <span className={'logo-title'}>Explorer</span>
           </div>
-          
-          <MenuItems isMenu={isMenu}/>
+
+          <MenuItems isMenu={isMenu} />
         </Drawer>
       </div>
     </ClickAwayListener>
