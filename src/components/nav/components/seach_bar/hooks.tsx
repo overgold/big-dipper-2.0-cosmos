@@ -7,7 +7,6 @@ import {
   BLOCK_DETAILS,
   TRANSACTION_DETAILS,
   PROFILE_DETAILS,
-  ACCOUNT_HASH,
 } from '@utils/go_to_page';
 import { useRecoilCallback } from 'recoil';
 import { readValidator } from '@recoil/validators';
@@ -52,9 +51,9 @@ export const useSearchBar = t => {
           router.push(BLOCK_DETAILS(numeral(parsedValue).value()));
         } else if (parsedValue.length === 64) {
           const data = await fetchAccountHash(parsedValue);
-          data && !isEmpty(data.account)
-            ? router.push(ACCOUNT_HASH(parsedValue))
-            : router.push(TRANSACTION_DETAILS(parsedValue));
+          data &&
+            !isEmpty(data.account) &&
+            router.push(TRANSACTION_DETAILS(parsedValue));
         } else {
           router.push(TRANSACTION_DETAILS(parsedValue));
         }
