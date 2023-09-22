@@ -5,7 +5,6 @@ import dayjs from '@utils/dayjs';
 import Link from 'next/link';
 import {
   TRANSACTION_DETAILS,
-  ACCOUNT_HASH,
   ACCOUNT_DETAILS,
   BLOCK_DETAILS,
 } from '@utils/go_to_page';
