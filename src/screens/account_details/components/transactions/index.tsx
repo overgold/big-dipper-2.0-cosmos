@@ -10,15 +10,14 @@ import { useTransactions } from './hooks';
 
 export interface TransactionProps {
   className?: string;
-  accountAddress?: string;
 }
 
-const Transactions = ({ className, accountAddress }: TransactionProps) => {
+const Transactions = ({ className }: TransactionProps) => {
   const txListFormat = useRecoilValue(readTx);
   const classes = useStyles();
   const { t } = useTranslation('validators');
 
-  const { state, loadNextPage } = useTransactions(accountAddress);
+  const { state, loadNextPage } = useTransactions();
 
   const loadMoreItems = state.isNextPageLoading ? () => null : loadNextPage;
   const isItemLoaded = index => !state.hasNextPage || index < state.data.length;

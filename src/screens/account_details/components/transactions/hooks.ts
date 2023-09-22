@@ -10,10 +10,14 @@ import { useState } from 'react';
 import * as R from 'ramda';
 
 import { TransactionState } from './types';
+import { useRouter } from 'next/router';
 
 const LIMIT = 20;
 
 export const useTransactions = (accountAddress = '') => {
+  const router = useRouter();
+  const address = R.pathOr('', ['query', 'address'], router);
+
   const [state, setState] = useState<TransactionState>({
     data: [],
     hasNextPage: false,
@@ -29,7 +33,7 @@ export const useTransactions = (accountAddress = '') => {
     variables: {
       limit: LIMIT + 1, // to check if more exist
       offset: 0,
-      address: `{${accountAddress}}`,
+      address: `{${address}}`,
     },
     onCompleted: data => {
       const itemsLength = data.messagesByAddress.length;

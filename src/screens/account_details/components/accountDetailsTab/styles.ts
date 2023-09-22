@@ -30,7 +30,7 @@ export const useStyles = () => {
         [theme.breakpoints.up('lg')]: {
           gridTemplateColumns: 'minmax(100px, 160px) 1fr repeat(2,minmax(100px, 160px))',
         },
-        gridTemplateColumns:'rminmax(100px, 160px) 1fr repeat(2,minmax(100px, 160px))',
+        gridTemplateColumns:'minmax(100px, 160px) 1fr repeat(2,minmax(100px, 160px))',
         listStyle: 'none',
         padding: '0 14px',
       },
