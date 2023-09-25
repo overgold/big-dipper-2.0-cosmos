@@ -1,6 +1,4 @@
-import {
-  useState, useEffect,
-} from 'react';
+import { useState, useEffect } from 'react';
 import numeral from 'numeral';
 import * as R from 'ramda';
 import { hexToBech32 } from '@utils/hex_to_bech32';
@@ -24,8 +22,9 @@ export const useConsensus = () => {
     proposer: '',
   });
 
-  const websocketUrl = (
-    process.env.NEXT_PUBLIC_RPC_WEBSOCKET || process.env.NEXT_PUBLIC_WS_CHAIN_URL);
+  const websocketUrl =
+    process.env.NEXT_PUBLIC_RPC_WEBSOCKET ||
+    process.env.NEXT_PUBLIC_WS_CHAIN_URL;
 
   useEffect(() => {
     const client = new WebSocket(websocketUrl);
@@ -34,7 +33,7 @@ export const useConsensus = () => {
       method: 'subscribe',
       id: 0,
       params: {
-        query: 'tm.event=\'NewRoundStep\'',
+        query: "tm.event='NewRoundStep'",
       },
     };
 
@@ -43,7 +42,7 @@ export const useConsensus = () => {
       method: 'subscribe',
       id: 0,
       params: {
-        query: 'tm.event=\'NewRound\'',
+        query: "tm.event='NewRound'",
       },
     };
 
@@ -54,6 +53,7 @@ export const useConsensus = () => {
 
     client.onmessage = (e: any) => {
       const data = JSON.parse(e.data);
+      console.log('🚀 ~ file: hooks.tsx:57 ~ useEffect ~ data:', data);
       const event = R.pathOr('', ['result', 'data', 'type'], data);
       if (event === 'tendermint/event/NewRound') {
         formatNewRound(data);
@@ -72,19 +72,28 @@ export const useConsensus = () => {
     };
   }, []);
 
-  const formatNewRound = (data:any) => {
-    const height = numeral(R.pathOr('', ['result', 'data', 'value', 'height'], data)).value();
-    const proposerHex = R.pathOr('', ['result', 'data', 'value', 'proposer', 'address'], data);
-    const consensusAddress = hexToBech32(proposerHex, chainConfig.prefix.consensus);
+  const formatNewRound = (data: any) => {
+    const height = numeral(
+      R.pathOr('', ['result', 'data', 'value', 'height'], data)
+    ).value();
+    const proposerHex = R.pathOr(
+      '',
+      ['result', 'data', 'value', 'proposer', 'address'],
+      data
+    );
+    const consensusAddress = hexToBech32(
+      proposerHex,
+      chainConfig.prefix.consensus
+    );
 
-    setState((prevState) => ({
+    setState(prevState => ({
       ...prevState,
       height,
       proposer: consensusAddress,
     }));
   };
 
-  const formatNewStep = (data:any) => {
+  const formatNewStep = (data: any) => {
     const stepReference = {
       0: 0,
       RoundStepNewHeight: 1,
@@ -95,11 +104,12 @@ export const useConsensus = () => {
     };
 
     const round = R.pathOr(0, ['result', 'data', 'value', 'round'], data);
-    const step = stepReference[R.pathOr(0, ['result', 'data', 'value', 'step'], data)];
+    const step =
+      stepReference[R.pathOr(0, ['result', 'data', 'value', 'step'], data)];
 
     const roundCompletion = (step / state.totalSteps) * 100;
 
-    setState((prevState) => ({
+    setState(prevState => ({
       ...prevState,
       round,
       step,

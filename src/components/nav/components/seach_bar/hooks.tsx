@@ -49,11 +49,6 @@ export const useSearchBar = t => {
           }
         } else if (/^-?\d+$/.test(numeral(parsedValue).value())) {
           router.push(BLOCK_DETAILS(numeral(parsedValue).value()));
-        } else if (parsedValue.length === 64) {
-          const data = await fetchAccountHash(parsedValue);
-          data &&
-            !isEmpty(data.account) &&
-            router.push(TRANSACTION_DETAILS(parsedValue));
         } else {
           router.push(TRANSACTION_DETAILS(parsedValue));
         }
