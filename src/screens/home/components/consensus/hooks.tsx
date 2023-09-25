@@ -53,7 +53,6 @@ export const useConsensus = () => {
 
     client.onmessage = (e: any) => {
       const data = JSON.parse(e.data);
-      console.log('🚀 ~ file: hooks.tsx:57 ~ useEffect ~ data:', data);
       const event = R.pathOr('', ['result', 'data', 'type'], data);
       if (event === 'tendermint/event/NewRound') {
         formatNewRound(data);
