@@ -29,7 +29,7 @@ const DataBlocks = ({ className, data: chartData }: IDataBlocks) => {
     {
       key: t('price'),
       value: chartData.length
-        ? `€${numeral(chartData[chartData.length - 1].price).format('0.00')}`
+        ? `$${numeral(chartData[chartData.length - 1].price).format('0.00')}`
         : 'N/A',
       className: classes.price,
     },
