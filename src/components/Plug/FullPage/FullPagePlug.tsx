@@ -3,7 +3,11 @@ import React from 'react';
 import PlugImage from '@assets/plug-image.svg';
 import { useStyles } from './styles';
 
-export const FullPagePlug = ({ message }) => {
+interface Props {
+  message?: any;
+}
+
+export const FullPagePlug = ({ message }: Props) => {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
@@ -13,13 +17,9 @@ export const FullPagePlug = ({ message }) => {
         </div>
         <div className={classes.text}>{'Sorry for the inconvenience'}</div>
         <div className={classes.imageContainer}>
-          <PlugImage
-            width="824"
-            height="453"
-            viewBox="0 0 824 453"
-          />
+          <PlugImage width="824" height="453" viewBox="0 0 824 453" />
         </div>
-        <div className={classes.text}>{message}</div>
+        {message && <div className={classes.text}>{message}</div>}
       </div>
     </div>
   );

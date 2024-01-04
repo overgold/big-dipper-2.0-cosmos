@@ -25,7 +25,10 @@ const usePlug = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_WALLET_URL}/v4/plug-service/plugs/big_dipper?language=en-GB`
         );
-        setPlugData(response.data);
+
+        if (response.status !== 204) {
+          setPlugData(response.data);
+        }
       } catch (error) {
         console.error(error);
       }

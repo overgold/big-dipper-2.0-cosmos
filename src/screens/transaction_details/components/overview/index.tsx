@@ -8,9 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { readDate } from '@recoil/settings';
 import useTranslation from 'next-translate/useTranslation';
 import { BLOCK_DETAILS } from '@utils/go_to_page';
-import {
-  BoxDetails, Result,
-} from '@components';
+import { BoxDetails, Result } from '@components';
 import { formatNumber } from '@utils/format_token';
 import { useStyles } from './styles';
 import { OverviewType } from '../../types';
@@ -18,9 +16,7 @@ import { OverviewType } from '../../types';
 const Overview: React.FC<{
   className?: string;
   data: OverviewType;
-}> = ({
-  className, data,
-}) => {
+}> = ({ className, data }) => {
   const { t } = useTranslation('transactions');
   const classes = useStyles();
   const dateFormat = useRecoilValue(readDate);
@@ -40,23 +36,26 @@ const Overview: React.FC<{
         </Link>
       ),
     },
-    {
-      label: t('time'),
-      detail: formatDayJs(dayjs.utc(data.timestamp), dateFormat),
-    },
+    // {
+    //   label: t('time'),
+    //   detail: formatDayJs(dayjs.utc(data.timestamp), dateFormat),
+    // },
     {
       label: t('fee'),
-      detail: `${formatNumber(data.fee.value, data.fee.exponent)} ${data?.fee?.displayDenom?.toUpperCase()}`,
+      detail: `${formatNumber(
+        data.fee.value,
+        data.fee.exponent
+      )} ${data?.fee?.displayDenom?.toUpperCase()}`,
     },
     {
       label: t('gas'),
-      detail: `${numeral(data.gasUsed).format('0,0.[00]')} / ${numeral(data.gasWanted).format('0,0.[00]')}`,
+      detail: `${numeral(data.gasUsed).format('0,0.[00]')} / ${numeral(
+        data.gasWanted
+      ).format('0,0.[00]')}`,
     },
     {
       label: t('result'),
-      detail: (
-        <Result success={data.success} />
-      ),
+      detail: <Result success={data.success} />,
     },
     {
       className: 'memo',

@@ -8,21 +8,13 @@ import Overgold from '@assets/logo.svg';
 import { HOME } from '@utils/go_to_page';
 import { useStyles } from './styles';
 import { NavbarProps } from './types';
-import usePlug from '@src/hooks/usePlug';
 const Navbar = (props: NavbarProps) => {
   const classes = useStyles();
   const selected = useRecoilValue(readSelectedNetwork);
   const { isOpen, openNetwork, toggleNavMenus } = props;
-  const { isEnabledNotificationPlug, NotificationPlugComponent } = usePlug();
   return (
     <div className={classes.wrapper}>
-      {isEnabledNotificationPlug && NotificationPlugComponent}
-
-      <div
-        className={classnames(classes.root, {
-          plug: isEnabledNotificationPlug,
-        })}
-      >
+      <div className={classnames(classes.root)}>
         <Link href={HOME}>
           <a className={classes.a}>
             <Overgold

@@ -1,23 +1,18 @@
 import React from 'react';
 import classnames from 'classnames';
-import {
-  Typography,
-  Divider,
-} from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 import useTranslation from 'next-translate/useTranslation';
 import { useStyles } from './styles';
 
-const SingleTransaction:React.FC<{
-  className?: string;
+const SingleTransaction: React.FC<{
   block: React.ReactNode;
   hash: React.ReactNode;
-  time: string;
   messageCount: string;
   messages: any[];
+  time?: string;
+  className?: string;
   result?: React.ReactNode;
-}> = ({
-  className, block, hash, time, messages, result, messageCount,
-}) => {
+}> = ({ className, block, hash, time, messages, result, messageCount }) => {
   const { t } = useTranslation('transactions');
   const classes = useStyles();
 
@@ -36,14 +31,16 @@ const SingleTransaction:React.FC<{
             </Typography>
             {block}
           </div>
-          <div className={classnames(classes.item, 'time')}>
-            <Typography variant="h4" className="label">
-              {t('time')}
-            </Typography>
-            <Typography variant="body1" className="value">
-              {time}
-            </Typography>
-          </div>
+          {time && (
+            <div className={classnames(classes.item, 'time')}>
+              <Typography variant="h4" className="label">
+                {t('time')}
+              </Typography>
+              <Typography variant="body1" className="value">
+                {time}
+              </Typography>
+            </div>
+          )}
           <div className={classnames(classes.item, 'messages')}>
             <Typography variant="h4" className="label">
               {t('messages')}
@@ -64,9 +61,7 @@ const SingleTransaction:React.FC<{
           <div className={classes.msgListContainer}>
             {messages.map((x, i) => (
               <div className={classes.msg} key={`${x.type}-${i}`}>
-                <div className={classes.tags}>
-                  {x.type}
-                </div>
+                <div className={classes.tags}>{x.type}</div>
                 {x.message}
               </div>
             ))}

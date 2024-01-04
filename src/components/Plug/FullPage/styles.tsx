@@ -5,6 +5,7 @@ export const useStyles = makeStyles(theme => ({
     minHeight: '100vh',
     display: 'flex',
     textAlign: 'center',
+    backgroundColor: '#020202',
   },
   content: {
     display: 'flex',
@@ -19,6 +20,10 @@ export const useStyles = makeStyles(theme => ({
     fontFamily: 'Montserrat',
     marginBottom: theme.spacing(2),
     fontWeight: 400,
+    padding: '0 18px',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '60%',
+    },
   },
   text: {
     fontSize: 20,
@@ -26,6 +31,12 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(5),
     fontFamily: 'Montserrat',
     fontWeight: 400,
+    textAlign: 'start',
+    padding: '0 18px',
+    whiteSpace: 'break-spaces',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '60%',
+    },
   },
   logo: {
     width: 170,

@@ -8,9 +8,6 @@ export const useStyles = () => {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: theme.spacing(3, 2, 0),
-        '&.plug': {
-          marginTop: '20px',
-        },
       },
       wrapper: {
         display: 'flex',

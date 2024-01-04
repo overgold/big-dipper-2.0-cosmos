@@ -34,9 +34,7 @@ export const useStyles = () => {
           letterSpacing: '0.5px',
           color: '#999999',
         },
-        '&.plug': {
-          marginTop: '30px',
-        },
+
         // '& .logo-title-none': {
         //   display: 'none',
         // },

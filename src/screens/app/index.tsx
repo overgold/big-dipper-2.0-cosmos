@@ -14,12 +14,16 @@ import {
   ADDITIONAL_LINK_TAGS_SEO,
   ADDITIONAL_META_TAGS,
 } from './utils';
+import usePlug from '@src/hooks/usePlug';
 
 function App(props: AppProps) {
   useApp();
   const { pageProps } = props;
   const apolloClient = useApollo(pageProps.initialApolloState);
   const { t } = useTranslation();
+  const { isEnabledFullPagePlug, FullPagePlugComponent } = usePlug();
+  if (isEnabledFullPagePlug) return FullPagePlugComponent;
+
   return (
     <>
       <DefaultSeo
