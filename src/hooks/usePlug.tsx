@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { NotificationPlug } from '@src/components/Plug/Notification/NotificationPlug';
 import { FullPagePlug } from '@src/components/Plug/FullPage/FullPagePlug';
+import { useApolloClient, gql } from '@apollo/client';
 
 interface Notification {
   id: string;
@@ -17,30 +17,24 @@ interface Notification {
 }
 
 const usePlug = () => {
-  const [plugData, setPlugData] = useState<Notification | null>(null);
-
-  useEffect(() => {
-    const getPlug = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_WALLET_URL}/v4/plug-service/plugs/big_dipper?language=en-GB`
-        );
-
-        if (response.status !== 204) {
-          setPlugData(response.data);
-        }
-      } catch (error) {
-        console.error(error);
+  const client = useApolloClient();
+  const plugData = client.readQuery({
+    query: gql`
+      query {
+        queryPlugData @client
       }
-    };
-    getPlug();
-  }, []);
+    `,
+  });
 
   const isEnabledNotificationPlug =
-    plugData?.enable && plugData.message.kind === 'notification';
+    plugData &&
+    plugData.queryPlugData?.enable &&
+    plugData.queryPlugData.message.kind === 'notification';
   const isEnabledFullPagePlug =
-    plugData?.enable && plugData.message.kind === 'full_page';
-  const plugMessage = plugData?.message?.message;
+    plugData &&
+    plugData.queryPlugData?.enable &&
+    plugData.queryPlugData.message.kind === 'full_page';
+  const plugMessage = plugData && plugData.queryPlugData?.message?.message;
 
   const NotificationPlugComponent = isEnabledNotificationPlug && (
     <NotificationPlug message={plugMessage} />

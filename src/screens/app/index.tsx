@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import useTranslation from 'next-translate/useTranslation';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider, gql } from '@apollo/client';
 import { useApollo } from '@src/graphql/client';
 import { chainConfig } from '@configs';
 import { Main } from './components';
@@ -14,15 +14,13 @@ import {
   ADDITIONAL_LINK_TAGS_SEO,
   ADDITIONAL_META_TAGS,
 } from './utils';
-import usePlug from '@src/hooks/usePlug';
 
 function App(props: AppProps) {
   useApp();
   const { pageProps } = props;
   const apolloClient = useApollo(pageProps.initialApolloState);
+
   const { t } = useTranslation();
-  const { isEnabledFullPagePlug, FullPagePlugComponent } = usePlug();
-  if (isEnabledFullPagePlug) return FullPagePlugComponent;
 
   return (
     <>
