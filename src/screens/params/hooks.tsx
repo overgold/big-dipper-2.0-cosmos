@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import numeral from 'numeral';
 import * as R from 'ramda';
-import {
-  useParamsQuery,
-  ParamsQuery,
-} from '@graphql/types';
+import { useParamsQuery, ParamsQuery } from '@graphql/types';
 import { formatToken } from '@utils/format_token';
 import { chainConfig } from '@configs';
 import {
@@ -14,9 +11,7 @@ import {
   DistributionParams,
   GovParams,
 } from '@models';
-import {
-  ParamsState,
-} from './types';
+import { ParamsState } from './types';
 
 const initialState = {
   loading: true,
@@ -25,14 +20,13 @@ const initialState = {
   slashing: null,
   minting: null,
   distribution: null,
-  gov: null,
 };
 
 export const useParams = () => {
   const [state, setState] = useState<ParamsState>(initialState);
 
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   // ================================
@@ -44,7 +38,7 @@ export const useParams = () => {
         loading: false,
       });
     },
-    onCompleted: (data) => {
+    onCompleted: data => {
       handleSetState({
         loading: false,
         ...formatParam(data),
@@ -60,7 +54,9 @@ export const useParams = () => {
     // ================================
     const formatStaking = () => {
       if (data.stakingParams.length) {
-        const stakingParamsRaw = StakingParams.fromJson(R.pathOr({}, ['stakingParams', 0, 'params'], data));
+        const stakingParamsRaw = StakingParams.fromJson(
+          R.pathOr({}, ['stakingParams', 0, 'params'], data)
+        );
         return {
           bondDenom: stakingParamsRaw.bondDenom,
           unbondingTime: stakingParamsRaw.unbondingTime,
@@ -80,7 +76,9 @@ export const useParams = () => {
     // ================================
     const formatSlashing = () => {
       if (data.slashingParams.length) {
-        const slashingParamsRaw = SlashingParams.fromJson(R.pathOr({}, ['slashingParams', 0, 'params'], data));
+        const slashingParamsRaw = SlashingParams.fromJson(
+          R.pathOr({}, ['slashingParams', 0, 'params'], data)
+        );
         return {
           downtimeJailDuration: slashingParamsRaw.downtimeJailDuration,
           minSignedPerWindow: slashingParamsRaw.minSignedPerWindow,
@@ -99,7 +97,9 @@ export const useParams = () => {
     // ================================
     const formatMint = () => {
       if (data.mintParams.length) {
-        const mintParamsRaw = MintParams.fromJson(R.pathOr({}, ['mintParams', 0, 'params'], data));
+        const mintParamsRaw = MintParams.fromJson(
+          R.pathOr({}, ['mintParams', 0, 'params'], data)
+        );
 
         return {
           blocksPerYear: mintParamsRaw.blocksPerYear,
@@ -122,7 +122,9 @@ export const useParams = () => {
 
     const formatDistribution = () => {
       if (data.distributionParams.length) {
-        const distributionParamsRaw = DistributionParams.fromJson(R.pathOr({}, ['distributionParams', 0, 'params'], data));
+        const distributionParamsRaw = DistributionParams.fromJson(
+          R.pathOr({}, ['distributionParams', 0, 'params'], data)
+        );
         return {
           baseProposerReward: distributionParamsRaw.baseProposerReward,
           bonusProposerReward: distributionParamsRaw.bonusProposerReward,
@@ -140,26 +142,26 @@ export const useParams = () => {
     // distribution
     // ================================
 
-    const formatGov = () => {
-      if (data.govParams.length) {
-        const govParamsRaw = GovParams.fromJson(R.pathOr({}, ['govParams', 0], data));
-        return {
-          minDeposit: formatToken(
-            R.pathOr(0, [0, 'amount'], govParamsRaw.depositParams.minDeposit),
-            R.pathOr(chainConfig.primaryTokenUnit, [0, 'denom'], govParamsRaw.depositParams.minDeposit),
-          ),
-          maxDepositPeriod: govParamsRaw.depositParams.maxDepositPeriod,
-          quorum: numeral(numeral(govParamsRaw.tallyParams.quorum).format('0.[00]')).value(),
-          threshold: numeral(numeral(govParamsRaw.tallyParams.threshold).format('0.[00]')).value(),
-          vetoThreshold: numeral(numeral(govParamsRaw.tallyParams.vetoThreshold).format('0.[00]')).value(),
-          votingPeriod: govParamsRaw.votingParams.votingPeriod,
-        };
-      }
+    // const formatGov = () => {
+    //   if (data.govParams.length) {
+    //     const govParamsRaw = GovParams.fromJson(R.pathOr({}, ['govParams', 0], data));
+    //     return {
+    //       minDeposit: formatToken(
+    //         R.pathOr(0, [0, 'amount'], govParamsRaw.depositParams.minDeposit),
+    //         R.pathOr(chainConfig.primaryTokenUnit, [0, 'denom'], govParamsRaw.depositParams.minDeposit),
+    //       ),
+    //       maxDepositPeriod: govParamsRaw.depositParams.maxDepositPeriod,
+    //       quorum: numeral(numeral(govParamsRaw.tallyParams.quorum).format('0.[00]')).value(),
+    //       threshold: numeral(numeral(govParamsRaw.tallyParams.threshold).format('0.[00]')).value(),
+    //       vetoThreshold: numeral(numeral(govParamsRaw.tallyParams.vetoThreshold).format('0.[00]')).value(),
+    //       votingPeriod: govParamsRaw.votingParams.votingPeriod,
+    //     };
+    //   }
 
-      return null;
-    };
+    //   return null;
+    // };
 
-    results.gov = formatGov();
+    // results.gov = formatGov();
 
     return results;
   };

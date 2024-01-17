@@ -1,15 +1,15 @@
-interface MsgIssueExtra {
-  kind: number;
-  data: string;
-}
+// interface MsgIssueExtra {
+//   kind: number;
+//   data: string;
+// }
 
 class MsgIssue {
   public type: string;
   public amount: number;
   public asset: string;
   public creator: string;
-  public extras: MsgIssueExtra[];
-  public wallet: string;
+  // public extras: MsgIssueExtra[];
+  public address: string;
   public json: any;
 
   constructor(payload: any) {
@@ -17,8 +17,8 @@ class MsgIssue {
     this.amount = payload.amount;
     this.asset = payload.asset;
     this.creator = payload.creator;
-    this.extras = payload.extras;
-    this.wallet = payload.wallet;
+    // this.extras = payload.extras;
+    this.address = payload.address;
     this.json = payload.json;
   }
 
@@ -26,11 +26,10 @@ class MsgIssue {
     return new MsgIssue({
       json,
       type: json['@type'],
-      asset: json['asset'],
-      creator: json['creator'],
+      asset: json['denom'],
       amount: json['amount'],
-      extras: json['extras'],
-      wallet: json['wallet'],
+      creator: json['creator'],
+      address: json['address'],
     });
   }
 }

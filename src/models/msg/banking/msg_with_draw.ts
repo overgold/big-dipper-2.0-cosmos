@@ -1,15 +1,9 @@
-interface MsgWithdrawExtra {
-  kind: number;
-  data: string;
-}
-
 class MsgWithdraw {
   public type: string;
   public amount: number;
   public asset: string;
   public creator: string;
-  public extras: MsgWithdrawExtra[];
-  public wallet: string;
+  public address: string;
   public json: any;
 
   constructor(payload: any) {
@@ -17,8 +11,7 @@ class MsgWithdraw {
     this.amount = payload.amount;
     this.asset = payload.asset;
     this.creator = payload.creator;
-    this.extras = payload.extras;
-    this.wallet = payload.wallet;
+    this.address = payload.address;
     this.json = payload.json;
   }
 
@@ -26,11 +19,10 @@ class MsgWithdraw {
     return new MsgWithdraw({
       json,
       type: json['@type'],
-      asset: json['asset'],
+      asset: json['denom'],
       creator: json['creator'],
       amount: json['amount'],
-      extras: json['extras'],
-      wallet: json['wallet'],
+      address: json['address'],
     });
   }
 }

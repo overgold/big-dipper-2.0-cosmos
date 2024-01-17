@@ -36,10 +36,10 @@ const Overview: React.FC<{
         </Link>
       ),
     },
-    // {
-    //   label: t('time'),
-    //   detail: formatDayJs(dayjs.utc(data.timestamp), dateFormat),
-    // },
+    {
+      label: t('time'),
+      detail: formatDayJs(dayjs.utc(data.timestamp), dateFormat),
+    },
     {
       label: t('fee'),
       detail: `${formatNumber(

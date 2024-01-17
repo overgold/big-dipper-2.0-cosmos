@@ -91,7 +91,7 @@ export const useTransactionDetails = () => {
       const overview = {
         hash: data.transaction[0].hash,
         height: data.transaction[0].height,
-        // timestamp: data.transaction[0].block.timestamp,
+        timestamp: data.transaction[0].block.timestamp,
         fee: formatToken(feeAmount.amount, feeAmount.denom),
         gasUsed: data.transaction[0].gasUsed,
         gasWanted: data.transaction[0].gasWanted,
