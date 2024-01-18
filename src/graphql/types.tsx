@@ -13801,7 +13801,7 @@ export type ValidatorUndelegationsQueryResult = Apollo.QueryResult<
   ValidatorUndelegationsQueryVariables
 >;
 export const ValidatorsDocument = gql`
-  query Validators {
+  query Validators @cached {
     stakingPool: staking_pool(limit: 1, order_by: { height: desc }) {
       bondedTokens: bonded_tokens
       __typename
