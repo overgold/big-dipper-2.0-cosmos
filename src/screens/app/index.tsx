@@ -15,7 +15,7 @@ import {
   ADDITIONAL_META_TAGS,
 } from './utils';
 
-function App(props: AppProps) {
+function App(props: AppProps & any) {
   useApp();
   const { pageProps } = props;
   const apolloClient = useApollo(pageProps.initialApolloState);

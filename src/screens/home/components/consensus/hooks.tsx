@@ -168,29 +168,29 @@ export const useConsensus = ({ statsPeriod }: Consensus) => {
   //   }));
   // };
 
-  const formatNewStep = (data: any) => {
-    const stepReference = {
-      0: 0,
-      RoundStepNewHeight: 1,
-      RoundStepPropose: 2,
-      RoundStepPrevote: 3,
-      RoundStepPrecommit: 4,
-      RoundStepCommit: 5,
-    };
+  // const formatNewStep = (data: any) => {
+  //   const stepReference = {
+  //     0: 0,
+  //     RoundStepNewHeight: 1,
+  //     RoundStepPropose: 2,
+  //     RoundStepPrevote: 3,
+  //     RoundStepPrecommit: 4,
+  //     RoundStepCommit: 5,
+  //   };
 
-    const round = R.pathOr(0, ['result', 'data', 'value', 'round'], data);
-    const step =
-      stepReference[R.pathOr(0, ['result', 'data', 'value', 'step'], data)];
+  //   const round = R.pathOr(0, ['result', 'data', 'value', 'round'], data);
+  //   const step =
+  //     stepReference[R.pathOr(0, ['result', 'data', 'value', 'step'], data)];
 
-    const roundCompletion = (step / state.totalSteps) * 100;
+  //   const roundCompletion = (step / state.totalSteps) * 100;
 
-    setState(prevState => ({
-      ...prevState,
-      round,
-      step,
-      roundCompletion,
-    }));
-  };
+  //   setState(prevState => ({
+  //     ...prevState,
+  //     round,
+  //     step,
+  //     roundCompletion,
+  //   }));
+  // };
 
   return {
     state,
