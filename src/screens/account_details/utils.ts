@@ -161,7 +161,7 @@ export const fetchAccountHash = async (hash: string) => {
 };
 export const fetchStakingInfo = async (hash: string) => {
   try {
-    const {data} = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
+    const { data } = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, {
       variables: {
         hash,
       },

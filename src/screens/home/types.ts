@@ -18,3 +18,8 @@ export interface PriceHistoryData {
 export interface IHome {
   data: PriceHistoryData[] | [];
 }
+
+export interface FetchStatus {
+  startDate: string;
+  endDate: string;
+}
