@@ -4,10 +4,14 @@ import Color from 'color';
 export const useStyles = () => {
   const styles = makeStyles(theme => {
     return {
+      '@keyframes rotate': {
+        from: { transform: 'rotate(360deg)' },
+        to: { transform: 'rotate(0deg)' },
+      },
       root: {
         height: '100%',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'start',
         flexDirection: 'column',
         overflow: 'auto',
       },
@@ -20,6 +24,18 @@ export const useStyles = () => {
       },
       label: {
         marginBottom: theme.spacing(2),
+      },
+      description: {
+        display: 'block',
+        fontSize: '1.125rem',
+        width: '100%',
+      },
+      descriptionInfo: {
+        fontSize: '1.4375rem',
+        fontWeight: 700,
+        color: theme.palette.primary.main,
+        width: '100%',
+        textTransform: 'uppercase',
       },
       chart: {
         '& .recharts-radial-bar-background-sector': {
@@ -39,15 +55,13 @@ export const useStyles = () => {
       },
       info: {
         display: 'flex',
+        padding: '15px 0',
         flexDirection: 'column',
+        gap: '0.5rem',
         width: '100%',
         color: theme.palette.custom.fonts.fontTwo,
-        '& > *': {
-          display: 'flex',
-          alignItems: 'center',
-          '& > *': {
-            width: '50%',
-          },
+        '&:first-child': {
+          paddingBottom: '10px',
         },
         '& .label': {
           color: theme.palette.custom.fonts.fontThree,
@@ -55,7 +69,29 @@ export const useStyles = () => {
         },
         [theme.breakpoints.up('lg')]: {
           marginBottom: 0,
+          gap: '1rem',
         },
+      },
+      logoWrapper: {
+        padding: 0,
+        [theme.breakpoints.up('lg')]: {
+          padding: '20px 0',
+        },
+      },
+      logoContainer: {
+        width: '69px',
+        height: '69px',
+        margin: '0 auto',
+        position: 'relative',
+      },
+      logoArrow: {
+        animation: '$rotate linear 4s infinite',
+      },
+      logo: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
       },
     };
   })();

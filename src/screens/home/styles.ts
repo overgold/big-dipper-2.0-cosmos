@@ -34,10 +34,10 @@ export const useStyles = () => {
             gridColumn: '1 / 3',
           },
           [theme.breakpoints.up('lg')]: {
-            gridColumn: '1 / 4',
+            gridColumn: '1 / 3',
           },
         },
-        tokenomics: {
+        stats: {
           height: '375px',
           [theme.breakpoints.up('md')]: {
             gridColumn: '1 / 2',

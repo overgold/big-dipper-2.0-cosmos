@@ -8,68 +8,30 @@ import { RadialBarChart, PolarAngleAxis, RadialBar, Tooltip } from 'recharts';
 import { useProfileRecoil } from '@recoil/profiles';
 import { useStyles } from './styles';
 import { useConsensus } from './hooks';
-import { SwitcherType } from './types';
-import Switcher from './switcher';
-import LogoArrowIcon from '@assets/turnover.svg';
-import LogoIcon from '@assets/loader-logo.svg';
 
 const Consensus: React.FC<{
   className?: string;
 }> = ({ className }) => {
   const { classes, theme } = useStyles();
-  const [switcher, setSwitcher] = useState(SwitcherType.day);
-  const { state } = useConsensus({ statsPeriod: switcher });
+  const { state } = useConsensus();
   const { t } = useTranslation('home');
 
-  // const data = [
-  //   {
-  //     value: state.roundCompletion,
-  //     fill: theme.palette.primary.main,
-  //   },
-  // ];
+  const data = [
+    {
+      value: state.roundCompletion,
+      fill: theme.palette.primary.main,
+    },
+  ];
 
-  // const circleSize = 200;
-  // const proposerProfile = useProfileRecoil(state.proposer);
+  const circleSize = 200;
+  const proposerProfile = useProfileRecoil(state.proposer);
   return (
     <Box className={classnames(className, classes.root)}>
-      {/* <Typography variant="h2" className={classes.label}>
+      <Typography variant="h2" className={classes.label}>
         {t('consensus')}
-      </Typography> */}
-      <Switcher type={switcher} setType={setSwitcher} />
+      </Typography>
+
       <div className={classes.info}>
-        <div className={classes.logoWrapper}>
-          <div className={classes.logoContainer}>
-            <LogoArrowIcon className={classes.logoArrow} />
-            <LogoIcon className={classes.logo} />
-          </div>
-        </div>
-        <div>
-          <Typography variant="h4" className={classes.description}>
-            {t('turnover')}
-          </Typography>
-          <div className={classes.descriptionInfo}>
-            {`${state.turnover} ${process.env.NEXT_PUBLIC_ASSET}`}
-          </div>
-        </div>
-        <div>
-          <Typography variant="h4" className={classes.description}>
-            {t('numberOfTransactions')}
-          </Typography>
-          <div className={classes.descriptionInfo}>
-            {state.totalTransaction}
-          </div>
-        </div>
-        <div>
-          <Typography variant="h4" className={classes.description}>
-            {t('feeCollected')}
-          </Typography>
-          <div className={classes.descriptionInfo}>
-            {' '}
-            {`${state.feeCollected} ${process.env.NEXT_PUBLIC_ASSET}`}
-          </div>
-        </div>
-      </div>
-      {/* <div className={classes.info}>
         <div>
           <Typography variant="caption" className="label" component="div">
             {t('height')}
@@ -140,7 +102,7 @@ const Consensus: React.FC<{
             </tspan>
           </text>
         </RadialBarChart>
-      </div> */}
+      </div>
     </Box>
   );
 };
