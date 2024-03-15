@@ -1,4 +1,4 @@
-FROM node:18.19.1
+FROM node:18.19.1-alpine
 RUN node -v
 RUN npm -v
 ENV PORT 3000
