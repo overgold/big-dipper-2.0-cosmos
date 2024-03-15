@@ -23,6 +23,8 @@ export const useStats = ({ statsPeriod }: Consensus) => {
 
   useEffect(() => {
     fetchStats(statsPeriod);
+    const intervalID = setInterval(() => fetchStats(statsPeriod), 30000);
+    return () => clearInterval(intervalID);
   }, [statsPeriod]);
 
   const fetchStats = async (period: string) => {
