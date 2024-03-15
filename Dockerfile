@@ -1,5 +1,6 @@
-FROM node:14.5.0-alpine
-
+FROM node:18.19.1
+RUN node -v
+RUN npm -v
 ENV PORT 3000
 
 # Install git for ui and internal packages
