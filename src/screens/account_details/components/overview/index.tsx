@@ -9,7 +9,7 @@ import { useScreenSize } from '@hooks';
 import { Typography, Dialog } from '@material-ui/core';
 
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
-import { ACCOUNT_DETAILS, ACCOUNT_HASH } from '@utils/go_to_page';
+import { ACCOUNT_DETAILS } from '@utils/go_to_page';
 
 import React from 'react';
 
@@ -55,10 +55,10 @@ const Overview: React.FC<{
         handleClose={handleClose}
       />
       {/* <Box className={classnames(className, classes.root)}> */}
-      {!isEmpty(accountData.walletOverview) && (
+      {!isEmpty(accountData) && (
         <Box className={classnames(className, classes.root)}>
           <div className={classnames(classes.list)}>
-            {walletInfo(accountData.walletOverview, t).map(walletItem => (
+            {walletInfo(accountData, t).map(walletItem => (
               <div
                 key={walletItem.title}
                 className={classnames(
@@ -83,19 +83,9 @@ const Overview: React.FC<{
                       />
                     </>
                   )}
+
                   <Typography variant="body1" className="value">
-                    {walletItem.isDetail ? (
-                      <Link href={ACCOUNT_DETAILS(walletItem.value)} passHref>
-                        {!isDesktop
-                          ? getMiddleEllipsis(walletItem.value, {
-                              beginning: 15,
-                              ending: 5,
-                            })
-                          : walletItem.value}
-                      </Link>
-                    ) : (
-                      walletItem.value
-                    )}
+                    {walletItem.value}
                   </Typography>
                 </div>
               </div>
@@ -103,7 +93,7 @@ const Overview: React.FC<{
           </div>
         </Box>
       )}
-      {!isEmpty(accountData.accountOverview) && (
+      {/* {!isEmpty(accountData.accountOverview) && (
         <>
           <Box className={classnames(className, classes.root)}>
             <div className={classnames(classes.listAccount)}>
@@ -177,7 +167,7 @@ const Overview: React.FC<{
             tabLabelsHead={tabLabels}
           />
         </>
-      )}
+      )} */}
       {/* </Box> */}
     </>
   );

@@ -55,9 +55,9 @@ export const useTransfer = (transferWallets: string[]) => {
       return;
     }
     fetchPaymentTransfers();
-    fetchSystemTransfers();
-    fetchWithdrawSystemTransfers();
-    fetchIssueSystemTransfers();
+    // fetchSystemTransfers();
+    // fetchWithdrawSystemTransfers();
+    // fetchIssueSystemTransfers();
   }, [transferWallets]);
   //PaymentTransfers
   const fetchPaymentTransfers = async () => {
@@ -83,71 +83,71 @@ export const useTransfer = (transferWallets: string[]) => {
   };
 
   //SystemTransfers
-  const fetchSystemTransfers = async () => {
-    const { jsClient } = await import('js-core');
-    const data = await fetchSystemTransfersByWallets({
-      address: transferWallets,
-      limit: LIMIT + 1,
-      offset: state.system.offsetCount,
-    });
-    const newItems = R.uniq([
-      ...state.system.data,
-      ...formatTransfer(data, jsClient),
-    ]);
-    const stateChange = {
-      system: {
-        data: newItems,
-        hasNextPage: data.transfers.length === 21,
-        isNextPageLoading: false,
-        offsetCount: state.system.offsetCount + LIMIT,
-      },
-    };
-    handleSetState(stateChange);
-  };
+  // const fetchSystemTransfers = async () => {
+  //   const { jsClient } = await import('js-core');
+  //   const data = await fetchSystemTransfersByWallets({
+  //     address: transferWallets,
+  //     limit: LIMIT + 1,
+  //     offset: state.system.offsetCount,
+  //   });
+  //   const newItems = R.uniq([
+  //     ...state.system.data,
+  //     ...formatTransfer(data, jsClient),
+  //   ]);
+  //   const stateChange = {
+  //     system: {
+  //       data: newItems,
+  //       hasNextPage: data.transfers.length === 21,
+  //       isNextPageLoading: false,
+  //       offsetCount: state.system.offsetCount + LIMIT,
+  //     },
+  //   };
+  //   handleSetState(stateChange);
+  // };
   //IssueSystemTransfers
-  const fetchIssueSystemTransfers = async () => {
-    const { jsClient } = await import('js-core');
-    const data = await fetchIssueSystemTransfersByWallets({
-      address: transferWallets,
-      limit: LIMIT + 1,
-      offset: state.issueSystem.offsetCount,
-    });
-    const newItems = R.uniq([
-      ...state.issueSystem.data,
-      ...formatTransfer(data, jsClient),
-    ]);
-    const stateChange = {
-      issueSystem: {
-        data: newItems,
-        hasNextPage: data.transfers.length === 21,
-        isNextPageLoading: false,
-        offsetCount: state.issueSystem.offsetCount + LIMIT,
-      },
-    };
-    handleSetState(stateChange);
-  };
+  // const fetchIssueSystemTransfers = async () => {
+  //   const { jsClient } = await import('js-core');
+  //   const data = await fetchIssueSystemTransfersByWallets({
+  //     address: transferWallets,
+  //     limit: LIMIT + 1,
+  //     offset: state.issueSystem.offsetCount,
+  //   });
+  //   const newItems = R.uniq([
+  //     ...state.issueSystem.data,
+  //     ...formatTransfer(data, jsClient),
+  //   ]);
+  //   const stateChange = {
+  //     issueSystem: {
+  //       data: newItems,
+  //       hasNextPage: data.transfers.length === 21,
+  //       isNextPageLoading: false,
+  //       offsetCount: state.issueSystem.offsetCount + LIMIT,
+  //     },
+  //   };
+  //   handleSetState(stateChange);
+  // };
   //WithdrawSystemTransfers
-  const fetchWithdrawSystemTransfers = async () => {
-    const { jsClient } = await import('js-core');
-    const data = await fetchWithdrawSystemTransfersByWallets({
-      address: transferWallets,
-      limit: LIMIT + 1,
-      offset: state.withdrawSystem.offsetCount,
-    });
-    const newItems = R.uniq([
-      ...state.withdrawSystem.data,
-      ...formatTransfer(data, jsClient),
-    ]);
-    const stateChange = {
-      withdrawSystem: {
-        data: newItems,
-        hasNextPage: data.transfers.length === 21,
-        isNextPageLoading: false,
-        offsetCount: state.withdrawSystem.offsetCount + LIMIT,
-      },
-    };
-    handleSetState(stateChange);
-  };
+  // const fetchWithdrawSystemTransfers = async () => {
+  //   const { jsClient } = await import('js-core');
+  //   const data = await fetchWithdrawSystemTransfersByWallets({
+  //     address: transferWallets,
+  //     limit: LIMIT + 1,
+  //     offset: state.withdrawSystem.offsetCount,
+  //   });
+  //   const newItems = R.uniq([
+  //     ...state.withdrawSystem.data,
+  //     ...formatTransfer(data, jsClient),
+  //   ]);
+  //   const stateChange = {
+  //     withdrawSystem: {
+  //       data: newItems,
+  //       hasNextPage: data.transfers.length === 21,
+  //       isNextPageLoading: false,
+  //       offsetCount: state.withdrawSystem.offsetCount + LIMIT,
+  //     },
+  //   };
+  //   handleSetState(stateChange);
+  // };
 
   const loadNextPage = async () => {
     handleSetState({
@@ -158,15 +158,15 @@ export const useTransfer = (transferWallets: string[]) => {
     if (state.tab === 0) {
       fetchPaymentTransfers();
     }
-    if (state.tab === 1) {
-      fetchSystemTransfers();
-    }
-    if (state.tab === 2) {
-      fetchWithdrawSystemTransfers();
-    }
-    if (state.tab === 3) {
-      fetchIssueSystemTransfers();
-    }
+    // if (state.tab === 1) {
+    //   fetchSystemTransfers();
+    // }
+    // if (state.tab === 2) {
+    //   // fetchWithdrawSystemTransfers();
+    // }
+    // if (state.tab === 3) {
+    //   // fetchIssueSystemTransfers();
+    // }
   };
   const sortItems = () => {
     let items;
@@ -179,12 +179,12 @@ export const useTransfer = (transferWallets: string[]) => {
       items = state.system;
     }
 
-    if (state.tab === 2) {
-      items = state.withdrawSystem;
-    }
-    if (state.tab === 3) {
-      items = state.issueSystem;
-    }
+    // if (state.tab === 2) {
+    //   items = state.withdrawSystem;
+    // }
+    // if (state.tab === 3) {
+    //   items = state.issueSystem;
+    // }
 
     return items;
   };

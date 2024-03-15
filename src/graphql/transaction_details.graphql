@@ -1,10 +1,7 @@
 query TransactionDetails($hash: String) {
-  transaction(where: {hash: {_eq: $hash}}, limit: 1) {
+  transaction(where: { hash: { _eq: $hash } }, limit: 1) {
     hash: hash
     height: height
-    block: block {
-      timestamp: timestamp
-    }
     fee: fee
     gasUsed: gas_used
     gasWanted: gas_wanted
@@ -13,5 +10,6 @@ query TransactionDetails($hash: String) {
     messages: messages
     logs
     rawLog: raw_log
+    __typename
   }
 }

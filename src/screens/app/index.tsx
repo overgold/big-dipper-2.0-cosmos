@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import useTranslation from 'next-translate/useTranslation';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider, gql } from '@apollo/client';
 import { useApollo } from '@src/graphql/client';
 import { chainConfig } from '@configs';
 import { Main } from './components';
@@ -15,11 +15,13 @@ import {
   ADDITIONAL_META_TAGS,
 } from './utils';
 
-function App(props: AppProps) {
+function App(props: AppProps & any) {
   useApp();
   const { pageProps } = props;
   const apolloClient = useApollo(pageProps.initialApolloState);
+
   const { t } = useTranslation();
+
   return (
     <>
       <DefaultSeo

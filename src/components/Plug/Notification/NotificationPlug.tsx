@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyles } from './NotificationPlug.style';
-import { Marquee } from '@src/components/Marquee/Marquee';
+import Marquee from 'react-fast-marquee';
 
 interface NotificationPlugProps {
   message?: string;
@@ -11,7 +11,9 @@ export const NotificationPlug = ({ message }: NotificationPlugProps) => {
 
   return (
     <div className={classes.wrapper}>
-      <Marquee text={message!} />
+      <Marquee pauseOnHover speed={80} className="marquee-container">
+        <span className={classes.text}>{message}</span>
+      </Marquee>
     </div>
   );
 };

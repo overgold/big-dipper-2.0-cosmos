@@ -20,7 +20,7 @@ const Switcher = ({ type, setType }: ISwitcher) => {
           type === SwitcherType.price ? classes.switcherItemActive : ''
         }`}
       >
-        {t('priceHistory')}
+        {t(`${SwitcherType.price}`)}
       </div>
       <div
         onClick={() => setType(SwitcherType.capitalization)}
@@ -28,7 +28,7 @@ const Switcher = ({ type, setType }: ISwitcher) => {
           type === SwitcherType.capitalization ? classes.switcherItemActive : ''
         }`}
       >
-        {t('capitalization')}
+        {t(`${SwitcherType.capitalization}`)}
       </div>
     </div>
   );

@@ -98,21 +98,22 @@ export const useAccountDetails = () => {
   useEffect(() => {
     fetchWithdrawalAddress();
     // fetchBalance();
-    fetchAccountInfoAddress();
-    fetchAddressHash();
+    // fetchAccountInfoAddress();
+    // fetchAddressHash();
   }, [router.query.address]);
 
   // ==========================
   // Fetch Data
   // ==========================
   const fetchWithdrawalAddress = async () => {
-    const data = await fetchAccountWithdrawalAddress(
-      router.query.address as string
-    );
+    // const data = await fetchAccountWithdrawalAddress(
+    //   router.query.address as string
+    // );
     handleSetState({
+      loading: false,
       overview: {
         address: router.query.address,
-        withdrawalAddress: R.pathOr('', ['withdrawalAddress', 'address'], data),
+        // withdrawalAddress: R.pathOr('', ['withdrawalAddress', 'address'], data),
       },
     });
   };

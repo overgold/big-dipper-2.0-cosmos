@@ -16,28 +16,28 @@ export const useDeposits = () => {
   });
 
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   useProposalDetailsDepositsQuery({
     variables: {
       proposalId: R.pathOr('', ['query', 'id'], router),
     },
-    onCompleted: (data) => {
+    onCompleted: data => {
       handleSetState(foramtProposalDeposits(data));
     },
   });
 
   const foramtProposalDeposits = (data: ProposalDetailsDepositsQuery) => {
-    const format = data.proposalDeposit.map((x) => {
-      return ({
+    const format = data.proposalDeposit.map(x => {
+      return {
         amount: formatToken(
           R.pathOr('0', ['amount', 0, 'amount'], x),
-          R.pathOr(chainConfig.primaryTokenUnit, ['amount', 0, 'denom'], x),
+          R.pathOr(chainConfig.primaryTokenUnit, ['amount', 0, 'denom'], x)
         ),
         user: R.pathOr('', ['depositorAddress'], x),
-        timestamp: R.pathOr('', ['block', 'timestamp'], x),
-      });
+        timestamp: R.pathOr('', ['timestamp'], x),
+      };
     });
 
     return {

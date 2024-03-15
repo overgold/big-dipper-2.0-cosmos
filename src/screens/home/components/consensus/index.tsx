@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import numeral from 'numeral';
 import { Typography } from '@material-ui/core';
@@ -25,12 +25,12 @@ const Consensus: React.FC<{
 
   const circleSize = 200;
   const proposerProfile = useProfileRecoil(state.proposer);
-
   return (
     <Box className={classnames(className, classes.root)}>
       <Typography variant="h2" className={classes.label}>
         {t('consensus')}
       </Typography>
+
       <div className={classes.info}>
         <div>
           <Typography variant="caption" className="label" component="div">

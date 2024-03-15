@@ -18,13 +18,13 @@ export const accountInfo: accountInfoType = (accountData, t) => [
     value: accountData.address,
     isDetail: true,
   },
-  {
-    title: t('hashHead'),
-    value: accountData.hash,
-    thisHash: true,
-  },
-  {
-    title: t('stateHead'),
-    value: t(accountData.state),
-  },
+  // {
+  //   title: t('hashHead'),
+  //   value: accountData.hash,
+  //   thisHash: true,
+  // },
+  // {
+  //   title: t('stateHead'),
+  //   value: t(accountData.state),
+  // },
 ];

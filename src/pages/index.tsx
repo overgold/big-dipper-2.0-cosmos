@@ -1,17 +1,14 @@
 import Home from '@screens/home';
 import { subtractYears } from '@src/utils/time';
 import { GetServerSideProps } from 'next';
-import axios from 'axios';
-import usePlug from '@src/hooks/usePlug';
 
 const HomePage = ({ data }) => {
-  const { isEnabledFullPagePlug, FullPagePlugComponent } = usePlug();
-  if (isEnabledFullPagePlug) return FullPagePlugComponent;
   return <Home data={data} />;
 };
 
 export default HomePage;
 //Fork
+
 export const getServerSideProps: GetServerSideProps = async () => {
   const data = await fetch(
     `${
@@ -21,6 +18,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     }&until=${Date.now()}&sort=desc`
   );
   const res = await data.json();
+
   if (!res) {
     return { notFound: true };
   }

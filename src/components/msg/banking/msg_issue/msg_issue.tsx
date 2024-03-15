@@ -17,24 +17,9 @@ const MsgIssueComponent = (props: { message: MsgIssue }) => {
       <Trans
         i18nKey="message_contents:MsgIssue"
         components={[
-          <Link href={ACCOUNT_DETAILS(message.wallet)}>{message.wallet}</Link>,
-          <>
-            {(message.extras?.length && (
-              <>
-                <span> {t('transactions:with extras')}:</span>
-                <div className={classes.extraList}>
-                  {message.extras.map((el, index) => (
-                    <div className={classes.extraItem} key={index}>
-                      <span>
-                        {el.kind}: {el.data}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )) ||
-              null}
-          </>,
+          <Link href={ACCOUNT_DETAILS(message.address)}>
+            {message.address}
+          </Link>,
           <Link href={ACCOUNT_DETAILS(message.creator)}>
             {message.creator}
           </Link>,

@@ -8,7 +8,6 @@ import {
   TRANSACTION_DETAILS,
   BLOCK_DETAILS,
   ACCOUNT_DETAILS,
-  ACCOUNT_HASH,
 } from '@utils/go_to_page';
 import InfiniteLoader from 'react-window-infinite-loader';
 import { VariableSizeGrid as Grid } from 'react-window';

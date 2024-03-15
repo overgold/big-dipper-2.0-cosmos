@@ -1,6 +1,4 @@
-import {
-  useState, useEffect,
-} from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as R from 'ramda';
 import {
@@ -9,9 +7,7 @@ import {
 } from '@graphql/types';
 import { formatToken } from '@utils/format_token';
 import { convertMsgsToModels } from '@msg';
-import {
-  TransactionState,
-} from './types';
+import { TransactionState } from './types';
 
 export const useTransactionDetails = () => {
   const router = useRouter();
@@ -43,7 +39,7 @@ export const useTransactionDetails = () => {
   });
 
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   useEffect(() => {
@@ -60,7 +56,7 @@ export const useTransactionDetails = () => {
     variables: {
       hash: router.query.tx as string,
     },
-    onCompleted: (data) => {
+    onCompleted: data => {
       handleSetState(formatTransactionDetails(data));
     },
   });
@@ -83,10 +79,14 @@ export const useTransactionDetails = () => {
     // =============================
     const formatOverview = () => {
       const { fee } = data.transaction[0];
-      const feeAmount = R.pathOr({
-        denom: '',
-        amount: 0,
-      }, ['amount', 0], fee);
+      const feeAmount = R.pathOr(
+        {
+          denom: '',
+          amount: 0,
+        },
+        ['amount', 0],
+        fee
+      );
       const { success } = data.transaction[0];
       const overview = {
         hash: data.transaction[0].hash,
@@ -143,7 +143,7 @@ export const useTransactionDetails = () => {
   };
 
   const filterMessages = (messages: any[]) => {
-    return messages.filter((x) => {
+    return messages.filter(x => {
       if (state.messages.filterBy !== 'none') {
         return x.category === state.messages.filterBy;
       }

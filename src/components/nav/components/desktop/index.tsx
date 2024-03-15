@@ -6,8 +6,8 @@ import { useStyles } from './styles';
 import { useDesktop } from './hooks';
 import { MenuItems, TitleBar } from '..';
 import { ActionBar } from './components';
-import { Tooltip } from 'react-tooltip';
 import usePlug from '@src/hooks/usePlug';
+
 const Desktop: React.FC<{
   className?: string;
   title: string;
@@ -16,6 +16,7 @@ const Desktop: React.FC<{
   const { isMenu, toggleMenu, turnOffAll, toggleNetwork, isNetwork } =
     useDesktop();
   const { isEnabledNotificationPlug, NotificationPlugComponent } = usePlug();
+
   return (
     <ClickAwayListener onClickAway={turnOffAll}>
       <div className={classnames(className, classes.root)}>

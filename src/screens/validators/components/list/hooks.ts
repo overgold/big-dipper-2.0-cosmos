@@ -1,7 +1,4 @@
-import {
-  useValidatorsQuery,
-  ValidatorsQuery,
-} from '@graphql/types';
+import { useValidatorsQuery, ValidatorsQuery } from '@graphql/types';
 
 import { SlashingParams } from '@models';
 
@@ -18,11 +15,7 @@ import * as R from 'ramda';
 
 import numeral from 'numeral';
 
-import {
-  ValidatorsState,
-  ItemType,
-  ValidatorType,
-} from './types';
+import { ValidatorsState, ItemType, ValidatorType } from './types';
 
 export const useValidators = () => {
   const [search, setSearch] = useState('');
@@ -37,14 +30,14 @@ export const useValidators = () => {
   });
 
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   // ==========================
   // Fetch Data
   // ==========================
   useValidatorsQuery({
-    onCompleted: (data) => {
+    onCompleted: data => {
       handleSetState({
         loading: false,
         ...formatValidators(data),
@@ -56,32 +49,56 @@ export const useValidators = () => {
   // Parse data
   // ==========================
   const formatValidators = (data: ValidatorsQuery) => {
-    const slashingParams = SlashingParams.fromJson(R.pathOr({}, ['slashingParams', 0, 'params'], data));
-    const votingPowerOverall = numeral(formatToken(
-      R.pathOr(0, ['stakingPool', 0, 'bondedTokens'], data),
-      chainConfig.votingPowerTokenUnit,
-    ).value).value();
+    const slashingParams = SlashingParams.fromJson(
+      R.pathOr({}, ['slashingParams', 0, 'params'], data)
+    );
+    const votingPowerOverall = numeral(
+      formatToken(
+        R.pathOr(0, ['stakingPool', 0, 'bondedTokens'], data),
+        chainConfig.votingPowerTokenUnit
+      ).value
+    ).value();
 
     const { signedBlockWindow } = slashingParams;
 
-    let formattedItems: ValidatorType[] = data.validator.filter((x) => x.validatorInfo).map((x) => {
-      const votingPower = R.pathOr(0, ['validatorVotingPowers', 0, 'votingPower'], x);
-      const votingPowerPercent = numeral((votingPower / votingPowerOverall) * 100).value();
+    let formattedItems: ValidatorType[] = data?.validator
+      .filter(x => x.validatorInfo)
+      .map(x => {
+        const votingPower = R.pathOr(
+          0,
+          ['validatorVotingPower', 0, 'votingPower'],
+          x
+        );
+        const votingPowerPercent = numeral(
+          (votingPower / votingPowerOverall) * 100
+        ).value();
 
-      const missedBlockCounter = R.pathOr(0, ['validatorSigningInfos', 0, 'missedBlocksCounter'], x);
-      const condition = getValidatorCondition(signedBlockWindow, missedBlockCounter);
+        const missedBlockCounter = R.pathOr(
+          0,
+          ['validatorSigningInfo', 0, 'missedBlocksCounter'],
+          x
+        );
+        const condition = getValidatorCondition(
+          signedBlockWindow,
+          missedBlockCounter
+        );
 
-      return ({
-        validator: x.validatorInfo.operatorAddress,
-        votingPower,
-        votingPowerPercent,
-        commission: R.pathOr(0, ['validatorCommissions', 0, 'commission'], x) * 100,
-        condition,
-        status: R.pathOr(0, ['validatorStatuses', 0, 'status'], x),
-        jailed: R.pathOr(false, ['validatorStatuses', 0, 'jailed'], x),
-        tombstoned: R.pathOr(false, ['validatorSigningInfos', 0, 'tombstoned'], x),
+        return {
+          validator: x.validatorInfo.operatorAddress,
+          votingPower,
+          votingPowerPercent,
+          commission:
+            R.pathOr(0, ['validatorCommission', 0, 'commission'], data) * 100,
+          condition,
+          status: R.pathOr(0, ['validatorStatus', 0, 'status'], x),
+          jailed: R.pathOr(false, ['validatorStatus', 0, 'jailed'], x),
+          tombstoned: R.pathOr(
+            false,
+            ['validatorSigningInfo', 0, 'tombstoned'],
+            data
+          ),
+        };
       });
-    });
 
     // get the top 34% validators
     formattedItems = formattedItems.sort((a, b) => {
@@ -91,7 +108,7 @@ export const useValidators = () => {
     // add key to indicate they are part of top 34%
     let cumulativeVotingPower = Big(0);
     let reached = false;
-    formattedItems.forEach((x) => {
+    formattedItems.forEach(x => {
       if (x.status === 3) {
         const totalVp = cumulativeVotingPower.add(x.votingPowerPercent);
         if (totalVp.lte(34) && !reached) {
@@ -114,7 +131,7 @@ export const useValidators = () => {
   };
 
   const handleTabChange = (_event: any, newValue: number) => {
-    setState((prevState) => ({
+    setState(prevState => ({
       ...prevState,
       tab: newValue,
     }));
@@ -122,12 +139,12 @@ export const useValidators = () => {
 
   const handleSort = (key: string) => {
     if (key === state.sortKey) {
-      setState((prevState) => ({
+      setState(prevState => ({
         ...prevState,
         sortDirection: prevState.sortDirection === 'asc' ? 'desc' : 'asc',
       }));
     } else {
-      setState((prevState) => ({
+      setState(prevState => ({
         ...prevState,
         sortKey: key,
         sortDirection: 'asc', // new key so we start the sort by asc
@@ -139,19 +156,22 @@ export const useValidators = () => {
     let sorted: ItemType[] = R.clone(items);
 
     if (state.tab === 0) {
-      sorted = sorted.filter((x) => x.status === 3);
+      sorted = sorted.filter(x => x.status === 3);
     }
 
     if (state.tab === 1) {
-      sorted = sorted.filter((x) => x.status !== 3);
+      sorted = sorted.filter(x => x.status !== 3);
     }
 
     if (search) {
-      sorted = sorted.filter((x) => {
+      sorted = sorted.filter(x => {
         const formattedSearch = search.toLowerCase().replace(/ /g, '');
         return (
-          x.validator.name.toLowerCase().replace(/ /g, '').includes(formattedSearch)
-          || x.validator.address.toLowerCase().includes(formattedSearch)
+          x.validator.name
+            .toLowerCase()
+            .replace(/ /g, '')
+            .includes(formattedSearch) ||
+          x.validator.address.toLowerCase().includes(formattedSearch)
         );
       });
     }

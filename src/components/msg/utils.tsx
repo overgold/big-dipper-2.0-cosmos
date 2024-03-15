@@ -530,46 +530,25 @@ const getDataByType = (type: string) => {
       tagDisplay: 'MsgCreateAccount',
     },
 
-    // =====================================
-    // Wallets messages
-    // =====================================
-
-    '/vipcoin.chain.wallets.MsgSetWalletKind': {
-      model: MODELS.MsgSetWalletKind,
-      content: COMPONENTS.MsgSetWalletKindComponent,
-      tagTheme: 'six',
-      tagDisplay: 'MsgSetWalletKind',
+    //OVG
+    '/ovgchain.core.MsgIssue': {
+      model: MODELS.MsgIssue,
+      content: COMPONENTS.MsgIssueComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgIssue',
     },
-    '/vipcoin.chain.wallets.MsgSetWalletState': {
-      model: MODELS.MsgSetWalletState,
-      content: COMPONENTS.MsgSetWalletStateComponent,
-      tagTheme: 'six',
-      tagDisplay: 'MsgSetWalletState',
+    '/ovgchain.core.MsgWithdraw': {
+      model: MODELS.MsgWithdraw,
+      content: COMPONENTS.MsgWithdrawComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgWithdraw',
     },
-    '/vipcoin.chain.wallets.MsgCreateWallet': {
-      model: MODELS.MsgCreateWallet,
-      content: COMPONENTS.MsgCreateWalletComponent,
-      tagTheme: 'six',
-      tagDisplay: 'MsgCreateWallet',
-    },
-    '/vipcoin.chain.wallets.MsgCreateWalletWithBalance': {
-      model: MODELS.MsgCreateWalletWithBalance,
-      content: COMPONENTS.MsgCreateWalletWithBalanceComponent,
-      tagTheme: 'six',
-      tagDisplay: 'MsgCreateWalletWithBalance',
-    },
-    '/vipcoin.chain.wallets.MsgSetDefaultWallet': {
-      model: MODELS.MsgSetDefaultWallet,
-      content: COMPONENTS.MsgSetDefaultWalletComponent,
-      tagTheme: 'six',
-      tagDisplay: 'MsgSetDefaultWallet',
-    },
-    '/vipcoin.chain.wallets.MsgSetExtra': {
-      model: MODELS.MsgSetExtraWallet,
-      content: COMPONENTS.MsgSetExtraWalletComponent,
-      tagTheme: 'six',
-      tagDisplay: 'MsgSetExtraWallet',
-    },
+    // '/ovgchain.stake.MsgDistributeRewards': {
+    //   model: MODELS.MsgWithdraw,
+    //   content: COMPONENTS.MsgWithdrawComponent,
+    //   tagTheme: 'one',
+    //   tagDisplay: 'MsgDistributeRewards',
+    // },
   };
 
   if (defaultTypeToModel[type]) return defaultTypeToModel[type];

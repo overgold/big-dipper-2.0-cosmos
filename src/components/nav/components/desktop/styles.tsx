@@ -37,6 +37,7 @@ export const useStyles = () => {
         '&.plug': {
           marginTop: '30px',
         },
+
         // '& .logo-title-none': {
         //   display: 'none',
         // },

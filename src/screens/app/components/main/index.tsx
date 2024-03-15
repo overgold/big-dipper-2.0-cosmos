@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ToastContainer } from 'react-toastify';
@@ -10,10 +10,10 @@ import { useBigDipperNetworksRecoil } from '@recoil/big_dipper_networks';
 import { useMarketRecoil } from '@recoil/market';
 import { useValidatorRecoil } from '@recoil/validators';
 import { InnerApp } from '..';
-import {
-  useTheme,
-  useGenesis,
-} from './hooks';
+import { useTheme, useGenesis } from './hooks';
+import { useApolloClient, gql } from '@apollo/client';
+import usePlug from '@src/hooks/usePlug';
+import axios from 'axios';
 
 const Main = (props: AppProps) => {
   // =====================================
@@ -23,28 +23,54 @@ const Main = (props: AppProps) => {
   useBigDipperNetworksRecoil();
   useMarketRecoil();
   const { loading } = useValidatorRecoil();
+  const client = useApolloClient();
+  const { isEnabledFullPagePlug, FullPagePlugComponent } = usePlug();
+
+  const handleGetPlug = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_WALLET_URL}/v4/plug-service/plugs/big_dipper?language=en-GB`
+      );
+
+      if (response.status !== 204) {
+        client.writeQuery({
+          query: gql`
+            query {
+              queryPlugData @client
+            }
+          `,
+          data: {
+            queryPlugData: response.data,
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetPlug();
+    const intervalId = setInterval(handleGetPlug, 60000);
+
+    return () => clearInterval(intervalId);
+  }, [client]);
 
   // =====================================
   // general setup
   // =====================================
   const { muiTheme } = useTheme();
-  const {
-    genesisStarted,
-    startGenesis,
-  } = useGenesis();
+  const { genesisStarted, startGenesis } = useGenesis();
 
   let Component = null;
-
-  if (!genesisStarted) {
-    Component = (
-      <Countdown startGenesis={startGenesis} />
-    );
+  if (isEnabledFullPagePlug) {
+    Component = FullPagePlugComponent;
+  } else if (!genesisStarted) {
+    Component = <Countdown startGenesis={startGenesis} />;
   } else if (loading) {
     Component = <InitialLoad {...props.pageProps} />;
   } else {
-    Component = (
-      <InnerApp {...props} />
-    );
+    Component = <InnerApp {...props} />;
   }
 
   return (

@@ -53,7 +53,7 @@ export const useStyles = () => {
       listAccount: {
         display: 'grid',
         gridTemplateColumns: '1fr',
-        [theme.breakpoints.between('md','lg')]: {
+        [theme.breakpoints.between('md', 'lg')]: {
           gridTemplateColumns: '1fr 1fr',
           gap: '12px',
         },
@@ -63,15 +63,13 @@ export const useStyles = () => {
         },
       },
       walletsItem: {
-        '&:first-child': {
-          '& .value': {
-            fontWeight: 700,
-            fontSize: '20px',
-          },
-          paddingBottom: 0,
+        '& .value': {
+          fontWeight: 400,
+          fontSize: '16px',
         },
+        paddingBottom: 0,
       },
-    
+
       item: {
         width: '100%',
         padding: theme.spacing(2, 0),

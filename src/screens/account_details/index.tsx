@@ -45,17 +45,14 @@ const AccountDetails = () => {
             )}
             <Overview
               className={classes.overview}
-              accountData={state.accountInfo}
-              balance={state.balance}
+              accountData={state.overview}
+              // balance={state.balance}
             />
-            <Transfers
+            {/* <Transfers
               className={classes.transactions}
               transferWallets={state.transferWallets}
-            />
-            <Transactions
-              className={classes.transactions}
-              accountAddress={state.accountAddress}
-            />
+            /> */}
+            <Transactions className={classes.transactions} />
           </span>
         </LoadAndExist>
       </Layout>

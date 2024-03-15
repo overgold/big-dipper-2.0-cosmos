@@ -2,7 +2,8 @@ import { useState } from 'react';
 import * as R from 'ramda';
 import { useRouter } from 'next/router';
 import {
-  useProposalDetailsTallyQuery, ProposalDetailsTallyQuery,
+  useProposalDetailsTallyQuery,
+  ProposalDetailsTallyQuery,
 } from '@graphql/types';
 import { formatToken } from '@utils/format_token';
 import { chainConfig } from '@configs';
@@ -30,46 +31,46 @@ export const useVotesGraph = () => {
   });
 
   const handleSetState = (stateChange: any) => {
-    setState((prevState) => R.mergeDeepLeft(stateChange, prevState));
+    setState(prevState => R.mergeDeepLeft(stateChange, prevState));
   };
 
   useProposalDetailsTallyQuery({
     variables: {
       proposalId: R.pathOr('', ['query', 'id'], router),
     },
-    onCompleted: (data) => {
+    onCompleted: data => {
       handleSetState(foramtProposalTally(data));
     },
   });
 
   const foramtProposalTally = (data: ProposalDetailsTallyQuery) => {
-    const quorumRaw = R.pathOr('0', [0, 'tallyParams', 'quorum'], data.quorum);
+    // const quorumRaw = R.pathOr('0', [0, 'tallyParams', 'quorum'], data.quorum);
 
-    return ({
+    return {
       votes: {
         yes: formatToken(
           R.pathOr('0', ['proposalTallyResult', 0, 'yes'], data),
-          chainConfig.votingPowerTokenUnit,
+          chainConfig.votingPowerTokenUnit
         ),
         no: formatToken(
           R.pathOr('0', ['proposalTallyResult', 0, 'no'], data),
-          chainConfig.votingPowerTokenUnit,
+          chainConfig.votingPowerTokenUnit
         ),
         veto: formatToken(
           R.pathOr('0', ['proposalTallyResult', 0, 'noWithVeto'], data),
-          chainConfig.votingPowerTokenUnit,
+          chainConfig.votingPowerTokenUnit
         ),
         abstain: formatToken(
           R.pathOr('0', ['proposalTallyResult', 0, 'abstain'], data),
-          chainConfig.votingPowerTokenUnit,
+          chainConfig.votingPowerTokenUnit
         ),
       },
       bonded: formatToken(
         R.pathOr('0', ['stakingPool', 0, 'bondedTokens'], data),
-        chainConfig.votingPowerTokenUnit,
+        chainConfig.votingPowerTokenUnit
       ),
-      quorum: Big(quorumRaw).times(100).toFixed(2),
-    });
+      // quorum: Big(quorumRaw).times(100).toFixed(2),
+    };
   };
 
   return {

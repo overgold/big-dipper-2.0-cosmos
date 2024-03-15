@@ -9,11 +9,15 @@ import { HOME } from '@utils/go_to_page';
 import { useStyles } from './styles';
 import { NavbarProps } from './types';
 import usePlug from '@src/hooks/usePlug';
+
+import { useApolloClient, gql } from '@apollo/client';
 const Navbar = (props: NavbarProps) => {
   const classes = useStyles();
+  const client = useApolloClient();
   const selected = useRecoilValue(readSelectedNetwork);
   const { isOpen, openNetwork, toggleNavMenus } = props;
   const { isEnabledNotificationPlug, NotificationPlugComponent } = usePlug();
+
   return (
     <div className={classes.wrapper}>
       {isEnabledNotificationPlug && NotificationPlugComponent}

@@ -2,30 +2,21 @@ import React from 'react';
 import classnames from 'classnames';
 import numeral from 'numeral';
 import Big from 'big.js';
-import {
-  Box,
-  InfoPopover,
-} from '@components';
+import { Box, InfoPopover } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import { Typography } from '@material-ui/core';
-import {
-  PieChart,
-  Pie,
-  Cell,
-} from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 import { useStyles } from './styles';
 import { formatGraphData } from './utils';
 import { useVotesGraph } from './hooks';
-import { QuorumExplanation } from './components';
+// import { QuorumExplanation } from './components';
 
-const VotesGraph: React.FC<ComponentDefault> = (props) => {
-  const {
-    classes, theme,
-  } = useStyles();
+const VotesGraph: React.FC<ComponentDefault> = props => {
+  const { classes, theme } = useStyles();
   const { t } = useTranslation('proposals');
   const { state } = useVotesGraph();
   const { votes } = state;
-  const { quorum } = state;
+  // const { quorum } = state;
 
   const total = Big(votes.yes.value)
     .plus(votes.no.value)
@@ -33,22 +24,22 @@ const VotesGraph: React.FC<ComponentDefault> = (props) => {
     .plus(votes.abstain.value);
 
   const formattedData = formatGraphData({
-    data: votes, theme, total,
+    data: votes,
+    theme,
+    total,
   });
   const totalVotedFormat = numeral(total.toFixed(2)).format('0,0.[00]');
   const totalBondedFormat = numeral(state.bonded.value).format('0,0.[00]');
   const totalVotedPercent = total.gt(0)
     ? `${numeral(
-      Big(total.toFixed(2)).div(state.bonded.value).times(100).toFixed(2),
-    ).format('0.[00]')}%` : '0%';
+        Big(total.toFixed(2)).div(state.bonded.value).times(100).toFixed(2)
+      ).format('0.[00]')}%`
+    : '0%';
 
   return (
     <Box className={classnames(props.className, classes.root)}>
       <div className={classes.pie}>
-        <PieChart
-          width={250}
-          height={250}
-        >
+        <PieChart width={250} height={250}>
           <Pie
             cx="50%"
             cy="50%"
@@ -78,35 +69,30 @@ const VotesGraph: React.FC<ComponentDefault> = (props) => {
             })}
           </Typography>
           <Typography variant="h2">
-            {totalVotedFormat}
-            {' '}
-            /
-            {' '}
-            {totalBondedFormat}
+            {totalVotedFormat} / {totalBondedFormat}
           </Typography>
         </div>
 
-        {formattedData.filter((x) => x.name !== 'empty').map((x) => {
-          return (
-            <div key={x.name} className={classnames(classes.voteItem, x.name)}>
-              <Typography variant="caption">
-                {t(x.name)}
-                {' '}
-                (
-                {x.percentage}
-                )
-              </Typography>
-              <Typography>
-                {x.display}
-              </Typography>
-            </div>
-          );
-        })}
+        {formattedData
+          .filter(x => x.name !== 'empty')
+          .map(x => {
+            return (
+              <div
+                key={x.name}
+                className={classnames(classes.voteItem, x.name)}
+              >
+                <Typography variant="caption">
+                  {t(x.name)} ({x.percentage})
+                </Typography>
+                <Typography>{x.display}</Typography>
+              </div>
+            );
+          })}
       </div>
       <div className={classes.popOver}>
-        <InfoPopover
+        {/* <InfoPopover
           content={<QuorumExplanation quorum={quorum} />}
-        />
+        /> */}
       </div>
     </Box>
   );

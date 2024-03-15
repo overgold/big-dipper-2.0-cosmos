@@ -11,9 +11,11 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: 1,
     fontWeight: 400,
     width: '100%',
-    height: 39,
+    height: '39px',
     backgroundColor: '#F3A50D',
     position: 'fixed',
-    zIndex: 10000,
+  },
+  text: {
+    margin: '0 20px',
   },
 }));
