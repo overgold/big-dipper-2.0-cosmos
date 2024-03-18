@@ -7,6 +7,7 @@ import {
   Table,
   TableBody,
   Typography,
+  useMediaQuery,
 } from '@material-ui/core';
 import useTranslation from 'next-translate/useTranslation';
 import numeral from 'numeral';
@@ -18,6 +19,7 @@ import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
 import { useStyles } from './styles';
 import { columns } from './utils';
 import { ItemType } from '../../types';
+import { ADDRESS_DETAILS } from '@utils/go_to_page';
 
 const Desktop: React.FC<{
   className?: string;
@@ -25,6 +27,7 @@ const Desktop: React.FC<{
 }> = ({ className, items }) => {
   const { t } = useTranslation('blocks');
   const classes = useStyles();
+  const isLaptop = useMediaQuery('(max-width:1500px)');
 
   const formattedData = items.map(x => {
     return {
@@ -38,15 +41,29 @@ const Desktop: React.FC<{
       txs: numeral(x.txs).format('0,0'),
       time: dayjs.utc(x.timestamp).fromNow(),
       proposer: (
-        <AvatarName
-          address={x.proposer.address}
-          imageUrl={x.proposer.imageUrl}
-          name={getMiddleEllipsis(x.proposer.name, { beginning: 6, ending: 5 })}
-        />
+        <>
+          {isLaptop ? (
+            <a href={ADDRESS_DETAILS(x.proposer.address)}>
+              {getMiddleEllipsis(x.proposer.name, {
+                beginning: 4,
+                ending: 3,
+              })}
+            </a>
+          ) : (
+            <AvatarName
+              address={x.proposer.address}
+              imageUrl={x.proposer.imageUrl}
+              name={getMiddleEllipsis(x.proposer.name, {
+                beginning: 6,
+                ending: 5,
+              })}
+            />
+          )}
+        </>
       ),
       hash: getMiddleEllipsis(x.hash, {
-        beginning: 6,
-        ending: 5,
+        beginning: !isLaptop ? 6 : 4,
+        ending: !isLaptop ? 5 : 3,
       }),
     };
   });

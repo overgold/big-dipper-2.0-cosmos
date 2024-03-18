@@ -30,16 +30,20 @@ const Footer: React.FC<{ className?: string }> = ({ className }) => {
                 {group.links.map(x => {
                   return (
                     // <div key={x.url} className={`${group.key} link`}>
-                      <a key={x.url}  href={x.url} target="_blank" rel="noreferrer">
-                        {t(`common:${x.key}`)}
-                      </a>
+                    <a
+                      key={x.url}
+                      href={x.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {t(`common:${x.key}`)}
+                    </a>
                     // </div>
                   );
                 })}
               </div>
             );
           })}
-         
         </div>
       </div>
       <Divider />

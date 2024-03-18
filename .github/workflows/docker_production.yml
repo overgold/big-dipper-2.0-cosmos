@@ -33,6 +33,10 @@ jobs:
           NEXT_PUBLIC_CHAIN_TYPE=
           NEXT_PUBLIC_ASSET=
           NEXT_PUBLIC_WALLET_API=
+          NEXT_PUBLIC_URL_TELEGRAM=
+          NEXT_PUBLIC_URL_OVERGOLD_SITE=
+          NEXT_PUBLIC_URL_MARKET=
+          NEXT_PUBLIC_URL_EXCHANGER=
           NODE_ENV="production"
           PORT=3000
           if [[ $GITHUB_REF == refs/tags/desmos-morpheus-apollo-1* ]]; then
@@ -51,6 +55,11 @@ jobs:
           echo ::set-output name=NEXT_PUBLIC_CHAIN_TYPE::${NEXT_PUBLIC_CHAIN_TYPE}
           echo ::set-output name=NEXT_PUBLIC_ASSET::${NEXT_PUBLIC_ASSET}
           echo ::set-output name=NEXT_PUBLIC_WALLET_API::${NEXT_PUBLIC_WALLET_API}
+
+          echo ::set-output name=NEXT_PUBLIC_URL_TELEGRAM::${NEXT_PUBLIC_URL_TELEGRAM}
+          echo ::set-output name=NEXT_PUBLIC_URL_OVERGOLD_SITE::${NEXT_PUBLIC_URL_OVERGOLD_SITE}
+          echo ::set-output name=NEXT_PUBLIC_URL_MARKET::${NEXT_PUBLIC_URL_MARKET}
+          echo ::set-output name=NEXT_PUBLIC_URL_EXCHANGER::${NEXT_PUBLIC_URL_EXCHANGER}
           echo ::set-output name=NODE_ENV::${NODE_ENV}
           echo ::set-output name=PORT::${PORT}
       - name: Set up Docker Buildx
@@ -75,6 +84,11 @@ jobs:
             "NEXT_PUBLIC_RPC_WEBSOCKET=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_RPC_WEBSOCKET }}"
             "NEXT_PUBLIC_CHAIN_TYPE=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_CHAIN_TYPE }}"
             "NEXT_PUBLIC_WALLET_API=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_WALLET_API }}"
+
+            "NEXT_PUBLIC_URL_TELEGRAM=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_URL_TELEGRAM }}"
+            "NEXT_PUBLIC_URL_OVERGOLD_SITE=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_URL_OVERGOLD_SITE }}"
+            "NEXT_PUBLIC_URL_MARKET=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_URL_MARKET }}"
+            "NEXT_PUBLIC_URL_EXCHANGER=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_URL_EXCHANGER }}"
             "NODE_ENV=${{ steps.dockerPrep.outputs.NODE_ENV }}"
             "PORT=${{ steps.dockerPrep.outputs.PORT }}"
           labels: |

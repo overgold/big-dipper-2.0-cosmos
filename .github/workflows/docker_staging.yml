@@ -33,6 +33,10 @@ jobs:
           NEXT_PUBLIC_CHAIN_TYPE="testnet"
           NEXT_PUBLIC_ASSET=ovg
           NEXT_PUBLIC_WALLET_API="https://api.chain.overgold.app"
+          NEXT_PUBLIC_URL_TELEGRAM="https://t.me/OverGoldCoin"
+          NEXT_PUBLIC_URL_OVERGOLD_SITE="https://devs.overgold.app/"
+          NEXT_PUBLIC_URL_MARKET="https://market-dev.overgold.app/"
+          NEXT_PUBLIC_URL_EXCHANGER="https://exchanger-dev.overgold.app/"
           NODE_ENV="production"
           PORT=3000
           NEXT_PUBLIC_MATOMO_URL="https://analytics.bigdipper.live"
@@ -48,6 +52,10 @@ jobs:
           echo ::set-output name=PORT::${PORT}
           echo ::set-output name=NEXT_PUBLIC_MATOMO_URL::${NEXT_PUBLIC_MATOMO_URL}
           echo ::set-output name=NEXT_PUBLIC_MATOMO_SITE_ID::${NEXT_PUBLIC_MATOMO_SITE_ID}
+          echo ::set-output name=NEXT_PUBLIC_URL_TELEGRAM::${NEXT_PUBLIC_URL_TELEGRAM}
+          echo ::set-output name=NEXT_PUBLIC_URL_OVERGOLD_SITE::${NEXT_PUBLIC_URL_OVERGOLD_SITE}
+          echo ::set-output name=NEXT_PUBLIC_URL_MARKET::${NEXT_PUBLIC_URL_MARKET}
+          echo ::set-output name=NEXT_PUBLIC_URL_EXCHANGER::${NEXT_PUBLIC_URL_EXCHANGER}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub

@@ -11,11 +11,10 @@ import {
   TableCell,
   Table,
   TableBody,
+  useMediaQuery,
 } from '@material-ui/core';
 import { getMiddleEllipsis } from '@utils/get_middle_ellipsis';
-import {
-  BLOCK_DETAILS, TRANSACTION_DETAILS,
-} from '@utils/go_to_page';
+import { BLOCK_DETAILS, TRANSACTION_DETAILS } from '@utils/go_to_page';
 import { Result } from '@components';
 import { useStyles } from './styles';
 import { columns } from './utils';
@@ -24,14 +23,13 @@ import { TransactionType } from '../../types';
 const Desktop: React.FC<{
   className?: string;
   items: TransactionType[];
-}> = ({
-  className, items,
-}) => {
+}> = ({ className, items }) => {
   const classes = useStyles();
   const { t } = useTranslation('transactions');
+  const isLaptop = useMediaQuery('(max-width:1500px)');
 
-  const formattedData = items.map((x) => {
-    return ({
+  const formattedData = items.map(x => {
+    return {
       block: (
         <Link href={BLOCK_DETAILS(x.height)} passHref>
           <Typography variant="body1" component="a">
@@ -43,17 +41,16 @@ const Desktop: React.FC<{
         <Link href={TRANSACTION_DETAILS(x.hash)} passHref>
           <Typography variant="body1" component="a">
             {getMiddleEllipsis(x.hash, {
-              beginning: 15, ending: 5,
+              beginning: !isLaptop ? 15 : 5,
+              ending: 5,
             })}
           </Typography>
         </Link>
       ),
-      result: (
-        <Result success={x.success} />
-      ),
+      result: <Result success={x.success} />,
       time: dayjs.utc(x.timestamp).fromNow(),
       messages: numeral(x.messages).format('0,0'),
-    });
+    };
   });
 
   return (
@@ -61,7 +58,7 @@ const Desktop: React.FC<{
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
+            {columns.map(column => (
               <TableCell
                 key={column.key}
                 align={column.align}
@@ -76,9 +73,7 @@ const Desktop: React.FC<{
           {formattedData.map((row, i) => (
             <TableRow key={`row-${i}`}>
               {columns.map((column, index) => {
-                const {
-                  key, align,
-                } = column;
+                const { key, align } = column;
                 const item = row[key];
                 return (
                   <TableCell
