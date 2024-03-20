@@ -1,16 +1,5 @@
 const BIG_DIPPER_URL = 'https://bigdipper.live';
-console.log(
-  'process.env.NEXT_PUBLIC_URL_OVERGOLD_SITE',
-  process.env.NEXT_PUBLIC_URL_OVERGOLD_SITE
-);
-console.log(
-  'process.env.NEXT_PUBLIC_URL_MARKET',
-  process.env.NEXT_PUBLIC_URL_MARKET
-);
-console.log(
-  'process.env.NEXT_PUBLIC_WALLET_URL',
-  process.env.NEXT_PUBLIC_WALLET_URL
-);
+
 //Fork
 export const footerLinks = [
   {

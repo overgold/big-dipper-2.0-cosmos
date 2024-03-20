@@ -6,6 +6,7 @@ import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
 import { convertCoinFromSatoshi } from '@src/utils/coinFormatting';
+import { Typography } from '@material-ui/core';
 
 const MsgIssueComponent = (props: { message: MsgIssue }) => {
   const { message } = props;
@@ -13,7 +14,7 @@ const MsgIssueComponent = (props: { message: MsgIssue }) => {
   const { t } = useTranslation();
 
   return (
-    <div>
+    <Typography>
       <Trans
         i18nKey="message_contents:MsgIssue"
         components={[
@@ -30,7 +31,7 @@ const MsgIssueComponent = (props: { message: MsgIssue }) => {
           )} ${message.asset.toLocaleUpperCase()}`,
         }}
       />
-    </div>
+    </Typography>
   );
 };
 

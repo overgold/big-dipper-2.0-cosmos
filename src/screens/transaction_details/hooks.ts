@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import * as R from 'ramda';
 import {
   useTransactionDetailsQuery,
   TransactionDetailsQuery,
 } from '@graphql/types';
-import { formatToken } from '@utils/format_token';
+
 import { convertMsgsToModels } from '@msg';
+
+import { formatToken } from '@utils/format_token';
+
+import { useState, useEffect } from 'react';
+
+import { useRouter } from 'next/router';
+
+import * as R from 'ramda';
+
 import { TransactionState } from './types';
 
 export const useTransactionDetails = () => {

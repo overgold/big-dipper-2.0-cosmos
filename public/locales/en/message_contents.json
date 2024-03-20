@@ -80,5 +80,12 @@
   "MsgCreateWallet": "Create wallet {{address}} cost {{cost}} for account <0></0> <1></1> by <2></2>",
   "MsgCreateWalletWithBalance": "Create wallet <0></0> for account <1></1> with balance {{amount}} {{denom}} <2></2> by <3></3>",
   "MsgSetDefaultWallet": "Set default wallet <0></0> by <1></1>",
-  "MsgSetExtraWallet": "Set Extra for wallet <0></0>: <1></1> by <2></2>"
+  "MsgSetExtraWallet": "Set Extra for wallet <0></0>: <1></1> by <2></2>",
+  "MsgDistributeRewards": "Distribution of rewards {{amount}} to stakeholders by <0></0>",
+  "MsgTransferFromUserComponent": "Transfer {{amount}} from <0></0> to <1></1>",
+  "MsgClaimReward": "Claim Reward {{amount}} from <0></0> to <1></1>",
+  "MsgCancelSell": "Cancel sell {{amount}} stake by creator <0></0>",
+  "MsgBuyRequest": "Buy request {{amount}} by creator <0></0><1></1>Receive {{amountReceive}} to <2></2>",
+  "MsgSellRequest": "Sell request {{amount}} by creator <0></0>",
+  "MsgSetReferrer": "Set referrer <0></0> to referral <1></1> by creator <2></2>"
 }

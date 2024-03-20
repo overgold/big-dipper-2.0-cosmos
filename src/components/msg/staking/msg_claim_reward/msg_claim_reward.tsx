@@ -1,22 +1,26 @@
 import React from 'react';
-import { MsgWithdraw } from '@models';
-import { useStyles } from '../styles';
+import { MsgClaimReward } from '@models';
 import Link from 'next/link';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
-import { convertCoinFromSatoshi } from '@src/utils/coinFormatting';
+import { formatNumber } from '@src/utils/format_token';
 import { Typography } from '@material-ui/core';
 
-const MsgWithdrawComponent = (props: { message: MsgWithdraw }) => {
+const MsgClaimRewardComponent = (props: { message: MsgClaimReward }) => {
   const { message } = props;
-  const classes = useStyles();
-  const { t } = useTranslation();
+  const parsedAmount = message.amounts
+    .map(x => {
+      return `${formatNumber(
+        x.value,
+        x.exponent
+      )} ${x.displayDenom.toUpperCase()}`;
+    })
+    .join(', ');
 
   return (
     <Typography>
       <Trans
-        i18nKey="message_contents:MsgWithdraw"
+        i18nKey="message_contents:MsgClaimReward"
         components={[
           <Link href={ACCOUNT_DETAILS(message.address)}>
             {message.address}
@@ -26,13 +30,11 @@ const MsgWithdrawComponent = (props: { message: MsgWithdraw }) => {
           </Link>,
         ]}
         values={{
-          amount: `${convertCoinFromSatoshi(
-            message.amount
-          )} ${message.asset.toLocaleUpperCase()}`,
+          amount: parsedAmount,
         }}
       />
     </Typography>
   );
 };
 
-export default MsgWithdrawComponent;
+export default MsgClaimRewardComponent;

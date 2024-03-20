@@ -1,7 +1,10 @@
-import * as MODELS from '@models';
-import * as R from 'ramda';
 import { Tag } from '@components';
+
+import * as MODELS from '@models';
+
 import * as COMPONENTS from '@msg';
+
+import * as R from 'ramda';
 //FORK
 const getDataByType = (type: string) => {
   // =====================================
@@ -543,12 +546,48 @@ const getDataByType = (type: string) => {
       tagTheme: 'one',
       tagDisplay: 'MsgWithdraw',
     },
-    // '/ovgchain.stake.MsgDistributeRewards': {
-    //   model: MODELS.MsgWithdraw,
-    //   content: COMPONENTS.MsgWithdrawComponent,
-    //   tagTheme: 'one',
-    //   tagDisplay: 'MsgDistributeRewards',
-    // },
+    '/ovgchain.stake.MsgDistributeRewards': {
+      model: MODELS.MsgClaimReward,
+      content: COMPONENTS.MsgDistributeRewardsComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgDistributeRewards',
+    },
+    '/ovgchain.stake.MsgTransferFromUser': {
+      model: MODELS.MsgTransferFromUser,
+      content: COMPONENTS.MsgTransferFromUserComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgTransferFromUserComponent',
+    },
+    '/ovgchain.stake.MsgClaimReward': {
+      model: MODELS.MsgClaimReward,
+      content: COMPONENTS.MsgClaimRewardComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgClaimReward',
+    },
+    '/ovgchain.stake.MsgMsgCancelSell': {
+      model: MODELS.MsgCancelSell,
+      content: COMPONENTS.MsgCancelSellComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgCancelSell',
+    },
+    '/ovgchain.stake.MsgBuyRequest': {
+      model: MODELS.MsgBuyRequest,
+      content: COMPONENTS.MsgBuyRequestComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgBuyRequest',
+    },
+    '/ovgchain.stake.MsgSellRequest': {
+      model: MODELS.MsgBuyRequest,
+      content: COMPONENTS.MsgSellRequestComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSellRequest',
+    },
+    '/ovgchain.referral.MsgSetReferrer': {
+      model: MODELS.MsgSetReferrer,
+      content: COMPONENTS.MsgSetReferrerComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSetReferrer',
+    },
   };
 
   if (defaultTypeToModel[type]) return defaultTypeToModel[type];
@@ -617,7 +656,8 @@ export const convertMsgsToModels = (transaction: any) => {
     const model = getMessageModelByType(msg?.['@type']);
     if (
       model === MODELS.MsgWithdrawDelegatorReward ||
-      model === MODELS.MsgWithdrawValidatorCommission
+      model === MODELS.MsgWithdrawValidatorCommission ||
+      model === MODELS.MsgClaimReward
     ) {
       const log = R.pathOr(null, ['logs', i], transaction);
       return model.fromJson(msg, log);

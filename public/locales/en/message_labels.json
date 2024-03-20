@@ -79,5 +79,12 @@
   "MsgCreateWallet": "Create Wallet",
   "MsgCreateWalletWithBalance": "Create Wallet With Balance",
   "MsgSetDefaultWallet": "Set Default Wallet",
-  "MsgSetExtraWallet": "Set Extra"
+  "MsgSetExtraWallet": "Set Extra",
+  "MsgDistributeRewards": "Distribute Rewards",
+  "MsgTransferFromUserComponent": "Transfer From User",
+  "MsgClaimReward": "Claim Reward",
+  "MsgCancelSell": "Cancel Sell Stake",
+  "MsgBuyRequest": "Buy Stake",
+  "MsgSellRequest": "Sell Request Stake",
+  "MsgSetReferrer": "Set Referrer"
 }
