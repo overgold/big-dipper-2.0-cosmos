@@ -18,6 +18,7 @@ const MsgWithdrawComponent = (props: { message: MsgWithdraw }) => {
       <Trans
         i18nKey="message_contents:MsgWithdraw"
         components={[
+          <b />,
           <Link href={ACCOUNT_DETAILS(message.address)}>
             {message.address}
           </Link>,

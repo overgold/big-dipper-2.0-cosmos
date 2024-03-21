@@ -17,10 +17,12 @@ const MsgBuyRequestComponent = (props: { message: MsgBuyRequest }) => {
       <Trans
         i18nKey="message_contents:MsgBuyRequest"
         components={[
+          <b />,
           <Link href={ACCOUNT_DETAILS(message.creator)}>
             {message.creator}
           </Link>,
           <br />,
+          <b />,
           <Link href={ACCOUNT_DETAILS(message.creator)}>
             {message.creator}
           </Link>,

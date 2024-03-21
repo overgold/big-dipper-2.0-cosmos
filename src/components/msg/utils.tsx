@@ -588,6 +588,18 @@ const getDataByType = (type: string) => {
       tagTheme: 'three',
       tagDisplay: 'MsgSetReferrer',
     },
+    '/ovgchain.stake.MsgSquashHistory': {
+      model: MODELS.MsgSquashHistory,
+      content: COMPONENTS.MsgSquashHistoryComponent,
+      tagTheme: 'three',
+      tagDisplay: 'MsgSquashHistory',
+    },
+    '/ovgchain.stake.MsgTransferToUser': {
+      model: MODELS.MsgTransferToUser,
+      content: COMPONENTS.MsgTransferToUserComponent,
+      tagTheme: 'one',
+      tagDisplay: 'MsgTransferTomUser',
+    },
   };
 
   if (defaultTypeToModel[type]) return defaultTypeToModel[type];
@@ -657,7 +669,8 @@ export const convertMsgsToModels = (transaction: any) => {
     if (
       model === MODELS.MsgWithdrawDelegatorReward ||
       model === MODELS.MsgWithdrawValidatorCommission ||
-      model === MODELS.MsgClaimReward
+      model === MODELS.MsgClaimReward ||
+      model === MODELS.MsgTransferToUser
     ) {
       const log = R.pathOr(null, ['logs', i], transaction);
       return model.fromJson(msg, log);

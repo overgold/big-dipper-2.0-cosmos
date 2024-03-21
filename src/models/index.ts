@@ -86,6 +86,8 @@ import MsgCreateValidator from './msg/staking/msg_create_validator';
 import MsgDelegate from './msg/staking/msg_delegate';
 import MsgEditValidator from './msg/staking/msg_edit_validator';
 import MsgRedelegate from './msg/staking/msg_redelegate';
+import MsgSetReferrer from './msg/staking/msg_set_referrer';
+import MsgSquashHistory from './msg/staking/msg_squash_history';
 import MsgTransferFromUser from './msg/staking/msg_transfer_from_user';
 import MsgUndelegate from './msg/staking/msg_undelegate';
 import MsgCreatePeriodicVestingAccount from './msg/vesting/msg_create_periodic_vesting_account';
@@ -96,7 +98,7 @@ import MsgSetDefaultWallet from './msg/wallets/msg_set_default_wallet';
 import MsgSetExtraWallet from './msg/wallets/msg_set_extra';
 import MsgSetWalletKind from './msg/wallets/msg_set_wallet_kind';
 import MsgSetWalletState from './msg/wallets/msg_set_wallet_state';
-import MsgSetReferrer from './msg/staking/msg_set_referrer';
+import MsgTransferToUser from './msg/staking/msg_transfer_to_user';
 
 export {
   BigDipperNetwork,
@@ -205,4 +207,6 @@ export {
   MsgCancelSell,
   MsgBuyRequest,
   MsgSetReferrer,
+  MsgSquashHistory,
+  MsgTransferToUser,
 };

@@ -14,6 +14,7 @@ const MsgTransferFromUserComponent = (props: { message: MsgWithdraw }) => {
       <Trans
         i18nKey="message_contents:MsgTransferFromUserComponent"
         components={[
+          <b />,
           <Link href={ACCOUNT_DETAILS(message.address)}>
             {message.address}
           </Link>,

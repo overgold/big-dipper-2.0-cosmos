@@ -86,5 +86,7 @@
   "MsgCancelSell": "Cancel Sell Stake",
   "MsgBuyRequest": "Buy Stake",
   "MsgSellRequest": "Sell Request Stake",
-  "MsgSetReferrer": "Set Referrer"
+  "MsgSetReferrer": "Set Referrer",
+  "MsgSquashHistory": "Squash History",
+  "MsgTransferTomUser": "Transfer To User"
 }

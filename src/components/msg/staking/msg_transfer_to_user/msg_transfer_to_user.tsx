@@ -1,15 +1,14 @@
 import React from 'react';
-import { MsgClaimReward } from '@models';
-3;
+import { MsgTransferToUser } from '@models';
 import Link from 'next/link';
 import Trans from 'next-translate/Trans';
 import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
 import { Typography } from '@material-ui/core';
 import { formatNumber } from '@src/utils/format_token';
 
-const MsgDistributeRewardsComponent = (props: { message: MsgClaimReward }) => {
+const MsgTransferToUserComponent = (props: { message: MsgTransferToUser }) => {
   const { message } = props;
-  const parsedAmount = message.amounts
+  const parsedAmount = message.amount
     .map(x => {
       return `${formatNumber(
         x.value,
@@ -21,11 +20,14 @@ const MsgDistributeRewardsComponent = (props: { message: MsgClaimReward }) => {
   return (
     <Typography>
       <Trans
-        i18nKey="message_contents:MsgDistributeRewards"
+        i18nKey="message_contents:MsgTransferTomUser"
         components={[
           <b />,
           <Link href={ACCOUNT_DETAILS(message.creator)}>
             {message.creator}
+          </Link>,
+          <Link href={ACCOUNT_DETAILS(message.address)}>
+            {message.address}
           </Link>,
         ]}
         values={{
@@ -36,4 +38,4 @@ const MsgDistributeRewardsComponent = (props: { message: MsgClaimReward }) => {
   );
 };
 
-export default MsgDistributeRewardsComponent;
+export default MsgTransferToUserComponent;

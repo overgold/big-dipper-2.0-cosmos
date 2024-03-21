@@ -18,6 +18,7 @@ const MsgIssueComponent = (props: { message: MsgIssue }) => {
       <Trans
         i18nKey="message_contents:MsgIssue"
         components={[
+          <b />,
           <Link href={ACCOUNT_DETAILS(message.address)}>
             {message.address}
           </Link>,

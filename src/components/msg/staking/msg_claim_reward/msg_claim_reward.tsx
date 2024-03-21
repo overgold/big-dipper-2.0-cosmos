@@ -22,6 +22,7 @@ const MsgClaimRewardComponent = (props: { message: MsgClaimReward }) => {
       <Trans
         i18nKey="message_contents:MsgClaimReward"
         components={[
+          <b />,
           <Link href={ACCOUNT_DETAILS(message.address)}>
             {message.address}
           </Link>,

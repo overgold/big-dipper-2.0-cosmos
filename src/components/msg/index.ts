@@ -90,14 +90,15 @@ import MsgClaimRewardComponent from './staking/msg_claim_reward/msg_claim_reward
 import MsgDistributeRewardsComponent from './staking/msg_distribute_rewards/msg_distribute_rewards';
 import MsgSellRequestComponent from './staking/msg_sell_request/msg_sell_request';
 import MsgSetReferrerComponent from './staking/msg_set_referrer/msg_set_referrer';
+import MsgSquashHistoryComponent from './staking/msg_squash_history/msg_squash_history';
 import MsgTransferFromUserComponent from './staking/msg_transfer_from_user/msg_transfer_from_user';
+import MsgTransferToUserComponent from './staking/msg_transfer_to_user/msg_transfer_to_user';
 import MsgCreateWalletComponent from './wallets/msg_create_wallet/msg_create_wallet';
 import MsgCreateWalletWithBalanceComponent from './wallets/msg_create_wallet_with_balance/msg_create_wallet_with_balance';
 import MsgSetDefaultWalletComponent from './wallets/msg_set_default_wallet/msg_set_default_wallet';
 import MsgSetExtraWalletComponent from './wallets/msg_set_extra/msg_set_extra';
 import MsgSetWalletKindComponent from './wallets/msg_set_wallet_kind/msg_set_wallet_kind';
 import MsgSetWalletStateComponent from './wallets/msg_set_wallet_state/msg_set_wallet_state';
-
 export { getMessageModelByType, getMessageByType, convertMsgsToModels };
 
 export {
@@ -192,4 +193,6 @@ export {
   MsgBuyRequestComponent,
   MsgSellRequestComponent,
   MsgSetReferrerComponent,
+  MsgSquashHistoryComponent,
+  MsgTransferToUserComponent,
 };
