@@ -54,46 +54,48 @@ const Overview: React.FC<{
         open={open}
         handleClose={handleClose}
       />
-      {/* <Box className={classnames(className, classes.root)}> */}
-      {!isEmpty(accountData) && (
-        <Box className={classnames(className, classes.root)}>
-          <div className={classnames(classes.list)}>
-            {walletInfo(accountData, t).map(walletItem => (
-              <div
-                key={walletItem.title}
-                className={classnames(
-                  classes.copyText,
-                  classes.item,
-                  classes.walletsItem
-                )}
-              >
-                <Typography variant="body1" className="label">
-                  <strong>{walletItem.title}</strong>
-                </Typography>
-                <div className="detail">
-                  {walletItem.isDetail && (
-                    <>
-                      <CopyIcon
-                        onClick={() => handleCopyToClipboard(walletItem.value)}
-                        className={classes.actionIcons}
-                      />
-                      <ShareIcon
-                        onClick={() => handleOpen(walletItem.value)}
-                        className={classes.actionIcons}
-                      />
-                    </>
+      <Box className={classnames(className, classes.root)}>
+        {!isEmpty(accountData) && (
+          <Box className={classnames(className, classes.root)}>
+            <div className={classnames(classes.list)}>
+              {walletInfo(accountData, t).map(walletItem => (
+                <div
+                  key={walletItem.title}
+                  className={classnames(
+                    classes.copyText,
+                    classes.item,
+                    classes.walletsItem
                   )}
-
-                  <Typography variant="body1" className="value">
-                    {walletItem.value}
+                >
+                  <Typography variant="body1" className="label">
+                    <strong>{walletItem.title}</strong>
                   </Typography>
+                  <div className="detail">
+                    {walletItem.isDetail && (
+                      <>
+                        <CopyIcon
+                          onClick={() =>
+                            handleCopyToClipboard(walletItem.value)
+                          }
+                          className={classes.actionIcons}
+                        />
+                        <ShareIcon
+                          onClick={() => handleOpen(walletItem.value)}
+                          className={classes.actionIcons}
+                        />
+                      </>
+                    )}
+
+                    <Typography variant="body1" className="value">
+                      {walletItem.value}
+                    </Typography>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Box>
-      )}
-      {/* {!isEmpty(accountData.accountOverview) && (
+              ))}
+            </div>
+          </Box>
+        )}
+        {/* {!isEmpty(accountData.accountOverview) && (
         <>
           <Box className={classnames(className, classes.root)}>
             <div className={classnames(classes.listAccount)}>
@@ -152,15 +154,7 @@ const Overview: React.FC<{
             </div>
           </Box>
 
-          <Balance
-            // className={classes.balance}
-            regular={balance.regular}
-            staked={balance.staked}
-            steakForRansom={balance.steakForRansom}
-            refReward={balance.refReward}
-            steakReward={balance.steakReward}
-            total={balance.total}
-          />
+
 
           <AccountDetailsTab
             data={accountData.accountOverview}
@@ -168,7 +162,16 @@ const Overview: React.FC<{
           />
         </>
       )} */}
-      {/* </Box> */}
+        <Balance
+          // className={classes.balance}
+          regular={balance.regular}
+          staked={balance.staked}
+          steakForRansom={balance.steakForRansom}
+          rewardAmount={balance.rewardAmount}
+          stakeAmount={balance.stakeAmount}
+          total={balance.total}
+        />
+      </Box>
     </>
   );
 };

@@ -37,6 +37,10 @@ jobs:
           NEXT_PUBLIC_URL_OVERGOLD_SITE="https://devs.overgold.app/"
           NEXT_PUBLIC_URL_MARKET="https://market-dev.overgold.app/"
           NEXT_PUBLIC_URL_EXCHANGER="https://exchanger-dev.overgold.app/"
+          NEXT_PUBLIC_BASE_BIP44_PATH="m/44'/118'/0'/0"
+          NEXT_PUBLIC_BLOCKCHAIN_URL="https://rpc.chain.dev.overgold.app"
+          NEXT_PUBLIC_BECH32_PREFIX="ovg"
+          NEXT_PUBLIC_STAKE_ASSET="stovg"
           NODE_ENV="production"
           PORT=3000
           NEXT_PUBLIC_MATOMO_URL="https://analytics.bigdipper.live"
@@ -56,6 +60,10 @@ jobs:
           echo ::set-output name=NEXT_PUBLIC_URL_OVERGOLD_SITE::${NEXT_PUBLIC_URL_OVERGOLD_SITE}
           echo ::set-output name=NEXT_PUBLIC_URL_MARKET::${NEXT_PUBLIC_URL_MARKET}
           echo ::set-output name=NEXT_PUBLIC_URL_EXCHANGER::${NEXT_PUBLIC_URL_EXCHANGER}
+          echo ::set-output name=NEXT_PUBLIC_BASE_BIP44_PATH::${NEXT_PUBLIC_BASE_BIP44_PATH}
+          echo ::set-output name=NEXT_PUBLIC_BLOCKCHAIN_URL::${NEXT_PUBLIC_BLOCKCHAIN_URL}
+          echo ::set-output name=NEXT_PUBLIC_BECH32_PREFIX::${NEXT_PUBLIC_BECH32_PREFIX}
+          echo ::set-output name=NEXT_PUBLIC_STAKE_ASSET::${NEXT_PUBLIC_STAKE_ASSET}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
@@ -82,6 +90,10 @@ jobs:
             "PORT=${{ steps.dockerPrep.outputs.PORT }}"
             "NEXT_PUBLIC_MATOMO_URL=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_MATOMO_URL }}"
             "NEXT_PUBLIC_MATOMO_SITE_ID=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_MATOMO_SITE_ID }}"
+            "NEXT_PUBLIC_BASE_BIP44_PATH=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_BASE_BIP44_PATH }}"
+            "NEXT_PUBLIC_BLOCKCHAIN_URL=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_BLOCKCHAIN_URL }}"
+            "NEXT_PUBLIC_BECH32_PREFIX=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_BECH32_PREFIX }}"
+            "NEXT_PUBLIC_STAKE_ASSET=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_STAKE_ASSET }}"
           tags: 'forbole/big-dipper-2.0-cosmos:${{ steps.prep.outputs.branch }}-staging'
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}

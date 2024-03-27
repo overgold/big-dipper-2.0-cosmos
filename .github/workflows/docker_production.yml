@@ -37,6 +37,10 @@ jobs:
           NEXT_PUBLIC_URL_OVERGOLD_SITE=
           NEXT_PUBLIC_URL_MARKET=
           NEXT_PUBLIC_URL_EXCHANGER=
+          NEXT_PUBLIC_BASE_BIP44_PATH=
+          NEXT_PUBLIC_BLOCKCHAIN_URL=
+          NEXT_PUBLIC_BECH32_PREFIX=
+          NEXT_PUBLIC_STAKE_ASSET=
           NODE_ENV="production"
           PORT=3000
           if [[ $GITHUB_REF == refs/tags/desmos-morpheus-apollo-1* ]]; then
@@ -47,6 +51,10 @@ jobs:
             NEXT_PUBLIC_CHAIN_TYPE="testnet"
             NEXT_PUBLIC_ASSET="ovg"
             NEXT_PUBLIC_WALLET_API="https://api.chain.overgold.app"
+            NEXT_PUBLIC_BASE_BIP44_PATH="m/44'/118'/0'/0"
+            NEXT_PUBLIC_BLOCKCHAIN_URL=https://rpc.chain.overgold.app
+            NEXT_PUBLIC_BECH32_PREFIX=ovg
+            NEXT_PUBLIC_STAKE_ASSET=stovg
           fi
           echo ::set-output name=NEXT_PUBLIC_GRAPHQL_URL::${NEXT_PUBLIC_GRAPHQL_URL}
           echo ::set-output name=NEXT_PUBLIC_GRAPHQL_WS::${NEXT_PUBLIC_GRAPHQL_WS}
@@ -55,6 +63,11 @@ jobs:
           echo ::set-output name=NEXT_PUBLIC_CHAIN_TYPE::${NEXT_PUBLIC_CHAIN_TYPE}
           echo ::set-output name=NEXT_PUBLIC_ASSET::${NEXT_PUBLIC_ASSET}
           echo ::set-output name=NEXT_PUBLIC_WALLET_API::${NEXT_PUBLIC_WALLET_API}
+
+          echo ::set-output name=NEXT_PUBLIC_BASE_BIP44_PATH::${NEXT_PUBLIC_BASE_BIP44_PATH}
+          echo ::set-output name=NEXT_PUBLIC_BLOCKCHAIN_URL::${NEXT_PUBLIC_BLOCKCHAIN_URL}
+          echo ::set-output name=NEXT_PUBLIC_BECH32_PREFIX::${NEXT_PUBLIC_BECH32_PREFIX}
+          echo ::set-output name=NEXT_PUBLIC_STAKE_ASSET::${NEXT_PUBLIC_STAKE_ASSET}
 
           echo ::set-output name=NEXT_PUBLIC_URL_TELEGRAM::${NEXT_PUBLIC_URL_TELEGRAM}
           echo ::set-output name=NEXT_PUBLIC_URL_OVERGOLD_SITE::${NEXT_PUBLIC_URL_OVERGOLD_SITE}
@@ -84,6 +97,11 @@ jobs:
             "NEXT_PUBLIC_RPC_WEBSOCKET=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_RPC_WEBSOCKET }}"
             "NEXT_PUBLIC_CHAIN_TYPE=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_CHAIN_TYPE }}"
             "NEXT_PUBLIC_WALLET_API=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_WALLET_API }}"
+
+            "NEXT_PUBLIC_BASE_BIP44_PATH=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_BASE_BIP44_PATH }}"
+            "NEXT_PUBLIC_BLOCKCHAIN_URL=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_BLOCKCHAIN_URL }}"
+            "NEXT_PUBLIC_BECH32_PREFIX=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_BECH32_PREFIX }}"
+            "NEXT_PUBLIC_STAKE_ASSET=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_STAKE_ASSET }}"
 
             "NEXT_PUBLIC_URL_TELEGRAM=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_URL_TELEGRAM }}"
             "NEXT_PUBLIC_URL_OVERGOLD_SITE=${{ steps.dockerPrep.outputs.NEXT_PUBLIC_URL_OVERGOLD_SITE }}"

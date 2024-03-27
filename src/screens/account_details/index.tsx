@@ -15,6 +15,7 @@ import {
 } from './components';
 import { useAccountDetails } from './hooks';
 import { useStyles } from './styles';
+
 import Transfers from './components/transfers';
 
 const AccountDetails = () => {
@@ -46,7 +47,7 @@ const AccountDetails = () => {
             <Overview
               className={classes.overview}
               accountData={state.overview}
-              // balance={state.balance}
+              balance={state.balance}
             />
             {/* <Transfers
               className={classes.transactions}

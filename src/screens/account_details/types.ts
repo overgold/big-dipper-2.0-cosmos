@@ -7,8 +7,8 @@ export type BalanceType = {
   regular: TokenUnit;
   staked: TokenUnit;
   steakForRansom: TokenUnit;
-  refReward: TokenUnit;
-  steakReward: TokenUnit;
+  stakeAmount: TokenUnit;
+  rewardAmount: TokenUnit;
   total: TokenUnit;
 };
 
@@ -64,7 +64,7 @@ export type AccountDetailState = {
     count: number;
   };
   rewards: RewardsType;
-  transferWallets:string[];
+  transferWallets: string[];
   accountInfo: {
     address: string;
     walletOverview?: WalletType | [];
