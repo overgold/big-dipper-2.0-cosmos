@@ -37,7 +37,7 @@ jobs:
           NEXT_PUBLIC_URL_OVERGOLD_SITE="https://devs.overgold.app/"
           NEXT_PUBLIC_URL_MARKET="https://market-dev.overgold.app/"
           NEXT_PUBLIC_URL_EXCHANGER="https://exchanger-dev.overgold.app/"
-          NEXT_PUBLIC_BASE_BIP44_PATH="m/44'/118'/0'/0"
+          NEXT_PUBLIC_BASE_BIP44_PATH='"m/44'/118'/0'/0"'
           NEXT_PUBLIC_BLOCKCHAIN_URL="https://rpc.chain.dev.overgold.app"
           NEXT_PUBLIC_BECH32_PREFIX="ovg"
           NEXT_PUBLIC_STAKE_ASSET="stovg"
