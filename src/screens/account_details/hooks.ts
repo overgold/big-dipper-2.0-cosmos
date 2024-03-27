@@ -132,28 +132,31 @@ export const useAccountDetails = () => {
       const rpc = await (await cosmosClient()).createRpcClient();
       const bankQueryClient = new CosmosBankQuery.QueryClientImpl(rpc);
       const stakesQueryClient = new OvgChainStakesQuery.QueryClientImpl(rpc);
-
       const resultBalance = await bankQueryClient.AllBalances({
         address,
       });
-
-      const resultStake = await stakesQueryClient.Stakes({
-        accountAddress: address,
-        hash: '',
-        addressFrom: '',
-        addressTo: '',
-        kinds: [],
-        endDay: '',
-        startDay: '',
-        pagination: {
-          limit: limitLong,
-          offset: offsetLong,
-          key: new Uint8Array(0),
-          countTotal: false,
-          reverse: true,
-        },
-      });
-      handleSetState(formatBalance(resultBalance, resultStake));
+      const stakedAmount = R.pathOr(false, ['balances'], resultBalance).find(
+        balance => balance.denom === process.env.NEXT_PUBLIC_STAKE_ASSET
+      );
+      if (stakedAmount) {
+        const resultStake = await stakesQueryClient.Stakes({
+          accountAddress: address,
+          hash: '',
+          addressFrom: '',
+          addressTo: '',
+          kinds: [],
+          endDay: '',
+          startDay: '',
+          pagination: {
+            limit: limitLong,
+            offset: offsetLong,
+            key: new Uint8Array(0),
+            countTotal: false,
+            reverse: true,
+          },
+        });
+        handleSetState(formatBalance(resultBalance, resultStake));
+      } else handleSetState(formatBalance(resultBalance));
     } catch (error) {
       console.error(error);
     }
@@ -311,7 +314,12 @@ export const useAccountDetails = () => {
     }
   };
 
-  const formatBalance = (balanceData, stakeData) => {
+  type FormatBalance = (
+    balanceData: any,
+    stakeData?: any
+  ) => Pick<AccountDetailState, 'balance' | 'loading'>;
+
+  const formatBalance: FormatBalance = (balanceData, stakeData) => {
     const formatBalances = () => {
       const ovgBalance = R.pathOr(
         { value: '0', denom: process.env.NEXT_PUBLIC_ASSET },
@@ -346,23 +354,23 @@ export const useAccountDetails = () => {
       );
 
       const regularBalances = formatToken(
-        ovgBalance.amount,
+        ovgBalance?.amount,
         chainConfig.primaryTokenUnit
       );
       const stakeBalances = formatToken(
-        stakedAmount.amount,
+        stakedAmount?.amount,
         chainConfig.tokenUnits.stovg.display
       );
       const stakeAmountBalances = formatToken(
-        stakesAmount.amount,
+        stakesAmount?.amount,
         chainConfig.tokenUnits.stovg.display
       );
       const steakForRansomBalances = formatToken(
-        steakForRansomAmount.amount,
+        steakForRansomAmount?.amount,
         chainConfig.tokenUnits.stovg.display
       );
       const rewardAmountBalance = formatToken(
-        rewardsAmount.amount,
+        rewardsAmount?.amount,
         chainConfig.primaryTokenUnit
       );
 
