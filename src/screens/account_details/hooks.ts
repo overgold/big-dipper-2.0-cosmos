@@ -3,6 +3,7 @@ import { useDesmosProfile } from '@hooks';
 import { chainConfig } from '@src/configs';
 import { roundToFixed } from '@src/utils/coinFormatting';
 import { sumBalances } from '@src/utils/sumBalances';
+import { cosmosClient } from '@src/utils/cosmosClient';
 
 import { getDenom } from '@utils/get_denom';
 import { formatToken } from '@utils/format_token';
@@ -18,6 +19,8 @@ import Big from 'big.js';
 import { useRouter } from 'next/router';
 
 import { isNil, isEmpty } from 'lodash';
+
+import Long from 'long';
 
 import { AccountDetailState } from './types';
 import {
@@ -56,8 +59,8 @@ const initialState: AccountDetailState = {
     regular: defaultTokenUnit,
     staked: defaultTokenUnit,
     steakForRansom: defaultTokenUnit,
-    refReward: defaultTokenUnit,
-    steakReward: defaultTokenUnit,
+    stakeAmount: defaultTokenUnit,
+    rewardAmount: defaultTokenUnit,
     total: defaultTokenUnit,
   },
   rewards: {},
@@ -100,6 +103,7 @@ export const useAccountDetails = () => {
     // fetchBalance();
     // fetchAccountInfoAddress();
     // fetchAddressHash();
+    getAccountAllBalance();
   }, [router.query.address]);
 
   // ==========================
@@ -116,6 +120,43 @@ export const useAccountDetails = () => {
         // withdrawalAddress: R.pathOr('', ['withdrawalAddress', 'address'], data),
       },
     });
+  };
+  // fetch balance from account address
+  const getAccountAllBalance = async () => {
+    const { CosmosBankQuery, OvgChainStakesQuery } = await import('js-client');
+    const address = router.query.address as string;
+
+    const offsetLong = Long.fromInt(0);
+    const limitLong = Long.fromInt(1);
+    try {
+      const rpc = await (await cosmosClient()).createRpcClient();
+      const bankQueryClient = new CosmosBankQuery.QueryClientImpl(rpc);
+      const stakesQueryClient = new OvgChainStakesQuery.QueryClientImpl(rpc);
+
+      const resultBalance = await bankQueryClient.AllBalances({
+        address,
+      });
+
+      const resultStake = await stakesQueryClient.Stakes({
+        accountAddress: address,
+        hash: '',
+        addressFrom: '',
+        addressTo: '',
+        kinds: [],
+        endDay: '',
+        startDay: '',
+        pagination: {
+          limit: limitLong,
+          offset: offsetLong,
+          key: new Uint8Array(0),
+          countTotal: false,
+          reverse: true,
+        },
+      });
+      handleSetState(formatBalance(resultBalance, resultStake));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   //fetch AccountInfo
@@ -270,85 +311,74 @@ export const useAccountDetails = () => {
     }
   };
 
-  const formatBalance = (walletData, stakeData) => {
-    const stateChange: any = {
-      loading: false,
-    };
-
+  const formatBalance = (balanceData, stakeData) => {
     const formatBalances = () => {
-      const regularAmount = sumBalances(
-        walletData.filter(item => item.kind !== 7),
-        {
-          paramsOne: 'balance',
-          paramsTwo: 'amount',
-        }
+      const ovgBalance = R.pathOr(
+        { value: '0', denom: process.env.NEXT_PUBLIC_ASSET },
+        ['balances'],
+        balanceData
+      ).find(balance => balance.denom === process.env.NEXT_PUBLIC_ASSET);
+
+      //stake
+      const stake = R.pathOr([], ['stakes', 'stake'], stakeData);
+
+      const stakedAmount = R.pathOr(
+        { value: '0', denom: process.env.NEXT_PUBLIC_STAKE_ASSET },
+        ['balances'],
+        balanceData
+      ).find(balance => balance.denom === process.env.NEXT_PUBLIC_STAKE_ASSET);
+
+      const steakForRansomAmount = R.pathOr(
+        { value: '0', denom: process.env.NEXT_PUBLIC_STAKE_ASSET },
+        ['sellAmount'],
+        stake
+      );
+
+      const stakesAmount = R.pathOr(
+        { value: '0', denom: process.env.NEXT_PUBLIC_STAKE_ASSET },
+        ['stakeAmount'],
+        stake
+      );
+      const rewardsAmount = R.pathOr(
+        { value: '0', denom: process.env.NEXT_PUBLIC_STAKE_ASSET },
+        ['rewardAmount'],
+        stake
       );
 
       const regularBalances = formatToken(
-        regularAmount,
+        ovgBalance.amount,
         chainConfig.primaryTokenUnit
-      );
-
-      const refRewardAmount = R.pathOr(
-        { value: '0', denom: '' },
-        ['0', 'balance', '0', 'amount'],
-        walletData.filter(item => item.kind === 7)
-      );
-
-      const refRewardBalances = formatToken(
-        refRewardAmount,
-        chainConfig.primaryTokenUnit
-      );
-
-      //stake
-      const stakeAmount = R.pathOr(
-        { value: '0', denom: '' },
-        ['balance', 'amount_stake'],
-        stakeData
-      );
-      const steakForRansomAmount = R.pathOr(
-        { value: '0', denom: '' },
-        ['balance', 'amount_sell'],
-        stakeData
-      );
-      const steakReward = R.pathOr(
-        { value: '0', denom: '' },
-        ['reward', 'aggregate', 'sum', 'amount'],
-        stakeData
       );
       const stakeBalances = formatToken(
-        stakeAmount,
-        chainConfig.primaryTokenUnit,
-        true
+        stakedAmount.amount,
+        chainConfig.tokenUnits.stovg.display
+      );
+      const stakeAmountBalances = formatToken(
+        stakesAmount.amount,
+        chainConfig.tokenUnits.stovg.display
       );
       const steakForRansomBalances = formatToken(
-        steakForRansomAmount,
-        chainConfig.primaryTokenUnit,
-        true
+        steakForRansomAmount.amount,
+        chainConfig.tokenUnits.stovg.display
       );
-      const steakRewardBalance = formatToken(
-        steakReward,
-        chainConfig.primaryTokenUnit,
-        true
+      const rewardAmountBalance = formatToken(
+        rewardsAmount.amount,
+        chainConfig.primaryTokenUnit
       );
 
-      const total = Big(steakRewardBalance.value)
-        .plus(regularBalances.value)
-        .plus(refRewardBalances.value)
-        .plus(stakeBalances.value)
-        .plus(steakForRansomBalances.value)
+      const totalOvg = Big(regularBalances.value)
+        .plus(rewardAmountBalance.value)
         .toFixed(chainConfig.tokenUnits[chainConfig.primaryTokenUnit].exponent);
 
-      //return balance
       const balance = {
-        regular: regularBalances,
-        staked: stakeBalances,
-        steakForRansom: steakForRansomBalances,
-        refReward: refRewardBalances,
-        steakReward: steakRewardBalance,
+        regular: regularBalances, //balance OVG
+        staked: stakeBalances, //balance total stake stakeAmount+sellAmount
+        steakForRansom: steakForRansomBalances, //sellAmount stOVG -на викуп
+        stakeAmount: stakeAmountBalances, // stakeAmount - застейкано
+        rewardAmount: rewardAmountBalance, // rewardAmoun -заработано
 
         total: {
-          value: total,
+          value: totalOvg,
           displayDenom: regularBalances.displayDenom,
           baseDenom: regularBalances.baseDenom,
           exponent: regularBalances.exponent,
@@ -356,9 +386,11 @@ export const useAccountDetails = () => {
       };
       return balance;
     };
-
-    stateChange.balance = formatBalances();
-    return stateChange;
+    const balance = formatBalances();
+    return {
+      loading: false,
+      balance,
+    };
   };
 
   return {

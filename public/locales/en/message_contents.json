@@ -57,9 +57,9 @@
   "MsgCreateVestingAccount": "Vesting account created for <0>{{toAddress}}</0>",
   "MsgCreatePeriodicVestingAccount": "Periodic vesting account created for <0>{{toAddress}}</0>",
   "MsgPayment": "Transfer {{amount}} {{asset}} from <0></0> to <1></1> <2></2> by <3></3>",
-  "MsgWithdraw": "Withdraw {{amount}} from account <0></0> by <1></1>",
+  "MsgWithdraw": "Withdraw <0>{{amount}}</0> from account <1></1> by <2></2>",
   "MsgSetTransferExtra": "Set Transfer Extra: <0></0> by <1></1>",
-  "MsgIssue": "Issue {{amount}} to <0></0> by <1></1>",
+  "MsgIssue": "Issue <0>{{amount}}</0> to <1></1> by <2></2>",
   "MsgSystemTransfer": "Transfer {{amount}} {{asset}} from <0></0> to <1></1> <2></2> by <3></3>",
   "MsgSetRewardManagerAddress": "Set reward manager address <0></0> by <1></1>",
   "MsgSystemRewardTransfer": "Transfer {{amount}} {{asset}} to <0></0> <1></1> by <2></2>",
@@ -80,5 +80,14 @@
   "MsgCreateWallet": "Create wallet {{address}} cost {{cost}} for account <0></0> <1></1> by <2></2>",
   "MsgCreateWalletWithBalance": "Create wallet <0></0> for account <1></1> with balance {{amount}} {{denom}} <2></2> by <3></3>",
   "MsgSetDefaultWallet": "Set default wallet <0></0> by <1></1>",
-  "MsgSetExtraWallet": "Set Extra for wallet <0></0>: <1></1> by <2></2>"
+  "MsgSetExtraWallet": "Set Extra for wallet <0></0>: <1></1> by <2></2>",
+  "MsgDistributeRewards": "Distribution of rewards <0>{{amount}}</0> to stakeholders by <1></1>",
+  "MsgTransferFromUserComponent": "Transfer <0>{{amount}}</0> from <1></1> to <2></2>",
+  "MsgClaimReward": "Claim Reward <0>{{amount}}</0> from <1></1> to <2></2>",
+  "MsgCancelSell": "Cancel sell <0>{{amount}}</0> stake by creator <1></1>",
+  "MsgBuyRequest": "Buy request <0>{{amount}}</0> by creator <1></1><2></2>Receive <3>{{amountReceive}}</3> to <4></4>",
+  "MsgSellRequest": "Sell request <0>{{amount}}</0> by creator <0></0>",
+  "MsgSetReferrer": "Set referrer <0></0> to referral <1></1> by creator <2></2>",
+  "MsgSquashHistory": "Squash history by creator <0></0>",
+  "MsgTransferTomUser": "Transfer <0>{{amount}}</0> from <1></1> to <2></2>"
 }

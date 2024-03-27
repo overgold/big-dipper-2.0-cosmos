@@ -5,7 +5,7 @@ import numeral from 'numeral';
 import * as R from 'ramda';
 import { useRecoilValue } from 'recoil';
 import { readMarket } from '@recoil/market';
-import { Typography, Divider } from '@material-ui/core';
+import { Typography, Divider, useMediaQuery } from '@material-ui/core';
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
 import useTranslation from 'next-translate/useTranslation';
 import { Box } from '@components';
@@ -19,11 +19,12 @@ const Balance: React.FC<{
   regular: TokenUnit;
   staked: TokenUnit;
   steakForRansom: TokenUnit;
-  refReward: TokenUnit;
-  steakReward: TokenUnit;
+  rewardAmount: TokenUnit;
+  stakeAmount: TokenUnit;
   total: TokenUnit;
 }> = props => {
   const { t } = useTranslation('accounts');
+  const isLaptop = useMediaQuery('(max-width:1023px)');
   const { classes, theme } = useStyles();
   const market = useRecoilValue(readMarket);
   const formattedChartData = formatBalanceData(props);
@@ -111,18 +112,29 @@ const Balance: React.FC<{
             );
           })}
         </div>
-      </div>
-      <div>
-        <Divider className={classes.divider} />
         <div className={classes.total}>
+          {isLaptop && <Divider className={classes.divider} />}
           <div className="total__single--container">
-            <Typography variant="h3" className="label">
-              {`${t('total')}:`}
-            </Typography>
-            <Typography variant="h3" className="totalCount">
-              {totalDisplay}
-            </Typography>
+            <div className="total__single--wrapper">
+              <Typography variant="h3" className="label">
+                {`${t('total')} ${props.total.displayDenom.toUpperCase()}:`}
+              </Typography>
+              <Typography variant="h3" className="totalCount">
+                {totalDisplay}
+              </Typography>
+            </div>
+            <div className="total__single--wrapper">
+              <Typography variant="h3" className="label">
+                {`${t('total')} ${props.staked.displayDenom.toUpperCase()}:`}
+              </Typography>
+              <Typography variant="h3" className="totalCount">
+                {`${
+                  props.staked.value
+                } ${props.staked.displayDenom.toUpperCase()}`}
+              </Typography>
+            </div>
           </div>
+
           {/* <div className="total__secondary--container total__single--container">
             <Typography variant="body1" className="label">
               ${numeral(market.price).format('0,0.[00]', Math.floor)} /{' '}
@@ -136,6 +148,43 @@ const Balance: React.FC<{
           </div> */}
         </div>
       </div>
+      {/* <div>
+        <Divider className={classes.divider} />
+        <div className={classes.total}>
+          <div className="total__single--container">
+            <div>
+              <Typography variant="h3" className="label">
+                {`${t('total')} ${props.total.displayDenom.toUpperCase()}:`}
+              </Typography>
+              <Typography variant="h3" className="totalCount">
+                {totalDisplay}
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="h3" className="label">
+                {`${t('total')} ${props.staked.displayDenom.toUpperCase()}:`}
+              </Typography>
+              <Typography variant="h3" className="totalCount">
+                {`${
+                  props.staked.value
+                } ${props.staked.displayDenom.toUpperCase()}`}
+              </Typography>
+            </div>
+          </div>
+
+          <div className="total__secondary--container total__single--container">
+            <Typography variant="body1" className="label">
+              ${numeral(market.price).format('0,0.[00]', Math.floor)} /{' '}
+              {R.pathOr(
+                '',
+                ['tokenUnits', chainConfig.primaryTokenUnit, 'display'],
+                chainConfig
+              ).toUpperCase()}
+            </Typography>
+            <Typography variant="body1">{totalAmount}</Typography>
+          </div>
+        </div>
+      </div> */}
     </Box>
   );
 };

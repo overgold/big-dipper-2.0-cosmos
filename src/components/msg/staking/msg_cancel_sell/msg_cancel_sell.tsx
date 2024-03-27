@@ -1,27 +1,20 @@
 import React from 'react';
-import { MsgIssue } from '@models';
-import { useStyles } from '../styles';
+import { MsgCancelSell } from '@models';
 import Link from 'next/link';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { ACCOUNT_DETAILS } from '@src/utils/go_to_page';
-import { convertCoinFromSatoshi } from '@src/utils/coinFormatting';
 import { Typography } from '@material-ui/core';
+import { convertCoinFromSatoshi } from '@src/utils/coinFormatting';
 
-const MsgIssueComponent = (props: { message: MsgIssue }) => {
+const MsgCancelSellComponent = (props: { message: MsgCancelSell }) => {
   const { message } = props;
-  const classes = useStyles();
-  const { t } = useTranslation();
 
   return (
     <Typography>
       <Trans
-        i18nKey="message_contents:MsgIssue"
+        i18nKey="message_contents:MsgCancelSell"
         components={[
           <b />,
-          <Link href={ACCOUNT_DETAILS(message.address)}>
-            {message.address}
-          </Link>,
           <Link href={ACCOUNT_DETAILS(message.creator)}>
             {message.creator}
           </Link>,
@@ -29,11 +22,11 @@ const MsgIssueComponent = (props: { message: MsgIssue }) => {
         values={{
           amount: `${convertCoinFromSatoshi(
             message.amount
-          )} ${message.asset.toLocaleUpperCase()}`,
+          )} ${message.denom.toLocaleUpperCase()}`,
         }}
       />
     </Typography>
   );
 };
 
-export default MsgIssueComponent;
+export default MsgCancelSellComponent;

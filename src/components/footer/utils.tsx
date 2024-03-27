@@ -1,4 +1,5 @@
 const BIG_DIPPER_URL = 'https://bigdipper.live';
+
 //Fork
 export const footerLinks = [
   {
@@ -6,23 +7,23 @@ export const footerLinks = [
     links: [
       {
         key: 'overgoldSite',
-        url: 'https://overgold.io/',
+        url: process.env.NEXT_PUBLIC_URL_OVERGOLD_SITE,
       },
       {
         key: 'wallet',
-        url: 'https://wallet.overgold.app/',
+        url: process.env.NEXT_PUBLIC_WALLET_URL,
       },
       {
         key: 'ovg',
-        url: 'https://market.overgold.app/',
+        url: process.env.NEXT_PUBLIC_URL_MARKET,
       },
       {
         key: 'exchanger',
-        url: 'https://exchanger.overgold.app/',
+        url: process.env.NEXT_PUBLIC_URL_EXCHANGER,
       },
       {
         key: 'telegram',
-        url: 'https://t.me/vipcoingoldOfficial',
+        url: process.env.NEXT_PUBLIC_URL_TELEGRAM,
       },
     ],
   },
