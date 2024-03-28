@@ -86,7 +86,7 @@
   "MsgClaimReward": "Claim Reward <0>{{amount}}</0> from <1></1> to <2></2>",
   "MsgCancelSell": "Cancel sell <0>{{amount}}</0> stake by creator <1></1>",
   "MsgBuyRequest": "Buy request <0>{{amount}}</0> by creator <1></1><2></2>Receive <3>{{amountReceive}}</3> to <4></4>",
-  "MsgSellRequest": "Sell request <0>{{amount}}</0> by creator <0></0>",
+  "MsgSellRequest": "Sell request <0>{{amount}}</0> by creator <1></1>",
   "MsgSetReferrer": "Set referrer <0></0> to referral <1></1> by creator <2></2>",
   "MsgSquashHistory": "Squash history by creator <0></0>",
   "MsgTransferTomUser": "Transfer <0>{{amount}}</0> from <1></1> to <2></2>"
